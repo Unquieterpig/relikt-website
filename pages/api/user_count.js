@@ -1,13 +1,12 @@
-// API request that returns a JSON response of the amount of registered users in the Firebase database
-import { auth, firestore } from '../../lib/firebase';
+// API request that returns a JSON response with the amount of registered users in the Firebase database
+import { firestore } from '../../lib/firebase';
 
 export default async (req, res) => {
     const snapshot = await firestore.collection('users').get();
-    const users = [];
 
-    snapshot.forEach((doc) => {
-        users.push({ id: doc.id, ...doc.data() });
-    });
+    // Use the size property of the snapshot to get the number of users
+    const numberOfUsers = snapshot.size;
 
-    res.status(200).json({ users });
+    // Return the count as JSON
+    res.status(200).json({ numberOfUsers });
 }
