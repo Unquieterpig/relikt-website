@@ -1,0 +1,8 @@
+/* Smexy Gradient */
+.gradientTop {
+    position: absolute;
+    top: 0;
+    height: 2px;
+    background: linear-gradient(to right, #fc466b, #3f5efb);
+    width: 100%;
+}

@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root {
-  --color-bg: #eef0f1;
-  --color-text: #08090a;
+  --color-bg: #171717;
+  --color-text: #ffffff;
+  --color-navy: #34517d;
   --color-blue: #3b49df;
   --color-red: #df3b3b;
   --color-green: #3bdf72;
@@ -64,7 +65,7 @@ code {
 .navbar {
   height: 70px;
   width: 100%;
-  background: white;
+  background: #202020;
   color: var(--colors-text);
   position: fixed;
   top: 0;
@@ -99,7 +100,7 @@ code {
 /* Buttons */
 
 .btn, button {
-  background-color: var(--color-gray);
+  background-color: var(--color-navy);
   border: none;
   color: var(--color-text);
   padding: 1rem 2rem;
@@ -150,7 +151,7 @@ button.btn-green {
 
 button.btn-google {
   background-color: white;
-  color: var(--color-text);
+  color: var(--color-bg);
 }
 
 .btn-google img {
@@ -159,8 +160,8 @@ button.btn-google {
 }
 
 button.btn-logo {
-  background-color: var(--color-text);
-  color: white;
+  background-color: black;
+  color: var(--color-text);
   text-transform: uppercase;
   font-size: 1.5rem;
   padding: 0.5rem 1rem;

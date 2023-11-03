@@ -2,8 +2,8 @@ import Link from 'next/link';
 
 // Top navbar
 export default function Navbar() {
-  const user = true;
-  const username = true;
+  const user = null;
+  const username = null;
 
   return (
     <nav className="navbar">
@@ -33,7 +33,7 @@ export default function Navbar() {
         {/* user is not signed OR has not created username */}
         {!username && (
           <li>
-            <Link href="/login">
+            <Link href="/enter">
               <button className="btn-blue">Log in</button>
             </Link>
           </li>
