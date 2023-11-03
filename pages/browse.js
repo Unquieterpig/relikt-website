@@ -1,11 +1,11 @@
-import PostFeed from '../components/PostFeed';
-import Loader from '../components/Loader';
-import { firestore, fromMillis, postToJSON } from '../lib/firebase';
+import PostFeed from '@components/PostFeed';
+import Loader from '@components/Loader';
+import { firestore, fromMillis, postToJSON } from '@lib/firebase';
 
 import { useState } from 'react';
 
 // Max post to query per page
-const LIMIT = 1;
+const LIMIT = 10;
 
 export async function getServerSideProps(context) {
     const postsQuery = firestore
@@ -61,8 +61,6 @@ export default function Browse( props ){
             <Loader show={loading} />
 
             {postsEnd && 'You have reached the end!'}
-
-
         </main>
     )
 }

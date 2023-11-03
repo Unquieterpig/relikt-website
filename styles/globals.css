@@ -16,10 +16,8 @@ body {
   font-family: 'Noto Sans', sans-serif;
   background-color: var(--color-bg);
   color: var(--color-text);
-  margin-top: 50px;
+  /* margin-top: 50px; */
 }
-
-
 
 /* main {
   padding: 1rem 10vw;
@@ -147,6 +145,7 @@ button.btn-red {
 button.btn-green {
   background-color: var(--color-green);
   color: white;
+  width: 100%;
 }
 
 button.btn-google {
@@ -172,7 +171,7 @@ button.btn-logo {
 .card {
   padding: 2rem;
   margin: 1rem 0;
-  background-color: white;
+  background-color: var(--color-bg);
   border: 1px solid var(--color-gray);
   border-radius: 8px;
 }
@@ -261,3 +260,12 @@ input[type="file"] {
 }
 
 .hidden { display:  none; }
+
+/* Smexy Gradient */
+.gradientTop {
+  position: absolute;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(to right, #fc466b, #3f5efb);
+  width: 100%;
+}

@@ -1,79 +1,62 @@
 import styles from '@styles/Enter.module.css';
 
-import { auth, firestore, googleAuthProvider } from '../lib/firebase';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import GradientTop from '@components/GradientTop';
+
+import { auth, firestore, googleAuthProvider } from '@lib/firebase';
 import { useContext, useEffect, useState, useCallback } from 'react';
 import { UserContext } from '@lib/context';
 import debounce from 'lodash.debounce';
 import toast from 'react-hot-toast'
 
 export default function Enter(props) {
-    const { user, username } = useContext(UserContext);
-
-  // 1. user signed out <SignInButton />
-  // 2. user signed in, but missing username <UsernameForm />
-  // 3. user signed in, has username <SignOutButton />
   return (
     <main>
         <GradientTop />
 
-      {user ? 
-        !username ? <UsernameForm /> : <SignOutButton /> 
-        : 
-        <SignInButton />
-      }
+        <LoginContainer />
     </main>
   );
 }
 
 // Container to put everything in
 function LoginContainer() {
+  const { user, username } = useContext(UserContext);
+  const router = useRouter();
+
+  useEffect(() => {
+    // If the user and username both exist, redirect to generate page
+    if (user && username) {
+      router.push('/generate');
+    }
+  }, [user, username]);
+
     return (
-        <div className="login-container">
-      <Link href="/">
-        <a>
-          <Image src="/imgs/relikt_logo_cropped.png" alt="Logo of Relikt" width={100} height={50} />
-        </a>
-      </Link>
+      <div className={styles.loginContainer}>
+        <Link href="/">
+          <a>
+            <Image src="/relikt_logo_cropped.png" alt="Logo of Relikt" width={900} height={300} className={styles.heroImage} />
+          </a>
+        </Link>
 
-      <div className="login-box">
-        <form method="POST" onSubmit={handleSubmit}>
-          <h3>Log in or <Link href="/Signup"><a>Sign up</a></Link></h3>
-          <div className="form-group w-100">
-            <input type="email" className="form-control" id="InputEmail" name="username" placeholder="Email" required />
-          </div>
-          <div className="form-group w-100">
-            <input type="password" className="form-control" id="InputPassword" name="password" placeholder="Password" required />
-          </div>
-          <div className="form-group">
-            <div className="custom-control custom-checkbox">
-              <input type="checkbox" className="custom-control-input" id="customCheck1" name="rememberMe" />
-              <label className="custom-control-label" for="customCheck1">Remember me</label>
+        <div className={styles.loginBox}>
+          
+        {/* 1. user signed out <SignInButton />
+            2. user signed in, but missing username <UsernameForm />
+            3. user signed in, has username route to generate page */}
+        { user ? 
+          !username ? <UsernameForm /> : null
+          : 
+          <SignInButton />
+        }
+            <div className="text-muted" style={{ fontSize: '10px' }}>
+              By logging in, you agree to our <Link href="/terms"><a>Terms of Service</a></Link> and <Link href="/privacy"><a>Privacy Policy</a></Link>.
             </div>
-          </div>
-          <button type="submit" className="btn btn-primary">Submit</button>
-
-          <div className="text"> Forgot Password? <Link href="/forgotPassword"><a><b>Click Here</b></a></Link></div>
-
-          {/* Separator */}
-          <div className="divider">
-            <hr className="left" />
-            <span>OR</span>
-            <hr className="right" />
-          </div>
-
-          {/* OAuth buttons */}
-          <div className="OAuthButtons">
-            <Link href="/auth/google"><a className="btn"><i className="fab fa-google"></i></a></Link>
-            <Link href="/auth/microsoft"><a className="btn"><i className="fab fa-microsoft"></i></a></Link>
-            {/* ... other buttons ... */}
-          </div>
-
-          <div className="text-muted" style={{ fontSize: '10px' }}>
-            By logging in, you agree to our <Link href="/terms"><a>Terms of Service</a></Link> and <Link href="/privacy"><a>Privacy Policy</a></Link>.
-          </div>
-        </form>
+        </div>
       </div>
-    </div>
     );
 }
 
@@ -94,11 +77,6 @@ function SignInButton() {
       <img src={'/google.png'} /> Sign in with Google
     </button>
   );
-}
-
-// Sign out button
-function SignOutButton() {
-  return <button onClick={() => auth.signOut()}>Sign Out</button>;
 }
 
 function UsernameForm() {
@@ -144,6 +122,8 @@ function UsernameForm() {
         batch.set(usernameDoc, { uid: user.uid });
 
         await batch.commit();
+        toast.success('Username created!');
+
     }
 
     //
@@ -170,27 +150,19 @@ function UsernameForm() {
 
     return (
         !username && (
-            <section>
+            <div className={styles.userNameBox}>
                 <h3>Choose Username</h3>
                 <form onSubmit={onSubmit}>
-                    <input name="username" placeholder="myname" value={formValue} onChange={onChange} />
+                    <input name="username" placeholder="Username" value={formValue} onChange={onChange} />
 
                     <UsernameMessage username={formValue} isValid={isValid} loading={loading} />
-
+                    <div className='box-center'>
                     <button type="submit" className="btn-green" disabled={!isValid}>
                         Choose 
                     </button>
-
-                    <h3>Debug State</h3>
-                    <div>
-                        Username: {formValue}
-                        <br />
-                        Loading: {loading.toString()}
-                        <br />
-                        Username Valid: {isValid.toString()}
                     </div>
                 </form>
-            </section>
+            </div>
 
         )
     );
@@ -206,8 +178,4 @@ function UsernameMessage({ username, isValid, loading }) {
     } else {
         return <p></p>;
     }
-}
-
-function GradientTop() {
-    return <div className={styles.gradientTop}></div>;
 }
