@@ -1,7 +1,10 @@
 import styles from '@styles/Post.module.css';
 import PostContent from '@components/PostContent';
 import Metatags from '@components/Metatags';
+import LikeButton from '@components/LikeButton';
+import AuthCheck from '@components/AuthCheck';
 
+import Link from 'next/link';
 import { firestore, getUserWithUsername, postToJSON } from '@lib/firebase';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 
@@ -58,8 +61,12 @@ export default function Post(props){
 
             <aside className="card">
                 <p>
-                    <strong>{post.heartCount || 0} 👍</strong>
+                    <strong>{post.likeCount || 0} 👍</strong>
                 </p>
+
+                <AuthCheck>
+                    <LikeButton postRef={postRef} />
+                </AuthCheck>
             </aside>
 
         </main>
