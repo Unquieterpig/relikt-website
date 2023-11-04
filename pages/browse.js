@@ -1,5 +1,7 @@
 import PostFeed from '@components/PostFeed';
 import Loader from '@components/Loader';
+import NavBarPanel from '@components/NavBarPanel';
+
 import { firestore, fromMillis, postToJSON } from '@lib/firebase';
 
 import { useState } from 'react';
@@ -54,6 +56,7 @@ export default function Browse( props ){
 
     return (
         <main>
+            <NavBarPanel />
             <PostFeed posts={posts} />
 
             {!loading && !postsEnd && <button onClick={getMorePosts}>Load more</button>}
