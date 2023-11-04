@@ -1,5 +1,7 @@
 import AuthCheck from "@components/AuthCheck";
 import PostFeed from "@components/PostFeed";
+import NavBarPanel from "@components/NavBarPanel";
+
 import { firestore, auth, serverTimestamp } from "@lib/firebase";
 import { UserContext } from "@lib/context";
 
@@ -12,12 +14,15 @@ import toast from 'react-hot-toast';
 
 export default function AdminPostsPage(props) {
     return (
+        <>
+        <NavBarPanel />
         <main>
             <AuthCheck>
                 <PostList />
                 <CreateNewPost />
             </AuthCheck>
         </main>
+        </>
     );
 }
 
@@ -30,7 +35,7 @@ function PostList() {
 
     return (
         <>
-            <h1>Manage your Posts</h1>
+            <h1>Your Posts</h1>
             <PostFeed posts={posts} admin />
         </>
     );
@@ -71,7 +76,7 @@ function CreateNewPost() {
         toast.success('Post created!');
 
         // Imperative navigation after doc is set
-        router.push(`/admin/${slug}`);
+        router.push(`/browse/admin/${slug}`);
     };
 
     return (
@@ -83,7 +88,7 @@ function CreateNewPost() {
                 className="input"
             />
             <p>
-                <strong>Slug:</strong> {slug}
+                <strong>URL:</strong> {slug}
             </p>
             <button type="submit" disabled={!isValid} className="btn-green">
                 Create New Post

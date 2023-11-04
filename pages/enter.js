@@ -14,11 +14,11 @@ import toast from 'react-hot-toast'
 
 export default function Enter(props) {
   return (
-    <main>
+    <>
         <GradientTop />
 
         <LoginContainer />
-    </main>
+    </>
   );
 }
 

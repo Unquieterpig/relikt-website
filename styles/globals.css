@@ -19,9 +19,9 @@ body {
   /* margin-top: 50px; */
 }
 
-/* main {
+main {
   padding: 1rem 10vw;
-} */
+}
 
 h1 { font-size: 2rem; }
 h2 { font-size: 1.5rem; }
@@ -263,6 +263,7 @@ input[type="file"] {
   width: 75%;
     margin-left: auto;
     background: white;
+    color: black;
     padding: 5px;
     margin: 5px 0;
 }

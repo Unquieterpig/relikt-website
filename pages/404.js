@@ -4,7 +4,7 @@ import Navbar from '@components/NavBarHome';
 
 export default function Custom404() {
     return (
-        <main>
+        <>
             <Navbar />
             <br />
             <br />
@@ -22,6 +22,6 @@ export default function Custom404() {
                 <Link href="/">
                     <button className='btn-blue'>Go home</button>
                 </Link>
-        </main>
+        </>
     );
 }

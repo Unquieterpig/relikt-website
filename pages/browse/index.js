@@ -2,12 +2,14 @@ import PostFeed from '@components/PostFeed';
 import Loader from '@components/Loader';
 import NavBarPanel from '@components/NavBarPanel';
 
+import Link from 'next/link';
+
 import { firestore, fromMillis, postToJSON } from '@lib/firebase';
 
 import { useState } from 'react';
 
 // Max post to query per page
-const LIMIT = 10;
+const LIMIT = 1;
 
 export async function getServerSideProps(context) {
     const postsQuery = firestore
@@ -55,8 +57,14 @@ export default function Browse( props ){
     };
 
     return (
-        <main>
+        <>
             <NavBarPanel />
+            <main>
+            <div className='card'> 
+            <Link href="/browse/admin">
+                <button className='btn-blue'>Create New Post</button> 
+            </Link>
+            </div>
             <PostFeed posts={posts} />
 
             {!loading && !postsEnd && <button onClick={getMorePosts}>Load more</button>}
@@ -65,5 +73,6 @@ export default function Browse( props ){
 
             {postsEnd && 'You have reached the end!'}
         </main>
+        </>
     )
 }

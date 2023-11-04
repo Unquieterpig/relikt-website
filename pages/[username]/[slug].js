@@ -58,7 +58,7 @@ export default function Post(props){
 
             <aside className="card">
                 <p>
-                    <strong>{post.heartCount || 0} 🤍</strong>
+                    <strong>{post.heartCount || 0} 👍</strong>
                 </p>
             </aside>
 

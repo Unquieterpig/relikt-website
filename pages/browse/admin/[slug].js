@@ -1,6 +1,8 @@
-import styles from '../../styles/Admin.module.css';
-import AuthCheck from '../../components/AuthCheck';
-import { firestore, auth, serverTimestamp } from '../../lib/firebase';
+import styles from '@styles/Admin.module.css';
+import AuthCheck from '@components/AuthCheck';
+import NavBarPanel from '@components/NavBarPanel';
+
+import { firestore, auth, serverTimestamp } from '@lib/firebase';
 
 import { useState } from 'react';
 import { useRouter } from 'next/router';
@@ -10,10 +12,12 @@ import { useForm } from 'react-hook-form';
 import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
+import ImageUploader from '@components/ImageUploader';
 
 export default function AdminPostEdit(props) {
   return (
     <AuthCheck>
+        <NavBarPanel />
         <PostManager />
     </AuthCheck>
   );
@@ -55,7 +59,7 @@ function PostManager() {
 function PostForm({ defaultValues, postRef, preview }) {
   const { register, handleSubmit, reset, watch, formState, errors } = useForm({ defaultValues, mode: 'onChange' });
 
-    const { isValid, isDirty } = formState;
+  const { isValid, isDirty } = formState;
 
   const updatePost = async ({ content, published }) => {
     await postRef.update({
@@ -78,12 +82,14 @@ function PostForm({ defaultValues, postRef, preview }) {
       )}
 
       <div className={preview ? styles.hidden : styles.controls}>
+        <ImageUploader />
   
         <textarea name="content" ref={register({
             maxLength: { value: 20000, message: 'content is too long' },
             minLength: { value: 10, message: 'content is too short' },
             required: { value: true, message: 'content is required' },
-        })}></textarea>
+        })}
+        ></textarea>
 
         {errors.content && <p className="text-danger">{errors.content.message}</p>}
 

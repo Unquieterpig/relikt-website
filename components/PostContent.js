@@ -12,7 +12,7 @@ export default function PostContent({ post }) {
         <div className="card">
             <h1>{post?.title}</h1>
             <span className="text-sm">
-                Written by{' '}
+                Posted by{' '}
                 <Link href={`/${post.username}/`}>
                     <a className="text-info">@{post.username}</a>
                 </Link>{' '}

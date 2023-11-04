@@ -4,9 +4,10 @@ import Link from 'next/link'
 
 import Loader from '@components/Loader'
 import Navbar from '@components/NavBarHome'
-import SignOutButton from '@components/SignOutButton'
 
 import toast from 'react-hot-toast'
+
+import { UserContext } from '@lib/context'
 
 export default function Home(){
   return(
@@ -18,12 +19,17 @@ export default function Home(){
       <br />
       <br />
       <br />
-      <button onClick={() => toast.success('Hello toast!')}>Toast Me</button>
+      <HomePage />
 
-      <SignOutButton />
-      <Loader show />
     </div>
     
     </>
   )
+}
+
+function HomePage() {
+
+  return (
+    <h1>  sdda</h1>
+  );
 }

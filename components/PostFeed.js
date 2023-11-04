@@ -22,7 +22,7 @@ function PostItem({ post, admin = false }) {
 
 
             <footer>
-                <span>💗 {post.heartCount} Hearts</span>
+                <span>👍 {post.heartCount} Thumbs</span>
             </footer>
         </div>
     );
