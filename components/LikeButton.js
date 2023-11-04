@@ -30,7 +30,7 @@ export default function Like({ postRef }) {
     await batch.commit();
   };
 
-  return likeDoc?.exists ? (
+  return likeDoc?.exists() ? (
     <button onClick={removeLike}>👎 UnThumbs</button>
   ) : (
     <button onClick={addLike}>👍 Thumbs</button>
