@@ -30,6 +30,6 @@ export default function Home(){
 function HomePage() {
 
   return (
-    <h1>  sdda</h1>
+    <h1> Work in Progress</h1>
   );
 }
