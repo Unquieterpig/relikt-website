@@ -31,8 +31,8 @@ export default function Like({ postRef }) {
   };
 
   return likeDoc?.exists() ? (
-    <button onClick={removeLike}>👎 UnThumbs</button>
+    <button onClick={removeLike}>👎 Unlike</button>
   ) : (
-    <button onClick={addLike}>👍 Thumbs</button>
+    <button onClick={addLike}>👍 Like</button>
   );
 }

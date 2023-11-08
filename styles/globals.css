@@ -64,7 +64,7 @@ code {
   height: 70px;
   width: 100%;
   background: #202020;
-  color: var(--colors-text);
+  color: var(--color-text);
   position: fixed;
   top: 0;
   padding: 0 10vw;
@@ -101,7 +101,7 @@ code {
   height: 100vh;
   width: 180px;
   background: #202020;
-  color: var(--colors-text);
+  color: var(--color-text);
   position: fixed;
   top: 0;
   font-weight: bold;
