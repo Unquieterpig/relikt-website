@@ -67,7 +67,7 @@ export default function Browse( props ){
             </div>
             <PostFeed posts={posts} />
 
-            {!loading && !postsEnd && <button onClick={getMorePosts}>Load more</button>}
+            {posts.length === 0 ? ('No posts to load') : (!loading && !postsEnd && <button onClick={getMorePosts}>Load more</button>)}
 
             <Loader show={loading} />
 
