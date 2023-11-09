@@ -40,15 +40,22 @@ function PostManager() {
             <h1>{post.title}</h1>
             <p>ID: {post.slug}</p>
 
-            <PostForm postRef={postRef} defaultValues={post} preview={preview} />
+            <PostForm
+              postRef={postRef}
+              defaultValues={post}
+              preview={preview}
+            />
           </section>
 
           <aside>
-          <h3>Tools</h3>
-            <button onClick={() => setPreview(!preview)}>{preview ? 'Edit' : 'Preview'}</button>
+            <h3>Tools</h3>
+            <button onClick={() => setPreview(!preview)}>
+              {preview ? "Edit" : "Preview"}
+            </button>
             <Link href={`/${post.username}/${post.slug}`}>
               <button className="btn-blue">Live view</button>
             </Link>
+            <DeletePostButton postRef={postRef} />
           </aside>
         </>
       )}
@@ -103,5 +110,24 @@ function PostForm({ defaultValues, postRef, preview }) {
         </button>
       </div>
     </form>
+  );
+}
+
+function DeletePostButton({ postRef }) {
+  const router = useRouter();
+
+  const deletePost = async () => {
+    const doIt = confirm("are you sure!");
+    if (doIt) {
+      await postRef.delete();
+      router.push("/admin");
+      toast("post annihilated ", { icon: "🗑️" });
+    }
+  };
+
+  return (
+    <button className="btn-red" onClick={deletePost}>
+      Delete
+    </button>
   );
 }
