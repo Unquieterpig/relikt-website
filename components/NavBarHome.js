@@ -11,7 +11,7 @@ export default function Navbar() {
     <nav className="navbar">
       <ul>
         <li>
-          <Link href="/">
+          <Link legacyBehavior href="/">
             <button className="btn-logo">RELIKT</button>
           </Link>
         </li>
@@ -20,12 +20,12 @@ export default function Navbar() {
         {username && (
           <>
             <li className="push-left">
-              <Link href="/generate">
+              <Link legacyBehavior href="/generate">
                 <button className="btn-blue">Generate</button>
               </Link>
             </li>
             <li>
-              <Link href={username}>
+              <Link legacyBehavior href={username}>
                 <img src={user.photoURL} />
               </Link>
             </li>
@@ -35,7 +35,7 @@ export default function Navbar() {
         {/* user is not signed OR has not created username */}
         {!username && (
           <li>
-            <Link href="/enter">
+            <Link legacyBehavior href="/enter">
               <button className="btn-blue">Log in</button>
             </Link>
           </li>
