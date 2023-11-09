@@ -10,26 +10,20 @@ import toast from 'react-hot-toast'
 import { UserContext } from '@lib/context'
 
 export default function Home(){
-  return(
+  return (
     <>
       <Navbar />
-    <div>
-      <br />
-      <br />
       <br />
       <br />
       <br />
       <HomePage />
-
-    </div>
-    
     </>
-  )
+  );
 }
 
 function HomePage() {
 
   return (
-    <h1> Work in Progress</h1>
+    <h1 className='text-3xl font-bold underline'> Work in Progress</h1>
   );
 }

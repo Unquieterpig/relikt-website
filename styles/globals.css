@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --color-bg: #171717;
@@ -9,6 +12,7 @@
   --color-green: #3bdf72;
   --color-gray: #b5bdc4;
 }
+
 html,
 body {
   padding: 0;
