@@ -24,6 +24,6 @@ export default function Home(){
 function HomePage() {
 
   return (
-    <h1 className='text-3xl font-bold underline'> Work in Progress</h1>
+    <h1 className='antialiased font-sans text-3x1'> Work in Progress</h1>
   );
 }
