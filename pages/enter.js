@@ -7,6 +7,8 @@ import { useRouter } from 'next/router';
 import GradientTop from '@components/GradientTop';
 
 import { auth, firestore, googleAuthProvider } from '@lib/firebase';
+import { signInWithPopup } from 'firebase/auth';
+import { doc, getDoc, writeBatch } from 'firebase/firestore';
 import { useContext, useEffect, useState, useCallback } from 'react';
 import { UserContext } from '@lib/context';
 import debounce from 'lodash.debounce';
@@ -64,7 +66,7 @@ function LoginContainer() {
 function SignInButton() {
   const signInWithGoogle = async () => {
     try {
-        await auth.signInWithPopup(googleAuthProvider);
+        await signInWithPopup(auth, googleAuthProvider);
 
         toast.success('Signed in!');
     } catch (error) {
@@ -109,11 +111,11 @@ function UsernameForm() {
         e.preventDefault();
 
         // Create refs for both documents
-        const userDoc = firestore.doc(`users/${user.uid}`);
-        const usernameDoc = firestore.doc(`usernames/${formValue}`);
+        const userDoc = doc(firestore, `users/${user.uid}`);
+        const usernameDoc = doc(firestore, `usernames/${formValue}`);
 
         // Commit both docs together as a batch write.
-        const batch = firestore.batch();
+        const batch = writeBatch(firestore);
         batch.set(userDoc, {
             username: formValue,
             photoURL: user.photoURL,
@@ -137,11 +139,10 @@ function UsernameForm() {
     const checkUsername = useCallback(
         debounce(async (username) => {
         if (username.length >= 3){
-            const ref = firestore.doc(`usernames/${username}`);
-            const { exists } = await ref.get();
-            console.log('Firestore read executed!');
-            setIsValid(!exists);
-            setLoading(false);
+          const docRef = doc(firestore, `usernames/${username}`);
+          const ref = await getDoc(docRef);
+          setIsValid(!ref.exists());
+          setLoading(false);
 
         }
     }, 500), 
