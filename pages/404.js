@@ -1,6 +1,5 @@
-import Link from 'next/link';
-
 import Navbar from '@components/NavBarHome';
+import BackButton from '@components/BackButton';
 
 export default function Custom404() {
     return (
@@ -20,9 +19,9 @@ export default function Custom404() {
             frameBorder="0"
             allowFullScreen
           ></iframe>
-          <Link legacyBehavior href="/">
-            <button className="btn-blue">Go home</button>
-          </Link>
+
+          <BackButton />
+        
         </center>
       </>
     );
