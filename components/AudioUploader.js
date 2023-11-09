@@ -1,9 +1,11 @@
-import { useState } from 'react';
-import { auth, storage, STATE_CHANGED } from '../lib/firebase';
-import Loader from './Loader';
+import { useState } from "react";
+import { auth, storage } from "@lib/firebase";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import Loader from "./Loader";
+import toast from "react-hot-toast";
 
 // Uploads images to Firebase Storage
-export default function ImageUploader() {
+export default function AudioUploader() {
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [downloadURL, setDownloadURL] = useState(null);
@@ -12,28 +14,41 @@ export default function ImageUploader() {
   const uploadFile = async (e) => {
     // Get the file
     const file = Array.from(e.target.files)[0];
-    const extension = file.type.split('/')[1];
+    const extension = file.type.split("/")[1];
 
     // Makes reference to the storage bucket location
-    const ref = storage.ref(`uploads/audio/${auth.currentUser.uid}/${Date.now()}.${extension}`);
+    const fileRef = ref(
+      storage,
+      `uploads/audio/${auth.currentUser.uid}/${Date.now()}.${extension}`
+    );
     setUploading(true);
 
     // Starts the upload
-    const task = ref.put(file);
+    const task = uploadBytesResumable(fileRef, file);
 
     // Listen to updates to upload task
-    task.on(STATE_CHANGED, (snapshot) => {
-      const pct = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0);
-      setProgress(pct);
-
-      // Get downloadURL AFTER task resolves (Note: this is not a native Promise)
-      task
-        .then((d) => ref.getDownloadURL())
-        .then((url) => {
+    task.on(
+      "state_changed",
+      (snapshot) => {
+        const pct = (
+          (snapshot.bytesTransferred / snapshot.totalBytes) *
+          100
+        ).toFixed(0);
+        setProgress(Number(pct));
+      },
+      // Handle errors
+      (error) => {
+        toast.error("An error occurred while uploading the audio");
+        setUploading(false);
+      },
+      // Handle successful upload
+      () => {
+        getDownloadURL(task.snapshot.ref).then((url) => {
           setDownloadURL(url);
           setUploading(false);
         });
-    });
+      }
+    );
   };
 
   return (
@@ -44,13 +59,19 @@ export default function ImageUploader() {
       {!uploading && (
         <>
           <label className="btn">
-            📸 Upload Img
-            <input type="file" onChange={uploadFile} accept="image/x-png,image/gif,image/jpeg" />
+            🎙️ Upload Audio
+            <input
+              type="file"
+              onChange={uploadFile}
+              accept="audio/mpeg, audio/wav, audio/ogg, audio/flac"
+            />
           </label>
         </>
       )}
 
-      {downloadURL && <code className="upload-snippet">{`![alt](${downloadURL})`}</code>}
+      {downloadURL && (
+        <code className="upload-snippet">{`![alt](${downloadURL})`}</code>
+      )}
     </div>
   );
 }
