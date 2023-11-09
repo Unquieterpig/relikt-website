@@ -66,11 +66,22 @@ export default function Post(props){
                     <strong>{post.likeCount || 0} 👍</strong>
                 </p>
 
-                <AuthCheck>
+                <AuthCheck fallback={
+                    <Link href="/enter">
+                        <button>Sign Up</button>
+                    </Link>
+                
+                }>
                     <LikeButton postRef={postRef} />
                 </AuthCheck>
-            </aside>
 
+                {currentUser?.uid === post.uid && (
+                    <Link href={`/admin/${post.slug}`}>
+                        <button className="btn-blue">Edit</button>
+                    </Link>
+                )}
+
+            </aside>
         </main>
     )
 }
