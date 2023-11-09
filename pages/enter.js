@@ -38,7 +38,7 @@ function LoginContainer() {
 
     return (
       <div className={styles.loginContainer}>
-        <Link href="/">
+        <Link legacyBehavior href="/">
           <a>
             <Image src="/relikt_logo_cropped.png" alt="Logo of Relikt" width={900} height={300} className={styles.heroImage} />
           </a>
@@ -55,7 +55,7 @@ function LoginContainer() {
           <SignInButton />
         }
             <div className="text-muted" style={{ fontSize: '10px' }}>
-              By logging in, you agree to our <Link href="/terms"><a>Terms of Service</a></Link> and <Link href="/privacy"><a>Privacy Policy</a></Link>.
+              By logging in, you agree to our <Link legacyBehavior href="/terms"><a>Terms of Service</a></Link> and <Link legacyBehavior href="/privacy"><a>Privacy Policy</a></Link>.
             </div>
         </div>
       </div>
