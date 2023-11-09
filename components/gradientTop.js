@@ -1,3 +1,3 @@
 export default function GradientTop() {
-    return <div className="gradientTop"></div>;
+  return <div className="gradientTop"></div>;
 }
