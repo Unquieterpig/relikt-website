@@ -3,7 +3,7 @@ import styles from '../styles/Home.module.css'
 import Link from 'next/link'
 
 import Loader from '@components/Loader'
-import Navbar from '@components/NavBarHome'
+import Navbar from '@components/NavBar'
 
 import toast from 'react-hot-toast'
 

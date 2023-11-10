@@ -1,4 +1,4 @@
-import Navbar from '@components/NavBarHome';
+import Navbar from '@components/NavBar';
 import BackButton from '@components/BackButton';
 
 export default function Custom404() {
