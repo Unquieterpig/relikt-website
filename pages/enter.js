@@ -17,9 +17,11 @@ import toast from 'react-hot-toast'
 export default function Enter(props) {
   return (
     <>
+      <div className="bg-relikt">
         <GradientTop />
 
         <LoginContainer />
+      </div>
     </>
   );
 }
@@ -29,34 +31,40 @@ function LoginContainer() {
   const { user, username } = useContext(UserContext);
   const router = useRouter();
 
-  useEffect(() => {
     // If the user and username both exist, redirect to generate page
     if (user && username) {
-      router.push('/generate');
+      router.replace('/generate');
     }
-  }, [user, username]);
 
     return (
-      <div className={styles.loginContainer}>
+      <div className="flex justify-center items-center h-screen flex-col w-1/3 mx-auto">
         <Link legacyBehavior href="/">
           <a>
-            <Image src="/relikt_logo_cropped.png" alt="Logo of Relikt" width={900} height={300} className={styles.heroImage} />
+            <Image
+              src="/relikt_logo_cropped.png"
+              alt="Logo of Relikt"
+              width={900}
+              height={300}
+            />
           </a>
         </Link>
 
-        <div className={styles.loginBox}>
-          
-        {/* 1. user signed out <SignInButton />
+        <div className="p-4 rounded-lg text-white shadow-md flex flex-col justify-center items-center my-1 text-center border border-transparent border-neutral-600">
+          {/* 1. user signed out <SignInButton />
             2. user signed in, but missing username <UsernameForm />
             3. user signed in, has username route to generate page */}
-        { user ? 
-          !username ? <UsernameForm /> : null
-          : 
-          <SignInButton />
-        }
-            <div className="text-muted" style={{ fontSize: '10px' }}>
-              By logging in, you agree to our <Link legacyBehavior href="/terms"><a>Terms of Service</a></Link> and <Link legacyBehavior href="/privacy"><a>Privacy Policy</a></Link>.
-            </div>
+          {user ? !username ? <UsernameForm /> : <div></div> : <SignInButton />}
+          <div className="text-muted" style={{ fontSize: "10px" }}>
+            By logging in, you agree to our{" "}
+            <Link legacyBehavior href="/terms">
+              <a>Terms of Service</a>
+            </Link>{" "}
+            and{" "}
+            <Link legacyBehavior href="/privacy">
+              <a>Privacy Policy</a>
+            </Link>
+            .
+          </div>
         </div>
       </div>
     );
@@ -150,22 +158,31 @@ function UsernameForm() {
     );
 
     return (
-        !username && (
-            <div className={styles.userNameBox}>
-                <h3>Choose Username</h3>
-                <form onSubmit={onSubmit}>
-                    <input name="username" placeholder="Username" value={formValue} onChange={onChange} />
+      !username && (
+        <div className="flex justify-center items-center flex-col">
+          <h3>Choose Username</h3>
+          <form onSubmit={onSubmit}>
+            <input
+              name="username"
+              placeholder="Username"
+              value={formValue}
+              onChange={onChange}
+            />
 
-                    <UsernameMessage username={formValue} isValid={isValid} loading={loading} />
-                    <div className='box-center'>
-                    <button type="submit" className="btn-green" disabled={!isValid}>
-                        Choose 
-                    </button>
-                    </div>
-                </form>
+            <UsernameMessage
+              username={formValue}
+              isValid={isValid}
+              loading={loading}
+            />
+            
+            <div className="box-center">
+              <button type="submit" className="btn-green" disabled={!isValid}>
+                Choose
+              </button>
             </div>
-
-        )
+          </form>
+        </div>
+      )
     );
 }
 

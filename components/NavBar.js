@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 import {
   Navbar,
   NavbarBrand,
@@ -8,31 +6,88 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
+  Link,
+  Button,
 } from "@nextui-org/react";
-
-import { Image } from "@nextui-org/react";
 
 import { useContext } from 'react';
 import { UserContext } from '@lib/context';
+import { useState } from 'react';
+
+import { ReliktLogo } from "@components/ReliktLogo";
 
 export default function NavBar(){
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const menuItems = [
+    "Features",
+    "Pricing",
+    "Integration",
+  ];
+
   return (
-    <Navbar>
-      <NavbarBrand>
-        <Image width={100} alt="Relikt Logo" src="/relikt-logo.png" />
-      </NavbarBrand>
-      <NavbarContent>
-        <NavbarItem>Home</NavbarItem>
-        <NavbarItem>Generate</NavbarItem>
-        <NavbarItem>About</NavbarItem>
-        <NavbarItem>Contact</NavbarItem>
-        <NavbarMenuToggle />
-        <NavbarMenu placement="end">
-          <NavbarMenuItem>Profile</NavbarMenuItem>
-          <NavbarMenuItem>Settings</NavbarMenuItem>
-          <NavbarMenuItem>Logout</NavbarMenuItem>
-        </NavbarMenu>
+    <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
+      <NavbarContent className="sm:hidden" justify="start">
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        />
       </NavbarContent>
+
+      <NavbarContent className="sm:hidden pr-3" justify="center">
+        <NavbarBrand>
+          <ReliktLogo />
+          <p className="font-bold text-inherit">RELIKT</p>
+        </NavbarBrand>
+      </NavbarContent>
+
+      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        <NavbarBrand>
+          <ReliktLogo />
+          <p className="font-bold text-inherit">RELIKT</p>
+        </NavbarBrand>
+
+        <NavbarItem>
+          <Link color="foreground" href="#">
+            Features
+          </Link>
+        </NavbarItem>
+
+        <NavbarItem>
+          <Link color="foreground" href="#">
+            Pricing
+          </Link>
+        </NavbarItem>
+
+        <NavbarItem>
+          <Link color="foreground" href="#">
+            Integration
+          </Link>
+        </NavbarItem>
+
+      </NavbarContent>
+
+      <NavbarContent justify="end">
+        <NavbarItem>
+          <Button as={Link} color="primary" href="/enter" variant="shadow">
+            Login
+          </Button>
+        </NavbarItem>
+      </NavbarContent>
+
+      <NavbarMenu>
+        {menuItems.map((item, index) => (
+          <NavbarMenuItem key={`${item}-${index}`}>
+            <Link
+              className="w-full"
+              color="foreground"
+              href="#"
+              size="lg"
+            >
+              {item}
+            </Link>
+          </NavbarMenuItem>
+        ))}
+      </NavbarMenu>
     </Navbar>
   );
 }

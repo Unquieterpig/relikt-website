@@ -13,15 +13,15 @@
   --color-gray: #b5bdc4;
 }
 
-html,
+/* html,
 body {
   padding: 0;
   margin: 0;
   font-family: 'Noto Sans', sans-serif;
   background-color: var(--color-bg);
   color: var(--color-text);
-  /* margin-top: 50px; */
-}
+  margin-top: 50px;
+} */
 
 main {
   padding: 1rem 10vw;
@@ -62,7 +62,7 @@ code {
   overflow-x: scroll;
 }
 
-/* Navbar for Home Page and all Un-Authed Pages */
+/* Navbar for Home Page and all Un-Authed Pages
 
 .navbar {
   height: 70px;
@@ -97,7 +97,7 @@ code {
 .navbar li {
   border-radius: 50%;
   
-}
+} */
 
 /* Navbar for Authed Pages */
 /* Vertical and on the left handside of the screen */
