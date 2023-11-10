@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import GradientTop from '@components/GradientTop';
+import GradientTop from '@components/GamesenseGradient';
 
 import { auth, firestore, googleAuthProvider } from '@lib/firebase';
 import { signInWithPopup } from 'firebase/auth';
