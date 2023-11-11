@@ -15,11 +15,9 @@ import toast from 'react-hot-toast'
 export default function Enter(props) {
   return (
     <>
-      <div className="bg-relikt">
         <GradientTop />
 
         <LoginContainer />
-      </div>
     </>
   );
 }
@@ -35,23 +33,12 @@ function LoginContainer() {
     }
 
     return (
-      <div className="flex justify-center items-center h-screen flex-col w-1/3 mx-auto">
-        <Link legacyBehavior href="/">
-          <a>
-            <Image
-              src="/relikt_logo_cropped.png"
-              alt="Logo of Relikt"
-              width={900}
-              height={300}
-            />
-          </a>
-        </Link>
-
-        <div className="p-4 rounded-lg text-white shadow-md flex flex-col justify-center items-center my-1 text-center border border-transparent border-neutral-600">
+      <div className="flex justify-center items-center text-center h-100% flex-col w-1/3 mx-auto">
+        <div className="flex justify-center items-center flex-col gap-3 rounded-2xl bg-gray-50 dark:bg-neutral-950 my-3 p-5 text-center ring-1 ring-inset ring-gray-900/5 dark:ring-gray-300/5">
           {/* 1. user signed out <SignInButton />
             2. user signed in, but missing username <UsernameForm />
             3. user signed in, has username route to generate page */}
-          {user ? !username ? <UsernameForm /> : <div></div> : <SignInButton />}
+          {user ? !username ? <UsernameForm /> : <div></div> : <SignInPanel />}
           <div className="text-muted" style={{ fontSize: "10px" }}>
             By logging in, you agree to our{" "}
             <Link legacyBehavior href="/terms">
@@ -68,8 +55,20 @@ function LoginContainer() {
     );
 }
 
+function SignInPanel() {
+  return (
+    <>
+      <SignInButtonGoogle />
+      <SignInButtonGithub />
+      <SignInButtonTwitter />
+      <SignInButtonMicrosoft />
+      <SignInButtonFacebook />
+    </>
+  );
+}
+
 // Sign in with Google button
-function SignInButton() {
+function SignInButtonGoogle() {
   const signInWithGoogle = async () => {
     try {
         await signInWithPopup(auth, googleAuthProvider);
@@ -81,10 +80,76 @@ function SignInButton() {
   };
 
   return (
-    <button className="btn-google" onClick={signInWithGoogle}>
-      <img src={'/google.png'} /> Sign in with Google
+    <button
+      className="bg-white px-4 py-2 border flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg text-black  hover:border-slate-400 dark:hover:border-slate-500 hover:brightness-90 hover:shadow transition duration-150"
+      onClick={signInWithGoogle}
+    >
+      <img
+        className="w-6 h-6"
+        src="https://www.svgrepo.com/show/475656/google-color.svg"
+        loading="lazy"
+        alt="Google Logo"
+      />
+      Sign in with Google
     </button>
   );
+}
+
+function SignInButtonGithub() {
+  return (
+    <button className="bg-neutral-700 px-4 py-2 border flex gap-2 border-slate-200 dark:border-neutral-700 rounded-lg text-neutral-200  hover:border-slate-400 dark:hover:border-slate-500 hover:brightness-90 hover:shadow transition duration-150">
+      <img
+        className="w-6 h-6"
+        src="https://www.svgrepo.com/show/512317/github-142.svg"
+        loading="lazy"
+        alt="Github Logo"
+      />
+      Sign in with Github
+    </button>
+  );
+}
+
+function SignInButtonTwitter() {
+  return (
+    <button className="bg-blue-500 px-4 py-2 border flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg text-white  hover:border-slate-400 dark:hover:border-slate-500 hover:brightness-90 hover:shadow transition duration-150">
+      <img
+        className="w-6 h-6"
+        src="https://authjs.dev/img/providers/twitter.svg"
+        loading="lazy"
+        alt="Twitter Logo"
+      />
+      Sign in with Twitter
+    </button>
+  );
+}
+
+function SignInButtonMicrosoft() {
+  return (
+    <button className="bg-white px-2 py-2 border flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg text-black  hover:border-slate-400 dark:hover:border-slate-500 hover:brightness-90 hover:shadow transition duration-150">
+      <img
+        className="w-6 h-6"
+        src="https://www.svgrepo.com/show/452062/microsoft.svg"
+        loading="lazy"
+        alt="Microsoft Logo"
+      />
+      Sign in with Microsoft
+    </button>
+  );
+}
+
+function SignInButtonFacebook() {
+  return (
+    <button className="bg-blue-500 px-2 py-2 border flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg text-white  hover:border-slate-400 dark:hover:border-slate-500 hover:brightness-90 hover:shadow transition duration-150">
+      <img
+        className="w-6 h-6"
+        src="https://www.svgrepo.com/show/475647/facebook-color.svg"
+        loading="lazy"
+        alt="Facebook Logo"
+      />
+      Sign in with Facebook
+    </button>
+  );
+
 }
 
 function UsernameForm() {
