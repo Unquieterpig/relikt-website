@@ -8,25 +8,33 @@ import {
   NavbarMenuItem,
   Link,
   Button,
+  Avatar,
+  DropdownItem,
+  DropdownTrigger,
+  Dropdown,
+  DropdownMenu,
 } from "@nextui-org/react";
 
-import { useContext } from 'react';
-import { UserContext } from '@lib/context';
-import { useState } from 'react';
+import { useContext } from "react";
+import { UserContext } from "@lib/context";
+import { useState } from "react";
 
 import { ReliktLogo } from "@components/ReliktLogo";
+import ThemeSwitcher from "@components/ThemeSwitcher";
 
-export default function NavBar(){
+export default function NavBar() {
+  const { user, username } = useContext(UserContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const menuItems = [
-    "Features",
-    "Pricing",
-    "Integration",
-  ];
+  const menuItems = ["Features", "Pricing", "Integration"];
 
   return (
-    <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
+    <Navbar
+      shouldHideOnScroll
+      isBordered
+      isMenuOpen={isMenuOpen}
+      onMenuOpenChange={setIsMenuOpen}
+    >
       <NavbarContent className="sm:hidden" justify="start">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -47,13 +55,13 @@ export default function NavBar(){
         </NavbarBrand>
 
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="/#features">
             Features
           </Link>
         </NavbarItem>
 
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="/#pricing">
             Pricing
           </Link>
         </NavbarItem>
@@ -63,26 +71,76 @@ export default function NavBar(){
             Integration
           </Link>
         </NavbarItem>
-
       </NavbarContent>
 
       <NavbarContent justify="end">
         <NavbarItem>
-          <Button as={Link} color="primary" href="/enter" variant="shadow">
-            Login
-          </Button>
+          <ThemeSwitcher />
         </NavbarItem>
+
+        {/* user is not signed-in or has no username */}
+        {!username && (
+          <NavbarItem>
+            <Button as={Link} color="primary" href="/enter" variant="shadow">
+              Login
+            </Button>
+          </NavbarItem>
+        )}
+
+        {/* user is signed-in and has username */}
+        {username && (
+          <>
+            <NavbarItem>
+              <Button
+                as={Link}
+                color="primary"
+                href="/generate"
+                variant="shadow"
+              >
+                Generate
+              </Button>
+            </NavbarItem>
+
+            <NavbarItem>
+              <Dropdown placement="bottom-end">
+                <DropdownTrigger>
+                  <Avatar
+                    isBordered
+                    as="button"
+                    className="transition-transform"
+                    color="primary"
+                    name={user.name}
+                    size="md"
+                    src={user.photoURL}
+                  />
+                </DropdownTrigger>
+                <DropdownMenu aria-label="Profile Actions" variant="flat">
+                  <DropdownItem
+                    key="profile"
+                    className="h-14 gap-2"
+                    href={username}
+                  >
+                    <p className="font-semibold">Signed in as</p>
+                    <p className="font-semibold">@{username}</p>
+                  </DropdownItem>
+                  <DropdownItem key="settings">My Settings</DropdownItem>
+                  <DropdownItem key="help_and_feedback">
+                    Help & Feedback
+                  </DropdownItem>
+                  <DropdownItem key="logout" color="danger">
+                    Log Out
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </NavbarItem>
+          </>
+        )}
       </NavbarContent>
 
       <NavbarMenu>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
-              className="w-full"
-              color="foreground"
-              href="#"
-              size="lg"
-            >
+            <Link className="w-full" color="foreground" href="#" size="lg">
               {item}
             </Link>
           </NavbarMenuItem>
@@ -91,7 +149,6 @@ export default function NavBar(){
     </Navbar>
   );
 }
-
 
 // Top navbar OLD
 // export default function NavBar() {
