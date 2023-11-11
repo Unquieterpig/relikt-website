@@ -1,14 +1,21 @@
-import Head from 'next/head'
-import Link from 'next/link'
 import NextImage from "next/image";
 
-import { Image } from '@nextui-org/react'
+import {
+  Image,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Spacer,
+  Button,
+} from "@nextui-org/react";
 
 import OGMartin from "../public/OGMartin.jpg"
 import ChefMartin from "../public/ChefMartin.png";
 import DoctorMartin from "../public/DoctorMartin.png";
 import FireMartin from "../public/FireMartin.png";
 import SpaceMartin from "../public/SpaceMartin.png";
+import Moist from "../public/Moist.png";
 
 import {
   CloudArrowUpIcon,
@@ -39,14 +46,82 @@ function HomePage() {
 
 function Section1() {
   return (
-      <div className="flex flex-col justify-center items-center h-screen">
-        <h1 className="text-6xl font-bold text-inherit">
-          Listen to what we produce
+    <>
+      <div className="flex flex-col items-center text-center gap-2">
+        <h1 className="my-5 text-2xl font-bold text-inherit lg:text-6xl">
+          We offer the best in class audio conversion using the latest in AI.
         </h1>
-        <p className="text-2xl text-inherit">
-          The best way to create a website.
-        </p>
+        <h2 className="text-xl text-inherit lg:text-3xl">
+          Give a listen and see for youself.
+        </h2>
       </div>
+
+      <Spacer y={5} />
+
+      <div className="flex flex-rows justify-center items-start h-unit-9xl gap-2">
+        <Card isFooterBlurred className="py-2">
+          <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+            <p className="text-tiny uppercase font-bold">The Martin Mix</p>
+            <small className="text-default-500">
+              Trained on 5 minutes of audio
+            </small>
+            <h4 className="font-bold text-large">Martin</h4>
+          </CardHeader>
+          <CardBody className="overflow-visible py-2">
+            <Image
+              isZoomed
+              as={NextImage}
+              alt="Card background"
+              className="opacity-100 max-h-72 max-w-sm object-cover rounded-xl"
+              src={OGMartin}
+            />
+          </CardBody>
+          <CardFooter className="justify-between overflow-hidden py-0 px-0 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_24px)] shadow-small ml-3 mb-6 z-10">
+            <Button
+              fullWidth
+              className="text-tiny text-white bg-black/20"
+              variant="flat"
+              color="default"
+              radius="lg"
+              size="sm"
+            >
+              Play Sample
+            </Button>
+          </CardFooter>
+        </Card>
+
+        <Card isFooterBlurred className="py-2">
+          <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+            <p className="text-tiny uppercase font-bold">The Moist Mix</p>
+            <small className="text-default-500">
+              Trained on 4 minutes of audio
+            </small>
+            <h4 className="font-bold text-large">MoistCr1tikal</h4>
+          </CardHeader>
+          <CardBody className="overflow-visible py-2">
+            <Image
+              isZoomed
+              as={NextImage}
+              alt="Card background"
+              className="opacity-100 max-h-72 max-w-sm object-cover rounded-xl"
+              src={Moist}
+            />
+          </CardBody>
+          <CardFooter className="justify-between overflow-hidden py-0 px-0 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_24px)] shadow-small ml-3 mb-6 z-10">
+            <Button
+              fullWidth
+              className="text-tiny text-white bg-black/20"
+              variant="flat"
+              color="default"
+              radius="lg"
+              size="sm"
+            >
+              Play Sample
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
+    </>
   );
 }
 
@@ -203,47 +278,97 @@ function Section3() {
 
 function Section4() {
   return (
-    <div className="h-screen py-24 sm:py-32 flex justify-center items-center">
-      <div className="mx-auto px-6 lg:px-8">
-        <h2 className="text-center text-lg font-semibold leading-8 text-gray-900 dark:text-gray-300">
-          Trusted by the world’s most innovative man
-        </h2>
-        <div className="mx-auto mt-10 grid grid-cols-2 items-center gap-x-8 gap-y-10 max-w-7xl sm:grid-cols-3 sm:gap-x-10 lg:mx-0 lg:grid-cols-5">
+    <div className="flex flex-col justify-center items-center h-100 py-24">
+      <h2 className="text-center text-lg font-semibold leading-8 text-gray-900 dark:text-gray-300">
+        Trusted by the world’s most innovative man
+      </h2>
+      <div className="max-w-[900px] gap-2 grid grid-cols-12 grid-rows-2 px-8">
+        <Card className="col-span-12 sm:col-span-4 h-[300px]">
+          <CardHeader className="absolute z-10 top-1 flex-col !items-start">
+            <p className="text-tiny text-white/60 uppercase font-bold">
+              The Man
+            </p>
+            <h4 className="text-white font-medium text-large">
+              Original Martin
+            </h4>
+          </CardHeader>
           <Image
             as={NextImage}
-            className="opacity-100 col-span-2 max-h-full w-full object-contain lg:col-span-1"
+            removeWrapper
+            alt="Card background"
+            className="opacity-100 z-0 w-full h-full object-cover"
             src={OGMartin}
-            alt="Russell Martin"
           />
+        </Card>
+        <Card className="col-span-12 sm:col-span-4 h-[300px]">
+          <CardHeader className="absolute z-10 top-1 flex-col !items-start">
+            <p className="text-tiny text-white/60 uppercase font-bold">
+              The Myth
+            </p>
+            <h4 className="text-white font-medium text-large">Chef Martin</h4>
+          </CardHeader>
           <Image
             as={NextImage}
-            className="opacity-100 col-span-2 max-h-full w-full object-contain lg:col-span-1"
+            removeWrapper
+            alt="Card background"
+            className="opacity-100 z-0 w-full h-full object-cover"
             src={ChefMartin}
-            alt="Chef Martin"
           />
+        </Card>
+        <Card className="col-span-12 sm:col-span-4 h-[300px]">
+          <CardHeader className="absolute z-10 top-1 flex-col !items-start">
+            <p className="text-tiny text-white/60 uppercase font-bold">
+              The Legend
+            </p>
+            <h4 className="text-white font-medium text-large">Doc Martin</h4>
+          </CardHeader>
           <Image
             as={NextImage}
-            className="opacity-100 col-span-2 max-h-full w-full object-contain lg:col-span-1"
+            removeWrapper
+            alt="Card background"
+            className="opacity-100 z-0 w-full h-full object-cover"
             src={DoctorMartin}
-            alt="Doc Martin"
           />
+        </Card>
+        <Card
+          isFooterBlurred
+          className="w-full h-[300px] col-span-12 sm:col-span-5"
+        >
+          <CardHeader className="absolute z-10 top-1 flex-col items-start">
+            <p className="text-tiny text-white/60 uppercase font-bold">
+              Breaking Boundaries
+            </p>
+            <h4 className="text-white font-medium text-2xl">Fireman Martin</h4>
+          </CardHeader>
           <Image
             as={NextImage}
-            className="opacity-100 col-span-2 max-h-full w-full object-contain sm:col-start-2 lg:col-span-1"
+            removeWrapper
+            alt="Card example background"
+            className="opacity-100 z-0 w-full h-full scale-125 -translate-y-6 object-cover"
             src={FireMartin}
-            alt="Fireman Martin"
           />
+        </Card>
+        <Card
+          isFooterBlurred
+          className="w-full h-[300px] col-span-12 sm:col-span-7"
+        >
+          <CardHeader className="absolute z-10 top-1 flex-col items-start">
+            <p className="text-tiny text-white/60 uppercase font-bold">
+              Pushing the limits
+            </p>
+            <h4 className="text-white/90 font-medium text-xl">
+              Spaceman Martin
+            </h4>
+          </CardHeader>
           <Image
             as={NextImage}
-            className="opacity-100 col-span-2 col-start-2 object-contain sm:col-start-auto lg:col-span-1"
+            removeWrapper
+            alt="Relaxing app background"
+            className="opacity-100 z-0 w-full h-full object-cover"
             src={SpaceMartin}
-            alt="Space Martin"
           />
-        </div>
+        </Card>
       </div>
     </div>
   );
-
-
-
 }
