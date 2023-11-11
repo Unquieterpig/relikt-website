@@ -1,8 +1,16 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import NextImage from "next/image";
 
-import Loader from '@components/Loader'
 import Navbar from '@components/NavBar'
+
+import { Image } from '@nextui-org/react'
+
+import OGMartin from "../public/OGMartin.jpg"
+import ChefMartin from "../public/ChefMartin.png";
+import DoctorMartin from "../public/DoctorMartin.png";
+import FireMartin from "../public/FireMartin.png";
+import SpaceMartin from "../public/SpaceMartin.png";
 
 import { UserContext } from '@lib/context'
 
@@ -12,8 +20,6 @@ import {
   ServerIcon,
   CheckIcon,
 } from "@heroicons/react/20/solid";
-
-import { ThemeSwitcher } from "@components/ThemeSwitcher";
 
 export default function Home(){
   return (
@@ -38,7 +44,6 @@ function HomePage() {
 
 function Section1() {
   return (
-    <>
       <div className="flex flex-col justify-center items-center h-screen">
         <h1 className="text-6xl font-bold text-inherit">
           Listen to what we produce
@@ -46,10 +51,7 @@ function Section1() {
         <p className="text-2xl text-inherit">
           The best way to create a website.
         </p>
-
-        {/* <ThemeSwitcher /> */}
       </div>
-    </>
   );
 }
 
@@ -108,7 +110,7 @@ function Section2() {
               </dl>
             </div>
           </div>
-          <img
+          <Image
             src="https://tailwindui.com/img/component-images/dark-project-app-screenshot.png"
             alt="Product screenshot"
             className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
@@ -207,45 +209,40 @@ function Section3() {
 function Section4() {
   return (
     <div className="h-screen py-24 sm:py-32 flex justify-center items-center">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="mx-auto px-6 lg:px-8">
         <h2 className="text-center text-lg font-semibold leading-8 text-gray-900 dark:text-gray-300">
           Trusted by the world’s most innovative man
         </h2>
-        <div className="mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5">
-          <img
-            className="col-span-2 max-h-full w-full object-contain lg:col-span-1"
-            src="/OGMartin.jpg"
+        <div className="mx-auto mt-10 grid grid-cols-2 items-center gap-x-8 gap-y-10 max-w-7xl sm:grid-cols-3 sm:gap-x-10 lg:mx-0 lg:grid-cols-5">
+          <Image
+            as={NextImage}
+            className="opacity-100 col-span-2 max-h-full w-full object-contain lg:col-span-1"
+            src={OGMartin}
             alt="Russell Martin"
-            width={158}
-            height={48}
           />
-          <img
-            className="col-span-2 max-h-full w-full object-contain lg:col-span-1"
-            src="/ChefMartin.png"
+          <Image
+            as={NextImage}
+            className="opacity-100 col-span-2 max-h-full w-full object-contain lg:col-span-1"
+            src={ChefMartin}
             alt="Chef Martin"
-            width={158}
-            height={48}
           />
-          <img
-            className="col-span-2 max-h-full w-full object-contain lg:col-span-1"
-            src="/DoctorMartin.png"
+          <Image
+            as={NextImage}
+            className="opacity-100 col-span-2 max-h-full w-full object-contain lg:col-span-1"
+            src={DoctorMartin}
             alt="Doc Martin"
-            width={158}
-            height={48}
           />
-          <img
-            className="col-span-2 max-h-full w-full object-contain sm:col-start-2 lg:col-span-1"
-            src="FireMartin.png"
+          <Image
+            as={NextImage}
+            className="opacity-100 col-span-2 max-h-full w-full object-contain sm:col-start-2 lg:col-span-1"
+            src={FireMartin}
             alt="Fireman Martin"
-            width={158}
-            height={48}
           />
-          <img
-            className="col-span-2 col-start-2 max-h-full w-full object-contain sm:col-start-auto lg:col-span-1"
-            src="SpaceMartin.png"
+          <Image
+            as={NextImage}
+            className="opacity-100 col-span-2 col-start-2 object-contain sm:col-start-auto lg:col-span-1"
+            src={SpaceMartin}
             alt="Space Martin"
-            width={158}
-            height={48}
           />
         </div>
       </div>
