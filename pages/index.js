@@ -8,6 +8,7 @@ import {
   CardFooter,
   Spacer,
   Button,
+  Link,
 } from "@nextui-org/react";
 
 import OGMartin from "../public/OGMartin.jpg"
@@ -40,6 +41,7 @@ function HomePage() {
         <Section2 />
         <Section3 />
         <Section4 />
+        <Footer />
       </>
   );
 }
@@ -49,7 +51,8 @@ function Section1() {
     <>
       <div className="flex flex-col items-center text-center gap-2">
         <h1 className="my-5 text-2xl font-bold text-inherit lg:text-6xl">
-          We offer the best in class audio conversion using the latest in AI.
+          We offer the best in class audio conversion
+          <span className="block">using the latest in AI.</span>
         </h1>
         <h2 className="text-xl text-inherit lg:text-3xl">
           Give a listen and see for youself.
@@ -369,6 +372,17 @@ function Section4() {
           />
         </Card>
       </div>
+    </div>
+  );
+}
+
+function Footer() {
+  return (
+    <div className="flex justify-center text-center border-t border-t-neutral-300/20 gap-2">
+      <p>Made with 💗 by </p>
+      <Link color="danger" href="https://github.com/Unquieterpig">
+        Joshua Partridge
+      </Link>
     </div>
   );
 }
