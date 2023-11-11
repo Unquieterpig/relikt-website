@@ -22,11 +22,20 @@ import { useState } from "react";
 import { ReliktLogo } from "@components/ReliktLogo";
 import ThemeSwitcher from "@components/ThemeSwitcher";
 
+import { auth } from '@lib/firebase';
+import { useRouter } from "next/router";
+
 export default function NavBar() {
   const { user, username } = useContext(UserContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
 
   const menuItems = ["Features", "Pricing", "Integration"];
+
+  const handleSignOut = async () => {
+    await auth.signOut();
+    router.replace('/');
+  };
 
   return (
     <Navbar
@@ -44,8 +53,8 @@ export default function NavBar() {
       <NavbarContent className="sm:hidden pr-3" justify="center">
         <NavbarBrand>
           <Link color="foreground" href="/">
-          <ReliktLogo />
-          <p className="font-bold text-inherit">RELIKT</p>
+            <ReliktLogo />
+            <p className="font-bold text-inherit">RELIKT</p>
           </Link>
         </NavbarBrand>
       </NavbarContent>
@@ -53,8 +62,8 @@ export default function NavBar() {
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarBrand>
           <Link color="foreground" href="/">
-          <ReliktLogo />
-          <p className="font-bold text-inherit">RELIKT</p>
+            <ReliktLogo />
+            <p className="font-bold text-inherit">RELIKT</p>
           </Link>
         </NavbarBrand>
 
@@ -113,9 +122,9 @@ export default function NavBar() {
                     as="button"
                     className="transition-transform"
                     color="primary"
-                    name={user.name}
+                    name={user?.name || "John Doe"}
                     size="md"
-                    src={user.photoURL}
+                    src={user?.photoURL || "/OGMartin.png"}
                   />
                 </DropdownTrigger>
                 <DropdownMenu aria-label="Profile Actions" variant="flat">
@@ -128,10 +137,14 @@ export default function NavBar() {
                     <p className="font-semibold">@{username}</p>
                   </DropdownItem>
                   <DropdownItem key="settings">My Settings</DropdownItem>
-                  <DropdownItem key="help_and_feedback">
+                  <DropdownItem showDivider key="help_and_feedback">
                     Help & Feedback
                   </DropdownItem>
-                  <DropdownItem key="logout" color="danger">
+                  <DropdownItem
+                    key="logout"
+                    color="danger"
+                    onPress={handleSignOut}
+                  >
                     Log Out
                   </DropdownItem>
                 </DropdownMenu>

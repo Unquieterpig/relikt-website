@@ -2,8 +2,6 @@ import Head from 'next/head'
 import Link from 'next/link'
 import NextImage from "next/image";
 
-import Navbar from '@components/NavBar'
-
 import { Image } from '@nextui-org/react'
 
 import OGMartin from "../public/OGMartin.jpg"
@@ -11,8 +9,6 @@ import ChefMartin from "../public/ChefMartin.png";
 import DoctorMartin from "../public/DoctorMartin.png";
 import FireMartin from "../public/FireMartin.png";
 import SpaceMartin from "../public/SpaceMartin.png";
-
-import { UserContext } from '@lib/context'
 
 import {
   CloudArrowUpIcon,
@@ -24,7 +20,6 @@ import {
 export default function Home(){
   return (
     <>
-      <Navbar />
       <HomePage/>
     </>
   );

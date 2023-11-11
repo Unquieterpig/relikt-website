@@ -1,10 +1,8 @@
-import Navbar from '@components/NavBar';
 import BackButton from '@components/BackButton';
 
 export default function Custom404() {
     return (
       <>
-        <Navbar />
         <br />
 
         <center>
