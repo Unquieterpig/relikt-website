@@ -43,15 +43,19 @@ export default function NavBar() {
 
       <NavbarContent className="sm:hidden pr-3" justify="center">
         <NavbarBrand>
+          <Link color="foreground" href="/">
           <ReliktLogo />
           <p className="font-bold text-inherit">RELIKT</p>
+          </Link>
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarBrand>
+          <Link color="foreground" href="/">
           <ReliktLogo />
           <p className="font-bold text-inherit">RELIKT</p>
+          </Link>
         </NavbarBrand>
 
         <NavbarItem>

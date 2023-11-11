@@ -1,7 +1,8 @@
 import Router from 'next/router';
+import { Button } from "@nextui-org/react";
 
 export default function BackButton() {
     return (
-        <button className="btn-blue" onClick={() => Router.back()}>Go Back</button>
+        <Button color="primary" variant="shadow" onClick={() => Router.back()}>Go Back</Button>
     );
 }
