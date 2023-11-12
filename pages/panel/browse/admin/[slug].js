@@ -1,24 +1,21 @@
 import styles from '@styles/Admin.module.css';
 import AuthCheck from '@components/AuthCheck';
-import NavBarPanel from '@components/NavBarPanel';
-
+import ImageUploader from "@components/ImageUploader";
 import { firestore, auth } from '@lib/firebase';
 
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { useDocumentData } from 'react-firebase-hooks/firestore';
+import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
 import { useForm, useFormState } from 'react-hook-form';
 import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
-import ImageUploader from '@components/ImageUploader';
 import { collection, doc, serverTimestamp, updateDoc, deleteDoc } from 'firebase/firestore';
 
 export default function AdminPostEdit(props) {
   return (
     <AuthCheck>
-        <NavBarPanel />
         <PostManager />
     </AuthCheck>
   );
@@ -66,7 +63,7 @@ function PostManager() {
 }
 
 function PostForm({ defaultValues, postRef, preview }) {
-  const { register, handleSubmit, reset, watch, formstate: { errors }, control } = useForm({ defaultValues, mode: 'onChange' });
+  const { register, handleSubmit, reset, watch, formState: { errors }, control } = useForm({ defaultValues, mode: 'onChange' });
 
   const { isValid, isDirty } = useFormState({ control });
 

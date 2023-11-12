@@ -1,3 +1,5 @@
+import Metatags from "@components/Metatags";
+
 import NextImage from "next/image";
 
 import {
@@ -28,7 +30,8 @@ import {
 export default function Home(){
   return (
     <>
-      <HomePage/>
+      <Metatags title="Relikt - Secure Your Voice" description="Homepage of website" />
+      <HomePage />
     </>
   );
 }

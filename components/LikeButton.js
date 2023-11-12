@@ -3,8 +3,9 @@ import { collection, doc, increment, writeBatch } from 'firebase/firestore';
 import { useDocument } from 'react-firebase-hooks/firestore';
 
 // Allows user to like a post 
-export default function Like({ postRef }) {
+export default function LikeButton({ postRef }) {
   // Listen to like document for currently logged in user
+  // todo; Fix later when user signs out
   const likeRef = doc(collection(postRef, 'likes'), auth.currentUser.uid);
   const [likeDoc] = useDocument(likeRef);
 
