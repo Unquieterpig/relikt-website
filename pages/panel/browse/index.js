@@ -62,7 +62,7 @@ export default function Browse( props ){
         <>
             <main>
             <div className='card'> 
-            <Link href="/browse/admin">
+            <Link href="/panel/browse/admin">
                 <button className='btn-blue'>Create New Post</button> 
             </Link>
             </div>

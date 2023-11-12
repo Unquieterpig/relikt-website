@@ -76,7 +76,7 @@ export default function Post(props){
                 </AuthCheck>
 
                 {currentUser?.uid === post.uid && (
-                    <Link href={`/admin/${post.slug}`}>
+                    <Link href={`/panel/browse/admin/${post.slug}`}>
                         <button className="btn-blue">Edit</button>
                     </Link>
                 )}

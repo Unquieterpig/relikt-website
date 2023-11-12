@@ -125,7 +125,7 @@ function DeletePostButton({ postRef }) {
       // hearts subcollection probably still needs to be deleted
       // todo; Consider checking the post for an uploaded image and remove it from storage bucket as well?
       await deleteDoc(postRef);
-      router.push("/admin");
+      router.push("/panel/browse/admin");
       toast("post annihilated ", { icon: "🗑️" });
     }
   };

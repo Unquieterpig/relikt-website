@@ -114,7 +114,7 @@ export default function NavBar() {
               <Button
                 as={Link}
                 color="primary"
-                href="/generate"
+                href="/panel"
                 variant="shadow"
               >
                 Generate

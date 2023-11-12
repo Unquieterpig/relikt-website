@@ -28,7 +28,7 @@ function PostItem({ post, admin = false }) {
             {/* If admin view, show extra controls for user */}
             {admin && (
                 <>
-                    <Link legacyBehavior href={`/admin/${post.slug}`}>
+                    <Link legacyBehavior href={`/panel/browse/admin/${post.slug}`}>
                         <h3>
                             <button className="btn-blue">Edit</button>
                         </h3>
