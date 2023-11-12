@@ -1,6 +1,5 @@
 import PostFeed from '@components/PostFeed';
 import Loader from '@components/Loader';
-import NavBarPanel from '@components/NavBarPanel';
 
 import Link from 'next/link';
 
@@ -61,7 +60,6 @@ export default function Browse( props ){
 
     return (
         <>
-            <NavBarPanel />
             <main>
             <div className='card'> 
             <Link href="/browse/admin">

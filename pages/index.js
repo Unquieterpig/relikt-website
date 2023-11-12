@@ -55,7 +55,7 @@ function Section1() {
           <span className="block">using the latest in AI.</span>
         </h1>
         <h2 className="text-xl text-inherit lg:text-3xl">
-          Give a listen and see for youself.
+          Give a listen and see for yourself.
         </h2>
       </div>
 
@@ -156,7 +156,7 @@ function Section2() {
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
           <div className="lg:pr-8 lg:pt-4">
             <div className="lg:max-w-lg">
-              <h2 className="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">
+              <h2 className="text-base font-semibold leading-7 text-blue-600 dark:text-blue-400">
                 Voice Conversion Made Easy
               </h2>
               <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-inherit sm:text-4xl">
@@ -172,7 +172,7 @@ function Section2() {
                   <div key={feature.name} className="relative pl-9">
                     <dt className="inline font-semibold text-gray-900 dark:text-gray-100">
                       <feature.icon
-                        className="absolute left-1 top-1 h-5 w-5 text-indigo-600 dark:text-indigo-400"
+                        className="absolute left-1 top-1 h-5 w-5 text-blue-600 dark:text-blue-400"
                         aria-hidden="true"
                       />
                       {feature.name}
@@ -184,7 +184,7 @@ function Section2() {
             </div>
           </div>
           <Image
-            src="https://tailwindui.com/img/component-images/dark-project-app-screenshot.png"
+            src="/AppPlaceHolder.png"
             alt="Product screenshot"
             className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
             width={2432}
@@ -227,7 +227,7 @@ function Section3() {
               assumenda.
             </p>
             <div className="mt-10 flex items-center gap-x-4">
-              <h4 className="flex-none text-sm font-semibold leading-6 text-indigo-600 dark:text-indigo-400">
+              <h4 className="flex-none text-sm font-semibold leading-6 text-blue-600 dark:text-blue-400">
                 What’s included
               </h4>
               <div className="h-px flex-auto bg-gray-100 dark:bg-gray-400" />
@@ -239,7 +239,7 @@ function Section3() {
               {includedFeatures.map((feature) => (
                 <li key={feature} className="flex gap-x-3">
                   <CheckIcon
-                    className="h-6 w-5 flex-none text-indigo-600 dark:text-indigo-400"
+                    className="h-6 w-5 flex-none text-blue-600 dark:text-blue-400"
                     aria-hidden="true"
                   />
                   {feature}
@@ -263,7 +263,7 @@ function Section3() {
                 </p>
                 <a
                   href="#"
-                  className="mt-10 block w-full rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="mt-10 block w-full rounded-md bg-blue-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Get started
                 </a>
@@ -281,7 +281,7 @@ function Section3() {
 
 function Section4() {
   return (
-    <div className="flex flex-col justify-center items-center h-100 py-24">
+    <div id="sponsor" className="flex flex-col justify-center items-center h-100 py-24">
       <h2 className="text-center text-lg font-semibold leading-8 text-gray-900 dark:text-gray-300">
         Trusted by the world’s most innovative man
       </h2>

@@ -30,7 +30,13 @@ export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
 
-  const menuItems = ["Features", "Pricing", "Integration"];
+  const currentPath = router.pathname;
+
+  const isOnPanelPage = currentPath.startsWith("/panel/");
+
+  const menuItems = isOnPanelPage
+  ? ["Generate", "Browse", "Subscription"]
+  : ["Features", "Pricing", "Integration"];
 
   const handleSignOut = async () => {
     await auth.signOut();
@@ -80,8 +86,8 @@ export default function NavBar() {
         </NavbarItem>
 
         <NavbarItem>
-          <Link color="foreground" href="#">
-            Integration
+          <Link color="foreground" href="/#sponsor">
+            Sponsors
           </Link>
         </NavbarItem>
       </NavbarContent>
@@ -103,7 +109,8 @@ export default function NavBar() {
         {/* user is signed-in and has username */}
         {username && (
           <>
-            <NavbarItem>
+          {!isOnPanelPage && (
+          <NavbarItem>
               <Button
                 as={Link}
                 color="primary"
@@ -113,6 +120,7 @@ export default function NavBar() {
                 Generate
               </Button>
             </NavbarItem>
+            )}
 
             <NavbarItem>
               <Dropdown placement="bottom-end">
