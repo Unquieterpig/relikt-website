@@ -3,11 +3,20 @@ import PostContent from '@components/PostContent';
 import Metatags from '@components/Metatags';
 import LikeButton from '@components/LikeButton';
 import AuthCheck from '@components/AuthCheck';
+import { UserContext } from "@lib/context";
+import { firestore, getUserWithUsername, postToJSON } from "@lib/firebase";
+import {
+  collection,
+  collectionGroup,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+} from "firebase/firestore";
 
 import Link from 'next/link';
-import { firestore, getUserWithUsername, postToJSON } from '@lib/firebase';
-import { collection, collectionGroup, doc, getDoc, getDocs, query } from 'firebase/firestore';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
+import { useContext } from 'react';
 
 export async function getStaticProps({ params }){
     const { username, slug } = params;
@@ -53,9 +62,11 @@ export default function Post(props){
 
     const post = realtimePost || props.post;
 
+    const { user: currentUser } = useContext(UserContext);
+
     return (
         <main className={styles.container}>
-            <Metatags title={props.username} description={props.slugs} />
+            <Metatags title={post.title} description={post.title} />
 
             <section>
                 <PostContent post={post} />
@@ -67,20 +78,19 @@ export default function Post(props){
                 </p>
 
                 <AuthCheck fallback={
-                    <Link href="/enter">
-                        <button>Sign Up</button>
-                    </Link>
-                
-                }>
+                        <Link href="/enter">
+                            <button>Sign Up</button>
+                        </Link>
+                    }
+                >
                     <LikeButton postRef={postRef} />
                 </AuthCheck>
 
                 {currentUser?.uid === post.uid && (
-                    <Link href={`/panel/browse/admin/${post.slug}`}>
+                    <Link legacyBehavior href={`/panel/browse/admin/${post.slug}`}>
                         <button className="btn-blue">Edit</button>
                     </Link>
                 )}
-
             </aside>
         </main>
     )
