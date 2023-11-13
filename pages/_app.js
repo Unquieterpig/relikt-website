@@ -10,6 +10,7 @@ import { NextUIProvider } from '@nextui-org/react';
 import {ThemeProvider as NextThemesProvider} from 'next-themes';
 
 import NavBar from '@components/NavBar';
+import AttachmentIssues from '@components/AttachmentIssues';
 
 function MyApp({ Component, pageProps }) {
   const userData = useUserData();
@@ -19,6 +20,7 @@ function MyApp({ Component, pageProps }) {
       <NextUIProvider>
         <NextThemesProvider attribute="class" defaultTheme="dark">
           <NavBar />
+          <AttachmentIssues />
           <Component {...pageProps} />
           <Toaster />
         </NextThemesProvider>
