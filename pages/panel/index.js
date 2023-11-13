@@ -1,4 +1,3 @@
-import NavBarPanel from "@components/NavBarPanel"
 import GradientTop from '@components/GamesenseGradient';
 import Metatags from '@components/Metatags';
 
