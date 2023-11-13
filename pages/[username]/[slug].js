@@ -19,24 +19,30 @@ import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { useContext } from 'react';
 
 export async function getStaticProps({ params }){
-    const { username, slug } = params;
-    const userDoc = await getUserWithUsername(username);
+  const { username, slug } = params;
+  const userDoc = await getUserWithUsername(username);
 
-    let post;
-    let path;
-
-    if (userDoc) {
-        const postRef = doc(collection(userDoc.ref, 'posts'), slug);
-        post = postToJSON(await getDoc(postRef));
-
-        path = postRef.path;
-    }
-
+  // If no user, short circuit to 404 page
+  if (!userDoc) {
     return {
-        props: { post, path },
-        revalidate: 5000,
+      notFound: true,
     };
+  }
 
+  let post;
+  let path;
+
+  if (userDoc) {
+    const postRef = doc(collection(userDoc.ref, "posts"), slug);
+    post = postToJSON(await getDoc(postRef));
+
+    path = postRef.path;
+  }
+
+  return {
+    props: { post, path },
+    revalidate: 5000,
+  };
 }
 
 export async function getStaticPaths(){

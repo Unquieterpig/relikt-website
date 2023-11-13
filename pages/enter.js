@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import GradientTop from '@components/GamesenseGradient';
+import Metatags from '@components/Metatags';
 
 import { auth, firestore, googleAuthProvider } from '@lib/firebase';
 import { signInWithPopup } from 'firebase/auth';
@@ -15,9 +16,10 @@ import toast from 'react-hot-toast'
 export default function Enter(props) {
   return (
     <>
-        <GradientTop />
+      <Metatags title="Login" description="Login to your account" />
+      <GradientTop />
 
-        <LoginContainer />
+      <LoginContainer />
     </>
   );
 }

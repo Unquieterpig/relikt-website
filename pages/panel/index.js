@@ -1,5 +1,7 @@
 import NavBarPanel from "@components/NavBarPanel"
 import GradientTop from '@components/GamesenseGradient';
+import Metatags from '@components/Metatags';
+
 import * as React from 'react';
 
 const styles = {
@@ -167,7 +169,7 @@ const styles = {
 export default function Generate() {
     return (
         <>
-
+            <Metatags title="Generate" description="Generate an AI voice" />
             <GradientTop />
 
             <GenerateContainer />
@@ -179,7 +181,6 @@ export default function Generate() {
 function GenerateContainer() {
     return (
         <>
-            <NavBarPanel />
 
             <PanelContent />
         </>

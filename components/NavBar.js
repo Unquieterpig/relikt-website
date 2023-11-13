@@ -17,7 +17,7 @@ import {
 
 import { useContext } from "react";
 import { UserContext } from "@lib/context";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { ReliktLogo } from "@components/ReliktLogo";
 import ThemeSwitcher from "@components/ThemeSwitcher";
@@ -26,13 +26,30 @@ import { auth } from '@lib/firebase';
 import { useRouter } from "next/router";
 
 export default function NavBar() {
+  const router = useRouter();
   const { user, username } = useContext(UserContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const router = useRouter();
+  const [currentPath, setCurrentPath] = useState(router.pathname);
 
-  const currentPath = router.pathname;
+  useEffect(() => {
 
-  const isOnPanelPage = currentPath.startsWith("/panel/");
+    // Update the current path when the route changes
+    const handleRouteChange = () => {
+      setCurrentPath(router.pathname);
+      console.log("Current path is: " + currentPath);
+    };
+
+    // Listen for route changes
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    // Clean up the event listener
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+
+  }, [router]);
+
+  const isOnPanelPage = currentPath.startsWith("panel/");
 
   const menuItems = isOnPanelPage
   ? ["Generate", "Browse", "Subscription"]
