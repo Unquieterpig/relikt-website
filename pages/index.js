@@ -13,7 +13,7 @@ import {
   Link,
 } from "@nextui-org/react";
 
-import OGMartin from "../public/OGMartin.jpg"
+import OGMartin from "../public/OGMartin.jpg";
 import ChefMartin from "../public/ChefMartin.png";
 import DoctorMartin from "../public/DoctorMartin.png";
 import FireMartin from "../public/FireMartin.png";
@@ -27,25 +27,27 @@ import {
   CheckIcon,
 } from "@heroicons/react/20/solid";
 
-export default function Home(){
+export default function Home() {
   return (
     <>
-      <Metatags title="Relikt - Secure Your Voice" description="Homepage of website" />
+      <Metatags
+        title="Relikt - Secure Your Voice"
+        description="Homepage of website"
+      />
       <HomePage />
     </>
   );
 }
 
 function HomePage() {
-
   return (
-      <>
-        <Section1 />
-        <Section2 />
-        <Section3 />
-        <Section4 />
-        <Footer />
-      </>
+    <>
+      <Section1 />
+      <Section2 />
+      <Section3 />
+      <Section4 />
+      <Footer />
+    </>
   );
 }
 
@@ -180,7 +182,9 @@ function Section2() {
                       />
                       {feature.name}
                     </dt>{" "}
-                    <dd className="inline dark:text-gray-500">{feature.description}</dd>
+                    <dd className="inline dark:text-gray-500">
+                      {feature.description}
+                    </dd>
                   </div>
                 ))}
               </dl>
@@ -254,14 +258,14 @@ function Section3() {
             <div className="rounded-2xl bg-gray-50 dark:bg-neutral-950 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
               <div className="mx-auto max-w-xs px-8">
                 <p className="text-base font-semibold text-gray-600 dark:text-gray-300">
-                  Pay one price forever
+                  One Flat Rate for All
                 </p>
                 <p className="mt-6 flex items-baseline justify-center gap-x-2">
                   <span className="text-5xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
                     $10
                   </span>
                   <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600 dark:text-gray-300">
-                    USD per month
+                    USD / month
                   </span>
                 </p>
                 <a
@@ -284,7 +288,10 @@ function Section3() {
 
 function Section4() {
   return (
-    <div id="sponsor" className="flex flex-col justify-center items-center h-100 py-24">
+    <div
+      id="sponsor"
+      className="flex flex-col justify-center items-center h-100 py-24"
+    >
       <h2 className="text-center text-lg font-semibold leading-8 text-gray-900 dark:text-gray-300">
         Trusted by the world’s most innovative man
       </h2>
