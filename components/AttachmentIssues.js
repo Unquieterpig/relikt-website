@@ -20,5 +20,5 @@ export default function AttachmentIssues(){
     };
   }, []);
 
-  return <div></div>;
+  return null;
 };
