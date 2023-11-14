@@ -29,27 +29,14 @@ export default function NavBar() {
   const router = useRouter();
   const { user, username } = useContext(UserContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [currentPath, setCurrentPath] = useState(router.pathname);
+  const [isOnPanelPage, setIsOnPanelPage] = useState(false);
 
   useEffect(() => {
 
-    // Update the current path when the route changes
-    const handleRouteChange = () => {
-      setCurrentPath(router.pathname);
-      console.log("Current path is: " + currentPath);
-    };
+    // Update the state when the route changes to anything with panel
+    setIsOnPanelPage(router.pathname.startsWith("/panel"));
 
-    // Listen for route changes
-    router.events.on("routeChangeComplete", handleRouteChange);
-
-    // Clean up the event listener
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
-    };
-
-  }, [router]);
-
-  const isOnPanelPage = currentPath.startsWith("panel/");
+  }, []);
 
   const menuItems = isOnPanelPage
   ? ["Generate", "Browse", "Subscription"]
@@ -90,24 +77,44 @@ export default function NavBar() {
           </Link>
         </NavbarBrand>
 
+      {/* Only show the menu items on the panel page */}
+      {isOnPanelPage && (
+        <><NavbarItem>
+            <Link color="foreground" href="/panel/generate">
+              Generate
+            </Link>
+          </NavbarItem><NavbarItem>
+              <Link color="foreground" href="/panel/browse">
+                Browse
+              </Link>
+            </NavbarItem><NavbarItem>
+              <Link color="foreground" href="/panel/subscription">
+                Subscription
+              </Link>
+            </NavbarItem></>)
+      }
+
+      {/* Only show the menu items on homepage or 404 */}
+      {!isOnPanelPage && (
+        <>
         <NavbarItem>
           <Link color="foreground" href="/#features">
             Features
           </Link>
         </NavbarItem>
-
         <NavbarItem>
-          <Link color="foreground" href="/#pricing">
-            Pricing
-          </Link>
+            <Link color="foreground" href="/#pricing">
+              Pricing
+            </Link>
+          </NavbarItem><NavbarItem>
+            <Link color="foreground" href="/#sponsor">
+              Sponsors
+            </Link>
         </NavbarItem>
+        </>
+        )}
 
-        <NavbarItem>
-          <Link color="foreground" href="/#sponsor">
-            Sponsors
-          </Link>
-        </NavbarItem>
-      </NavbarContent>
+    </NavbarContent>
 
       <NavbarContent justify="end">
         <NavbarItem>
