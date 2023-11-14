@@ -99,50 +99,6 @@ code {
   
 } */
 
-/* Navbar for Authed Pages */
-/* Vertical and on the left handside of the screen */
-.navbar-vert {
-  height: 100vh;
-  width: 180px;
-  background: #202020;
-  color: var(--color-text);
-  position: fixed;
-  top: 0;
-  font-weight: bold;
-  border-right: 1px solid var(--color-gray);
-  z-index: 99;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.navbar-vert-top {
-  flex-grow: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 1rem;
-}
-
-.navbar-vert-bottom {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 1rem;
-}
-
-.navbar-vert ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.navbar-vert li {
-  border-radius: 50%;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
 /* Buttons */
 
 /* .btn, button {
@@ -216,7 +172,7 @@ button.btn-logo {
 
 /* Cards */
 
-.card {
+/* .card {
   padding: 2rem;
   margin: 1rem 0;
   background-color: var(--color-bg);
@@ -239,7 +195,7 @@ button.btn-logo {
 .card-info {
   color: white;
   background: var(--color-blue);
-}
+} */
 
 /* Loader */
 
