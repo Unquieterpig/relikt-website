@@ -4,6 +4,16 @@ import Metatags from "@components/Metatags";
 
 import Link from "next/link";
 
+import {
+  Breadcrumbs,
+  BreadcrumbItem,
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+} from "@nextui-org/react";
+
 import { firestore, postToJSON } from "@lib/firebase";
 import {
   Timestamp,
@@ -70,16 +80,32 @@ export default function Browse(props) {
   };
 
   return (
-    <main>
+    <>
       <Metatags
-        title="Relikt - Secure Your Voice"
-        description="Homepage of website"
+        title="Relikt - Browse"
+        description="Find the perfect voice in our community."
       />
-      <div className="card">
-        <Link href="/panel/browse/admin">
-          <button className="btn-blue">Create New Post</button>
-        </Link>
-      </div>
+      <Card className="mx-10 mt-5">
+        <CardBody className="flex flex-row justify-between">
+          <Breadcrumbs
+            size="lg"
+            className="flex text-center justify-center font"
+          >
+            <BreadcrumbItem href="/panel">Panel</BreadcrumbItem>
+            <BreadcrumbItem href="/panel/browse">Browse</BreadcrumbItem>
+          </Breadcrumbs>
+          <Button
+            as={Link}
+            className="w-40"
+            variant="shadow"
+            color="primary"
+            href="/panel/browse/admin"
+          >
+            + Create New Post
+          </Button>
+        </CardBody>
+      </Card>
+
       <PostFeed posts={posts} />
 
       {posts.length === 0
@@ -90,6 +116,6 @@ export default function Browse(props) {
       <Loader show={loading} />
 
       {postsEnd && "You have reached the end!"}
-    </main>
+    </>
   );
 }
