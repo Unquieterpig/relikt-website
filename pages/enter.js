@@ -31,7 +31,7 @@ function LoginContainer() {
 
   // If the user and username both exist, redirect to generate page
   if (user && username) {
-    router.replace("/panel");
+    router.push("/panel");
   }
 
   return (
