@@ -54,7 +54,7 @@ function HomePage() {
 function Section1() {
   return (
     <>
-      <div className="flex flex-col items-center text-center gap-2">
+      <div className="w">
         <h1 className="my-5 text-2xl font-bold text-inherit lg:text-6xl">
           We offer the best in class audio conversion
           <span className="block">using the latest in AI.</span>
