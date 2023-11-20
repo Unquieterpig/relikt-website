@@ -32,7 +32,7 @@ function PostItem({ post, admin = false }) {
 
       <Divider />
 
-      <CardFooter className="flex justify-between">
+      <CardFooter className="flex justify-between text-end">
         <span>👍 {post.likeCount} Thumbs</span>
 
         {/* If post is owned by user, show extra controls for user */}
