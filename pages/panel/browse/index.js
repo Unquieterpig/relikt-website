@@ -106,8 +106,9 @@ export default function Browse(props) {
         </CardBody>
       </Card>
 
-      <PostFeed posts={posts} />
-
+      <div className="mx-12 grid grid-cols-4 gap-4">
+        <PostFeed posts={posts} />
+      </div>
       {posts.length === 0
         ? "No posts to load"
         : !loading &&
