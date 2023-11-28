@@ -1,12 +1,6 @@
 import Link from "next/link";
 
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Divider,
-} from "@nextui-org/react";
+import { Card, CardHeader, CardFooter, Divider } from "@nextui-org/react";
 
 export default function PostFeed({ posts, admin }) {
   return posts
@@ -18,7 +12,7 @@ export default function PostFeed({ posts, admin }) {
 
 function PostItem({ post, admin = false }) {
   return (
-    <Card className="w-[450px] mt-5">
+    <Card className="w-[clamp(250px, 350px, 450px)] mt-5">
       <CardHeader className="flex flex-col items-start">
         <Link legacyBehavior href={`/${post.username}/${post.slug}`}>
           <a className="text-lg">{post.title}</a>

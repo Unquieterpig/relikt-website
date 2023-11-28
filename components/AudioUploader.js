@@ -4,7 +4,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import Loader from "./Loader";
 import toast from "react-hot-toast";
 
-// Uploads images to Firebase Storage
+// Uploads audio to Firebase Storage
 export default function AudioUploader() {
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -53,8 +53,7 @@ export default function AudioUploader() {
 
   return (
     <div className="box">
-      <Loader show={uploading} />
-      {uploading && <h3>{progress}%</h3>}
+      <Loader show={uploading} progress={progress} />
 
       {!uploading && (
         <>

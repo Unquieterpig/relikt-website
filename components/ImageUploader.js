@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { auth, storage } from "@lib/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import Loader from "./Loader";
-import { Button, Code } from "@nextui-org/react";
+import { Button, Snippet } from "@nextui-org/react";
 import toast from "react-hot-toast";
 
 // Uploads images to Firebase Storage
@@ -61,8 +61,7 @@ export default function ImageUploader() {
 
   return (
     <div className="flex justify-between">
-      <Loader show={uploading} />
-      {uploading && <p className="text-lg">{progress}%</p>}
+      <Loader show={uploading} progress={progress} />
 
       {!uploading && (
         <>
@@ -81,7 +80,12 @@ export default function ImageUploader() {
       )}
 
       {downloadURL && (
-        <Code className="upload-snippet">{`![alt](${downloadURL})`}</Code>
+        <Snippet
+          className="max-w-[500px]"
+          codeString={`![alt](${downloadURL})`}
+        >
+          Copy to clipboard
+        </Snippet>
       )}
     </div>
   );

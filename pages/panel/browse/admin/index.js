@@ -145,9 +145,11 @@ function CreateNewPost() {
               className="inline-block"
             />
             <p className="text-default-500 text-small">URL: {slug}</p>
-            <Button type="submit" isDisabled={!isValid} color="success">
-              Create New Post
-            </Button>
+            <div className="flex items-center justify-center">
+              <Button type="submit" isDisabled={!isValid} color="success">
+                Create New Post
+              </Button>
+            </div>
           </form>
         </Card>
       </div>
