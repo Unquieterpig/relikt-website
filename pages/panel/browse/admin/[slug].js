@@ -1,4 +1,3 @@
-import styles from "@styles/Admin.module.css";
 import AuthCheck from "@components/AuthCheck";
 import ImageUploader from "@components/ImageUploader";
 import { firestore, auth } from "@lib/firebase";
@@ -7,7 +6,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { Button, Card, CardBody, Textarea } from "@nextui-org/react";
 
-import { useDocumentDataOnce } from "react-firebase-hooks/firestore";
+import { useDocumentData } from "react-firebase-hooks/firestore";
 import { useForm, useFormState } from "react-hook-form";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
@@ -39,7 +38,7 @@ function PostManager() {
     slug
   );
   // todo; useDocumentDataOnce instead of useDocumentData to prevent realtime updates
-  const [post] = useDocumentDataOnce(postRef);
+  const [post] = useDocumentData(postRef);
 
   return (
     <main className="flex min-h-screen">
@@ -120,8 +119,12 @@ function PostForm({ defaultValues, postRef, preview }) {
             base: "h-[60vh]",
             input: "h-[60vh]",
           }}
-          isInvalid={errors.content}
-          errorMessage={errors.content && errors.content.message}
+          isInvalid={errors.errorMessage}
+          errorMessage={
+            errors.content && (
+              <p className="font-bold">{errors.content.message}</p>
+            )
+          }
           {...register("content", {
             maxLength: {
               value: 20000,
@@ -144,7 +147,7 @@ function PostForm({ defaultValues, postRef, preview }) {
             type="checkbox"
             {...register("published")}
           />
-          <label>Published</label>
+          <label> Make Public?</label>
         </fieldset>
 
         <Button type="submit" color="success" isDisabled={!isDirty || !isValid}>
@@ -159,7 +162,7 @@ function DeletePostButton({ postRef }) {
   const router = useRouter();
 
   const deletePost = async () => {
-    const doIt = confirm("are you sure!");
+    const doIt = confirm("Are you sure? This action is irreversible.");
     if (doIt) {
       // todo; firebase docs mention that a delete doesn't delete subcollections https://firebase.google.com/docs/firestore/manage-data/delete-data#delete_documents
       // likes subcollection probably still needs to be deleted

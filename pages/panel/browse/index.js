@@ -106,7 +106,7 @@ export default function Browse(props) {
         </CardBody>
       </Card>
 
-      <div className="mx-12 grid grid-cols-4 gap-4">
+      <div className="mx-12 grid grid-cols-1 gap-4 sm:grid-cols-3 md:grid-cols-4">
         <PostFeed posts={posts} />
       </div>
       {posts.length === 0
