@@ -1,12 +1,6 @@
 import Link from "next/link";
 
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Divider,
-} from "@nextui-org/react";
+import { Card, CardHeader, CardFooter, Divider } from "@nextui-org/react";
 
 export default function PostFeed({ posts, admin }) {
   return posts
