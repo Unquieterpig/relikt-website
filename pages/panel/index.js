@@ -17,14 +17,8 @@ import {
     DropdownItem,
     Textarea,
     Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    RaisedButton,
-    select} from "@nextui-org/react";
-import { getDisplayName } from 'next/dist/shared/lib/utils';
-import { stringify } from 'postcss';
-import { and } from 'firebase/firestore';
+    CardBody} from "@nextui-org/react";
+import { useState } from 'react';
 
 export default function Generate() {
     return (
@@ -96,18 +90,8 @@ function PanelContent() {
             <div className='flex flex-col items-center'>
                 <h3 className='my-5 text-2xl font-bold'>Generated Voices</h3>
 
-                <Card isBlurred className="border-none bg-background/60 dark:bg-default-100/50 max-w-[610px] text-center w-1/2" shadow="sm">
-                    <CardBody className="flex-row justify-between">
-                        <h3 className='my-2 text-l self-center'>Template</h3>
-
-                        <div className='mp3-player'>
-                            <audio controls>
-                                <source src='' type='audio/mpeg' />
-                                Your browser does not support the audio element.
-                            </audio>
-                        </div>
-                    </CardBody>
-                </Card>
+                {/* Paste voiceTemplate clones here */}
+                <div id="vbody" className='w-full flex flex-col items-center'></div>
 
                 <div className='ring-1 ring-gray-400/10 noVoiceHistoryObject' id='noVoiceHistoryObject'>
                     <h4>
@@ -116,9 +100,24 @@ function PanelContent() {
                 </div>
             </div>
 
-            
+            <div className='hidden'>
+                <div className="my-2" id='template'>
+                    <Card isBlurred className="border-none bg-background/60 dark:bg-default-100/50 max-w-[610px] text-center w-full" shadow="sm">
+                        <CardBody className="flex-row justify-between">
+                            <h3 className='m-2 text-l self-center' id='voiceName'>Template</h3>
+
+                            <div className='mp3-player'>
+                                <audio controls>
+                                    <source src='' type='audio/mpeg' id='voiceSource'/>
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </CardBody>
+                    </Card>
+                </div>
+            </div>
         </div>
-    );
+    )
 }
 
 function PopUpContainer() {
@@ -127,17 +126,7 @@ function PopUpContainer() {
         <div className='flex-col justify-center text-center'>
             <div className='generatePopUp'>
 
-                <div className='ring-1 ring-gray-400/10 my-4'>
-                    <Dropdown id="voiceSelection">
-                        <DropdownTrigger>
-                            <Button variant="bordered" className='my-2'>Pick a Voice</Button>
-                        </DropdownTrigger>
-                        <DropdownMenu aria-label="Static Actions">
-                            <DropdownItem key="martin">Martin Russel</DropdownItem>
-                            <DropdownItem key="critikal">Moist Critikal</DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>
-                </div>
+            <VoiceSelector onVoiceChange={VoiceSelector.handleVoiceChange} />
 
                 <div className='flex flex-col items-center'>
                     <Textarea id="textArea" label="Text To speech" placeholder="Enter your text" className="max-w-xl"/>
@@ -156,6 +145,67 @@ function PopUpContainer() {
             </div>
         </div>
     );
+}
+
+function VoiceSelector() {
+    const [selectedVoice, setSelectedVoice] = useState(null);
+
+    const handleVoiceChange = (value) => {
+        setSelectedVoice(value);
+    };
+
+    return (
+        <div className='ring-1 ring-gray-400/10 my-4'>
+            <Dropdown id="voiceSelection">
+                <DropdownTrigger>
+                    <Button variant="bordered" className='my-2'>
+                        {selectedVoice ? selectedVoice : 'Pick a Voice'}
+                    </Button>
+                </DropdownTrigger>
+                <DropdownMenu aria-label="Static Actions">
+                    <DropdownItem
+                        key="martin"
+                        onSelect={() => handleVoiceChange('Martin Russel')}
+                        isChecked={selectedVoice === 'Martin Russel'}
+                    >
+                        Martin Russel
+                    </DropdownItem>
+                    <DropdownItem
+                        key="critikal"
+                        onSelect={() => handleVoiceChange('Moist Critikal')}
+                        isChecked={selectedVoice === 'Moist Critikal'}
+                    >
+                        Moist Critikal
+                    </DropdownItem>
+                </DropdownMenu>
+            </Dropdown>
+        </div>
+    );
+}
+
+function createVoiceCard(name, audio) {
+    // Get the template element by ID
+    const template = document.getElementById("template");
+
+    // Clone the template element
+    const newVoice = template.cloneNode(true);
+
+    // Set the name and audio values in the cloned element
+    // newVoice.querySelector('.voice-name').textContent = name;
+    // newVoice.querySelector('.voice-audio').src = audio;
+
+    // Get the container where you want to append the new card
+    const vbody = document.getElementById("vbody");
+
+    // Append the cloned element to the container
+    vbody.appendChild(newVoice);
+
+    // Make the cloned element visible (assuming it was hidden in the template)
+    newVoice.style.display = 'block';
+
+    // Hide no voices paragraph
+    let noVoices = document.getElementById("noVoiceHistoryObject")
+    noVoices.style.display = 'none';
 }
 
 function openFile() {
