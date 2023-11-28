@@ -1,12 +1,13 @@
-import { firestore, auth } from '@lib/firebase';
-import { collection, doc, increment, writeBatch } from 'firebase/firestore';
-import { useDocument } from 'react-firebase-hooks/firestore';
+import { firestore, auth } from "@lib/firebase";
+import { collection, doc, increment, writeBatch } from "firebase/firestore";
+import { useDocument } from "react-firebase-hooks/firestore";
+import { Button } from "@nextui-org/react";
 
-// Allows user to like a post 
+// Allows user to like a post
 export default function LikeButton({ postRef }) {
   // Listen to like document for currently logged in user
   // todo; Fix later when user signs out
-  const likeRef = doc(collection(postRef, 'likes'), auth.currentUser.uid);
+  const likeRef = doc(collection(postRef, "likes"), auth.currentUser.uid);
   const [likeDoc] = useDocument(likeRef);
 
   // Create a user-to-post relationship
@@ -31,8 +32,12 @@ export default function LikeButton({ postRef }) {
   };
 
   return likeDoc?.exists() ? (
-    <button onClick={removeLike}>👎 Unlike</button>
+    <Button onClick={removeLike} color="danger">
+      👎 Unlike
+    </Button>
   ) : (
-    <button onClick={addLike}>👍 Like</button>
+    <Button onClick={addLike} color="success">
+      👍 Like
+    </Button>
   );
 }

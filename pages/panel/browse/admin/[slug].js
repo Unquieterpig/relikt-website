@@ -41,7 +41,7 @@ function PostManager() {
   const [post] = useDocumentData(postRef);
 
   return (
-    <main className="flex min-h-screen">
+    <main className="flex min-h-screen m-2">
       {post && (
         <>
           <section className="w-[60vw] mr-[1rem]">

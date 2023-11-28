@@ -71,17 +71,17 @@ export default function Post(props) {
   const { user: currentUser } = useContext(UserContext);
 
   return (
-    <main className="flex min-h-screen gap-4">
+    <main className="flex min-w-screen justify-center gap-4">
       <Metatags title={post.title} description={post.title} />
 
-      <Card className="flex min-h-full top-[15px] ml-2">
+      <Card className="flex top-[15px] ml-2">
         <CardBody>
           <PostContent post={post} />
         </CardBody>
       </Card>
 
       <aside>
-        <Card className="sticky flex flex-col justify-center items-center text-center w-[20%] min-w-[250px] top-[80px] h-0 min-h-[100px] mr-2">
+        <Card className="sticky flex flex-col justify-center items-center text-center w-[20%] min-w-[250px] top-[80px] h-0 min-h-[100px] mr-2 gap-1">
           <p className="font-bold">{post.likeCount || 0} 👍</p>
 
           <AuthCheck
@@ -96,7 +96,9 @@ export default function Post(props) {
 
           {currentUser?.uid === post.uid && (
             <Link legacyBehavior href={`/panel/browse/admin/${post.slug}`}>
-              <button className="btn-blue">Edit</button>
+              <Button color="primary" className="mb-1">
+                Edit
+              </Button>
             </Link>
           )}
         </Card>
