@@ -10,11 +10,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        relikt: '#171717',
+        relikt: "#171717",
       },
     },
   },
   darkMode: "class",
-  plugins: [nextui()],
+  plugins: [nextui(), require("@tailwindcss/typography")],
 };
-
