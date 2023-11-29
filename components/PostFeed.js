@@ -19,7 +19,9 @@ function PostItem({ post, admin = false }) {
         </Link>
         <Link legacyBehavior href={`/${post.username}`}>
           <a>
-            <strong>By @{post.username}</strong>
+            <strong>
+              By <span className="text-blue-600">@{post.username}</span>
+            </strong>
           </a>
         </Link>
       </CardHeader>
