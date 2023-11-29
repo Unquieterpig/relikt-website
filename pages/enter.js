@@ -44,11 +44,11 @@ function LoginContainer() {
         <div className="text-muted" style={{ fontSize: "10px" }}>
           By logging in, you agree to our{" "}
           <Link legacyBehavior href="/terms">
-            <a>Terms of Service</a>
+            <a className="text-blue-600">Terms of Service</a>
           </Link>{" "}
           and{" "}
           <Link legacyBehavior href="/privacy">
-            <a>Privacy Policy</a>
+            <a className="text-blue-600">Privacy Policy</a>
           </Link>
           .
         </div>
