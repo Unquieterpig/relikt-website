@@ -6,8 +6,8 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { Button, Card, CardBody, Textarea } from "@nextui-org/react";
 
-import { useDocumentData } from "react-firebase-hooks/firestore";
-import { useForm, useFormState } from "react-hook-form";
+import { useDocumentDataOnce } from "react-firebase-hooks/firestore";
+import { Controller, useForm, useFormState } from "react-hook-form";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
 import toast from "react-hot-toast";
@@ -18,6 +18,7 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
+import Metatags from "@components/Metatags";
 
 export default function AdminPostEdit(props) {
   return (
@@ -38,14 +39,15 @@ function PostManager() {
     slug
   );
   // todo; useDocumentDataOnce instead of useDocumentData to prevent realtime updates
-  const [post] = useDocumentData(postRef);
+  const [post] = useDocumentDataOnce(postRef);
 
   return (
     <main className="flex min-h-screen m-2">
       {post && (
         <>
+          <Metatags title={post.title} description={post.title} />
           <section className="w-[60vw] mr-[1rem]">
-            <h1>{post.title}</h1>
+            <h1 className="text-3xl font-bold">{post.title}</h1>
             <p>ID: {post.slug}</p>
 
             <PostForm
@@ -61,11 +63,9 @@ function PostManager() {
               {preview ? "Edit" : "Preview"}
             </Button>
 
-            <Button color="secondary">
-              <Link href={`/${post.username}/${post.slug}`}>
-                Go to Live Post
-              </Link>
-            </Button>
+            <Link legacyBehavior href={`/${post.username}/${post.slug}`}>
+              <Button color="secondary">Go to Live Post</Button>
+            </Link>
 
             <DeletePostButton postRef={postRef} />
           </aside>
@@ -104,7 +104,9 @@ function PostForm({ defaultValues, postRef, preview }) {
       {preview && (
         <Card>
           <CardBody>
-            <ReactMarkdown>{watch("content")}</ReactMarkdown>
+            <ReactMarkdown className="prose dark:prose-invert">
+              {watch("content")}
+            </ReactMarkdown>
           </CardBody>
         </Card>
       )}
@@ -112,20 +114,10 @@ function PostForm({ defaultValues, postRef, preview }) {
       <div className={preview ? "hidden" : "flex flex-col"}>
         <ImageUploader />
 
-        <Textarea
-          variant="bordered"
-          disableAutosize
-          classNames={{
-            base: "h-[60vh]",
-            input: "h-[60vh]",
-          }}
-          isInvalid={errors.errorMessage}
-          errorMessage={
-            errors.content && (
-              <p className="font-bold">{errors.content.message}</p>
-            )
-          }
-          {...register("content", {
+        <Controller
+          name="content"
+          control={control}
+          rules={{
             maxLength: {
               value: 20000,
               message: "Post cannot be longer than 20,000 characters",
@@ -138,8 +130,21 @@ function PostForm({ defaultValues, postRef, preview }) {
               value: true,
               message: "Post cannot be empty",
             },
-          })}
-        ></Textarea>
+          }}
+          render={({ field, fieldState: { error } }) => (
+            <Textarea
+              variant="bordered"
+              disableAutosize
+              classNames={{
+                base: "h-[60vh]",
+                input: "h-[60vh]",
+              }}
+              isInvalid={!!error}
+              errorMessage={errors.content && errors.content.message}
+              {...field}
+            />
+          )}
+        />
 
         <fieldset>
           <input
@@ -165,7 +170,7 @@ function DeletePostButton({ postRef }) {
     const doIt = confirm("Are you sure? This action is irreversible.");
     if (doIt) {
       // todo; firebase docs mention that a delete doesn't delete subcollections https://firebase.google.com/docs/firestore/manage-data/delete-data#delete_documents
-      // likes subcollection probably still needs to be deleted
+      // likes subcollection probably still needs to be deleted (probably will cause problems if the user creates the same document again, let future Josh deal with it)
       // todo; Consider checking the post for an uploaded image and remove it from storage bucket as well?
       await deleteDoc(postRef);
       router.push("/panel/browse/admin");
