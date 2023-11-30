@@ -25,7 +25,8 @@ import {
     TableRow,
     TableCell,
     Breadcrumbs,
-    BreadcrumbItem} from "@nextui-org/react";
+    BreadcrumbItem,
+    Tab} from "@nextui-org/react";
 import { useState, useMemo } from 'react';
 
 export default function Generate() {
@@ -110,14 +111,14 @@ function PanelContent() {
             <div className='flex flex-col items-center'>
                 <h3 className='my-5 text-2xl font-bold'>Generated Voices</h3>
 
-                {/* Paste voiceTemplate clones here */}
-                <div id="vbody" className='w-full flex flex-col items-center'></div>
-
-                <div className='ring-1 ring-gray-400/10 noVoiceHistoryObject' id='noVoiceHistoryObject'>
-                    <h4>
-                        No files have been generated. Press the button above to begin!
-                    </h4>
-                </div>
+                <Table className='mx-10 mt-5 w-5/6'>
+                    <TableHeader>
+                        <TableColumn>Name</TableColumn>
+                        <TableColumn>Voice</TableColumn>
+                        <TableColumn>Audio Sample</TableColumn>
+                    </TableHeader>
+                    <TableBody id="vbody" emptyContent={"No files have been generated. Press the button above to begin!"}>{[]}</TableBody>
+                </Table>
             </div>
 
             <div className='hidden'>
@@ -242,7 +243,7 @@ function openFile() {
     input.click();
 }
 
-function createVoiceCard(name, audio) {
+function createVoiceCell(name, audio) {
     // Get the template element by ID
     const template = document.getElementById("template");
 
@@ -283,8 +284,8 @@ function postVTSData() {
             }
         })
         .then((response) => {
-            // Edit response if needed then send to createVoiceCard
-            // createVoiceCard(response);
+            // Edit response if needed then send to createVoiceCell
+            // createVoiceCell(response);
             console.log(response);
         });
     }
@@ -307,8 +308,8 @@ function postTTSData() {
             }
         })
         .then((response) => {
-            // Edit response if needed then send to createVoiceCard
-            // createVoiceCard(response);
+            // Edit response if needed then send to createVoiceCell
+            // createVoiceCell(response);
             console.log(response);
         });
     }
