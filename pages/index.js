@@ -56,7 +56,7 @@ function Section1() {
     <>
       <div className="flex flex-col items-center text-center gap-2">
         <h1 className="my-5 text-2xl font-bold text-inherit lg:text-6xl">
-          We offer the best in class audio conversion
+          The best in class audio conversion
           <span className="block">using the latest in AI.</span>
         </h1>
         <h2 className="text-xl text-inherit lg:text-3xl">
@@ -223,7 +223,7 @@ function Section3() {
             quasi iusto modi velit ut non voluptas in. Explicabo id ut laborum.
           </p>
         </div>
-        <div className="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
+        <div className="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 shadow-lg shadow-blue-600/50 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
           <div className="p-8 sm:p-10 lg:flex-auto">
             <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-inherit">
               Premium
