@@ -74,7 +74,7 @@ export default function Post(props) {
     <main className="flex min-w-screen justify-center gap-4">
       <Metatags title={post.title} description={post.title} />
 
-      <Card className="flex top-[15px] ml-2">
+      <Card className="flex top-[15px] w-[60vw] ml-2">
         <CardBody>
           <PostContent post={post} />
         </CardBody>

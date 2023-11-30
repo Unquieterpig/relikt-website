@@ -64,12 +64,8 @@ function TrainBreadcrumb() {
             type="search"
           />
 
-          <Button
-            color="primary"
-            onPress={onOpen}
-            className="text-sm md:text-md"
-          >
-            + Train New Model
+          <Button color="primary" onPress={onOpen}>
+            + Train Model
           </Button>
           <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="full">
             <ModalContent>

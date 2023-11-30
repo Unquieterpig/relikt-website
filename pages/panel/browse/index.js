@@ -1,5 +1,5 @@
 import PostFeed from "@components/PostFeed";
-import Loader from "@components/Loader";
+import AuthCheck from "@components/AuthCheck";
 import Metatags from "@components/Metatags";
 
 import Link from "next/link";
@@ -94,29 +94,41 @@ export default function Browse(props) {
             <BreadcrumbItem href="/panel">Panel</BreadcrumbItem>
             <BreadcrumbItem href="/panel/browse">Browse</BreadcrumbItem>
           </Breadcrumbs>
-          <Button
-            as={Link}
-            className="w-40"
-            variant="shadow"
-            color="primary"
-            href="/panel/browse/admin"
+          <AuthCheck
+            fallback={
+              <Link href="/enter">
+                <Button color="primary">Sign Up to Post</Button>
+              </Link>
+            }
           >
-            + Create New Post
-          </Button>
+            <Button
+              as={Link}
+              className="w-40"
+              variant="shadow"
+              color="primary"
+              href="/panel/browse/admin"
+            >
+              + Create New Post
+            </Button>
+          </AuthCheck>
         </CardBody>
       </Card>
 
       <div className="mx-12 grid grid-cols-1 gap-4 sm:grid-cols-3 md:grid-cols-4">
         <PostFeed posts={posts} />
       </div>
-      {posts.length === 0
-        ? "No posts to load"
-        : !loading &&
-          !postsEnd && <button onClick={getMorePosts}>Load more</button>}
 
-      <Loader show={loading} />
+      <div className="flex justify-center align-center mt-2">
+        {posts.length === 0
+          ? "No posts to load"
+          : !postsEnd && (
+              <Button isLoading={loading} onClick={getMorePosts}>
+                Load more
+              </Button>
+            )}
 
-      {postsEnd && "You have reached the end!"}
+        {postsEnd && "You have reached the end!"}
+      </div>
     </>
   );
 }

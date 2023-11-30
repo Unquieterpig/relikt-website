@@ -22,29 +22,21 @@ import { useState, useEffect } from "react";
 import { ReliktLogo } from "@components/ReliktLogo";
 import ThemeSwitcher from "@components/ThemeSwitcher";
 
-import { auth } from '@lib/firebase';
+import { auth } from "@lib/firebase";
 import { useRouter } from "next/router";
 
 export default function NavBar() {
   const router = useRouter();
   const { user, username } = useContext(UserContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isOnPanelPage, setIsOnPanelPage] = useState(false);
 
-  useEffect(() => {
-
-    // Update the state when the route changes to anything with panel
-    setIsOnPanelPage(router.pathname.startsWith("/panel"));
-
-  }, []);
-
-  const menuItems = isOnPanelPage
-  ? ["Generate", "Browse", "Subscription"]
-  : ["Features", "Pricing", "Integration"];
+  const menuItems = user
+    ? ["Generate", "Train", "Browse", "Subscription"]
+    : ["Features", "Pricing", "Integration"];
 
   const handleSignOut = async () => {
     await auth.signOut();
-    router.replace('/');
+    router.replace("/");
   };
 
   return (
@@ -77,44 +69,53 @@ export default function NavBar() {
           </Link>
         </NavbarBrand>
 
-      {/* Only show the menu items on the panel page */}
-      {isOnPanelPage && (
-        <><NavbarItem>
-            <Link color="foreground" href="/panel/generate">
-              Generate
-            </Link>
-          </NavbarItem><NavbarItem>
+        {/* Only show the menu items on the panel page */}
+        {user && (
+          <>
+            <NavbarItem>
+              <Link color="foreground" href="/panel/">
+                Generate
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link color="foreground" href="/panel/train">
+                Train
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
               <Link color="foreground" href="/panel/browse">
                 Browse
               </Link>
-            </NavbarItem><NavbarItem>
+            </NavbarItem>
+            <NavbarItem>
               <Link color="foreground" href="/panel/subscription">
                 Subscription
               </Link>
-            </NavbarItem></>)
-      }
-
-      {/* Only show the menu items on homepage or 404 */}
-      {!isOnPanelPage && (
-        <>
-        <NavbarItem>
-          <Link color="foreground" href="/#features">
-            Features
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-            <Link color="foreground" href="/#pricing">
-              Pricing
-            </Link>
-          </NavbarItem><NavbarItem>
-            <Link color="foreground" href="/#sponsor">
-              Sponsors
-            </Link>
-        </NavbarItem>
-        </>
+            </NavbarItem>
+          </>
         )}
 
-    </NavbarContent>
+        {/* Only show this menu to unauthenticated users */}
+        {!user && (
+          <>
+            <NavbarItem>
+              <Link color="foreground" href="/#features">
+                Features
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link color="foreground" href="/#pricing">
+                Pricing
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link color="foreground" href="/#sponsor">
+                Sponsors
+              </Link>
+            </NavbarItem>
+          </>
+        )}
+      </NavbarContent>
 
       <NavbarContent justify="end">
         <NavbarItem>
@@ -122,7 +123,7 @@ export default function NavBar() {
         </NavbarItem>
 
         {/* user is not signed-in or has no username */}
-        {!username && (
+        {!user && (
           <NavbarItem>
             <Button as={Link} color="primary" href="/enter" variant="shadow">
               Login
@@ -133,17 +134,17 @@ export default function NavBar() {
         {/* user is signed-in and has username */}
         {username && (
           <>
-          {!isOnPanelPage && (
-          <NavbarItem>
-              <Button
-                as={Link}
-                color="primary"
-                href="/panel"
-                variant="shadow"
-              >
-                Generate
-              </Button>
-            </NavbarItem>
+            {!user && (
+              <NavbarItem>
+                <Button
+                  as={Link}
+                  color="primary"
+                  href="/panel"
+                  variant="shadow"
+                >
+                  Generate
+                </Button>
+              </NavbarItem>
             )}
 
             <NavbarItem>
@@ -198,45 +199,3 @@ export default function NavBar() {
     </Navbar>
   );
 }
-
-// Top navbar OLD
-// export default function NavBar() {
-//     const { user, username } = useContext(UserContext);
-
-//   return (
-//     <nav className="navbar">
-//       <ul>
-//         <li>
-//           <Link legacyBehavior href="/">
-//             <button className="btn-logo">RELIKT</button>
-//           </Link>
-//         </li>
-
-//         {/* user is signed-in and has username */}
-//         {username && (
-//           <>
-//             <li className="push-left">
-//               <Link legacyBehavior href="/generate">
-//                 <button className="btn-blue">Generate</button>
-//               </Link>
-//             </li>
-//             <li>
-//               <Link legacyBehavior href={username}>
-//                 <img src={user.photoURL} />
-//               </Link>
-//             </li>
-//           </>
-//         )}
-
-//         {/* user is not signed OR has not created username */}
-//         {!username && (
-//           <li>
-//             <Link legacyBehavior href="/enter">
-//               <button className="btn-blue">Log in</button>
-//             </Link>
-//           </li>
-//         )}
-//       </ul>
-//     </nav>
-//   );
-// }
