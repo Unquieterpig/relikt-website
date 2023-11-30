@@ -32,12 +32,12 @@ export default function LikeButton({ postRef }) {
   };
 
   return likeDoc?.exists() ? (
-    <Button onClick={removeLike} color="danger">
-      👎 Unlike
+    <Button isIconOnly variant="ghost" onClick={removeLike} color="danger">
+      👎
     </Button>
   ) : (
-    <Button onClick={addLike} color="success">
-      👍 Like
+    <Button isIconOnly variant="ghost" onClick={addLike} color="success">
+      👍
     </Button>
   );
 }

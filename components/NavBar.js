@@ -29,14 +29,8 @@ export default function NavBar() {
   const router = useRouter();
   const { user, username } = useContext(UserContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isOnPanelPage, setIsOnPanelPage] = useState(false);
 
-  useEffect(() => {
-    // Update the state when the route changes to anything with panel
-    setIsOnPanelPage(router.pathname.startsWith("/panel"));
-  }, []);
-
-  const menuItems = isOnPanelPage
+  const menuItems = user
     ? ["Generate", "Train", "Browse", "Subscription"]
     : ["Features", "Pricing", "Integration"];
 
@@ -76,7 +70,7 @@ export default function NavBar() {
         </NavbarBrand>
 
         {/* Only show the menu items on the panel page */}
-        {isOnPanelPage && (
+        {user && (
           <>
             <NavbarItem>
               <Link color="foreground" href="/panel/">
@@ -101,8 +95,8 @@ export default function NavBar() {
           </>
         )}
 
-        {/* Only show the menu items on homepage or 404 */}
-        {!isOnPanelPage && (
+        {/* Only show this menu to unauthenticated users */}
+        {!user && (
           <>
             <NavbarItem>
               <Link color="foreground" href="/#features">
@@ -129,7 +123,7 @@ export default function NavBar() {
         </NavbarItem>
 
         {/* user is not signed-in or has no username */}
-        {!username && (
+        {!user && (
           <NavbarItem>
             <Button as={Link} color="primary" href="/enter" variant="shadow">
               Login
@@ -140,7 +134,7 @@ export default function NavBar() {
         {/* user is signed-in and has username */}
         {username && (
           <>
-            {!isOnPanelPage && (
+            {!user && (
               <NavbarItem>
                 <Button
                   as={Link}
