@@ -17,8 +17,17 @@ import {
     DropdownItem,
     Textarea,
     Card,
-    CardBody} from "@nextui-org/react";
-import { useState } from 'react';
+    CardBody,
+    Table,
+    TableHeader,
+    TableBody,
+    TableColumn,
+    TableRow,
+    TableCell,
+    Breadcrumbs,
+    BreadcrumbItem,
+    Tab} from "@nextui-org/react";
+import { useState, useMemo } from 'react';
 
 export default function Generate() {
     return (
@@ -31,7 +40,7 @@ export default function Generate() {
     )
 }
 
-let selectedFile, selectedFileData;
+let selectedFile, selectedFileData, selectedVoice;
 
 //Container to put everything in
 function GenerateContainer() {
@@ -46,8 +55,20 @@ function PanelContent() {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
     return(
-
         <div className='flex-col justify-center text-center'>
+
+            <Card className="mx-10 mt-5">
+                    <CardBody className="flex flex-row justify-between">
+                    <Breadcrumbs
+                        size="lg"
+                        className="flex text-center justify-center font"
+                    >
+                        <BreadcrumbItem href="/panel">Panel</BreadcrumbItem>
+                        <BreadcrumbItem href="/panel">Generate</BreadcrumbItem>
+                    </Breadcrumbs>
+                    </CardBody>
+                </Card>
+
             {/* Button to open popup */}
             <div className='my-4'>
                     <Button
@@ -68,7 +89,7 @@ function PanelContent() {
                         </ModalBody>
                         <ModalFooter>
                             <Button color="danger" variant="light" onPress={onClose}>
-                            Close
+                            Cancel
                             </Button>
                             <Button color="primary" onPress={postTTSData}>
                             Generate TTS       
@@ -90,14 +111,14 @@ function PanelContent() {
             <div className='flex flex-col items-center'>
                 <h3 className='my-5 text-2xl font-bold'>Generated Voices</h3>
 
-                {/* Paste voiceTemplate clones here */}
-                <div id="vbody" className='w-full flex flex-col items-center'></div>
-
-                <div className='ring-1 ring-gray-400/10 noVoiceHistoryObject' id='noVoiceHistoryObject'>
-                    <h4>
-                        No files have been generated. Press the button above to begin!
-                    </h4>
-                </div>
+                <Table className='mx-10 mt-5 w-5/6'>
+                    <TableHeader>
+                        <TableColumn>Name</TableColumn>
+                        <TableColumn>Voice</TableColumn>
+                        <TableColumn>Audio Sample</TableColumn>
+                    </TableHeader>
+                    <TableBody id="vbody" emptyContent={"No files have been generated. Press the button above to begin!"}>{[]}</TableBody>
+                </Table>
             </div>
 
             <div className='hidden'>
@@ -117,73 +138,112 @@ function PanelContent() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 function PopUpContainer() {
     return(
-        
         <div className='flex-col justify-center text-center'>
-            <div className='generatePopUp'>
 
+            <h3>Pick a Voice:</h3>
             <VoiceSelector onVoiceChange={VoiceSelector.handleVoiceChange} />
 
-                <div className='flex flex-col items-center'>
-                    <Textarea id="textArea" label="Text To speech" placeholder="Enter your text" className="max-w-xl"/>
-                </div>
-
-                <div className='ring-1 ring-gray-400/10 my-4'>
-                    <h3 className=''>Voice To Speech:</h3>
-
-                    <Button
-                        className='my-2'
-                        color='primary'
-                        label="Open File"
-                        onPress={openFile.bind(this)}
-                    >Open File</Button>     
-                </div>
-            </div>
+            <Table hideHeader>
+                <TableHeader>
+                    <TableColumn>TextArea</TableColumn>
+                    <TableColumn>FileSelect</TableColumn>
+                </TableHeader>
+                <TableBody>
+                    <TableRow>
+                        <TableCell className="w-1/2">
+                            <h3>Text To Speech:</h3>
+                        </TableCell>
+                        <TableCell className="w-1/2">
+                            <h3>Voice To Speech:</h3>
+                        </TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell className="w-1/2">
+                            <div className='flex flex-col items-center'>
+                                <Textarea id="textArea" placeholder="Enter your text" className="max-w-xl"/>
+                            </div>
+                        </TableCell>
+                        <TableCell className="w-1/2">
+                            <div className='flex flex-col items-center'>
+                                <Button
+                                    className='my-2'
+                                    color='primary'
+                                    label="Open File"
+                                    onPress={openFile.bind(this)}
+                                >Open File</Button>
+                                <h3 id='fileName'></h3>
+                            </div>
+                        </TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
         </div>
     );
 }
 
 function VoiceSelector() {
-    const [selectedVoice, setSelectedVoice] = useState(null);
+    const [selectedKeys, setSelectedKeys] = useState(new Set(["Martin Russel"]));
 
-    const handleVoiceChange = (value) => {
-        setSelectedVoice(value);
-    };
+    const selectedValue = useMemo(
+        () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
+        [selectedKeys]
+    );
 
     return (
         <div className='ring-1 ring-gray-400/10 my-4'>
             <Dropdown id="voiceSelection">
                 <DropdownTrigger>
-                    <Button variant="bordered" className='my-2'>
-                        {selectedVoice ? selectedVoice : 'Pick a Voice'}
-                    </Button>
+                    <Button variant="bordered" className='my-2'>{selectedValue}</Button>
                 </DropdownTrigger>
-                <DropdownMenu aria-label="Static Actions">
-                    <DropdownItem
-                        key="martin"
-                        onSelect={() => handleVoiceChange('Martin Russel')}
-                        isChecked={selectedVoice === 'Martin Russel'}
-                    >
-                        Martin Russel
-                    </DropdownItem>
-                    <DropdownItem
-                        key="critikal"
-                        onSelect={() => handleVoiceChange('Moist Critikal')}
-                        isChecked={selectedVoice === 'Moist Critikal'}
-                    >
-                        Moist Critikal
-                    </DropdownItem>
+                <DropdownMenu 
+                    aria-label="Single selection"
+                    disallowEmptySelection
+                    selectionMode="single"
+                    selectedKeys={selectedKeys}
+                    onSelectionChange={(event) => setSelectedKeys(event)}
+                >
+                    <DropdownItem key="Martin Russel">Martin Russel</DropdownItem>
+                    <DropdownItem key="Moist Critikal">Moist Critikal</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
         </div>
     );
 }
 
-function createVoiceCard(name, audio) {
+function openFile() {
+    let input = document.createElement('input');
+    input.type = 'file';
+
+    let fileName = document.getElementById("fileName");
+
+    input.onchange = (event) => {
+        const file = event.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                const fileData = e.target.result;
+
+                selectedFile = file;
+                selectedFileData = fileData;
+            };
+
+            reader.readAsText(file);
+
+            fileName.innerText = file.name
+        }
+    };
+
+    input.click();
+}
+
+function createVoiceCell(name, audio) {
     // Get the template element by ID
     const template = document.getElementById("template");
 
@@ -208,42 +268,25 @@ function createVoiceCard(name, audio) {
     noVoices.style.display = 'none';
 }
 
-function openFile() {
-    let input = document.createElement('input');
-    input.type = 'file';
-
-    input.onchange = (event) => {
-        const file = event.target.files[0];
-
-        if (file) {
-            const reader = new FileReader();
-
-            reader.onload = (e) => {
-                const fileData = e.target.result;
-
-                selectedFile = file;
-                selectedFileData = fileData;
-            };
-
-            reader.readAsText(file);
-        }
-    };
-
-    input.click();
-}
-
 function postVTSData() {
-    if (selectedFile && selectedFileData) {
+    if (selectedFile && selectedFileData && selectedVoice) {
+        // Edit serverURL to correct location
         let serverURL = 'http://localhost:3001'
     
         axios({
             method: 'post',
             url: serverURL,
             data: {
-                voice: selectedVoice,
+                // Edit data to correct format
+                voice: selectedValue,
                 name: selectedFile.name,
                 audio: selectedFileData
             }
+        })
+        .then((response) => {
+            // Edit response if needed then send to createVoiceCell
+            // createVoiceCell(response);
+            console.log(response);
         });
     }
 }
@@ -251,16 +294,23 @@ function postVTSData() {
 function postTTSData() {
     let text = textToBinaryArray(document.getElementById("textArea").value);
     if (text) {
+        // Edit serverURL to correct location
         let serverURL = 'http://localhost:3001'
 
         axios({
             method: 'post',
             url: serverURL,
             data: {
+                // Edit data to correct format
                 voice: selectedVoice,
                 name: 'TTS',
                 audio: text
             }
+        })
+        .then((response) => {
+            // Edit response if needed then send to createVoiceCell
+            // createVoiceCell(response);
+            console.log(response);
         });
     }
 }
