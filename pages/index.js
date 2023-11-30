@@ -137,19 +137,19 @@ const features = [
   {
     name: "Push of a button.",
     description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
+      "Simplify your interactions with instant voice-to-voice translation. Our AI-powered service captures nuances, accents, and intonations, delivering natural and authentic audio outputs.",
     icon: CloudArrowUpIcon,
   },
   {
     name: "Arctic Backups.",
     description:
-      "Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.",
+      "Never lose your important voice data. Our secure cloud backups ensure your information is safe, retrievable, and protected against any unforeseen events.",
     icon: LockClosedIcon,
   },
   {
     name: "Fast.",
     description:
-      "Ac tincidunt sapien vehicula erat auctor pellentesque rhoncus. Et magna sit morbi lobortis.",
+      "Enjoy real-time conversion speeds. Our optimized algorithms provide quick, efficient, and high-quality voice translations, saving you time and resources.",
     icon: ServerIcon,
   },
 ];
@@ -168,9 +168,10 @@ function Section2() {
                 A better solution
               </p>
               <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Maiores impedit perferendis suscipit eaque, iste dolor
-                cupiditate blanditiis ratione.
+                Revolutionize your communication with our state-of-the-art AI
+                voice conversion technology. Experience seamless integration
+                into your daily workflow, enhancing productivity and breaking
+                down language barriers — where clarity meets convenience.
               </p>
               <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none">
                 {features.map((feature) => (
@@ -219,8 +220,10 @@ function Section3() {
             One Simple Price
           </h2>
           <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
-            Distinctio et nulla eum soluta et neque labore quibusdam. Saepe et
-            quasi iusto modi velit ut non voluptas in. Explicabo id ut laborum.
+            Unlock the full potential of effortless communication with our
+            straightforward pricing. No hidden fees, no complexity—just one low
+            price for unlimited access to the most advanced voice conversion
+            technology available.
           </p>
         </div>
         <div className="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 shadow-lg shadow-blue-600/50 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
@@ -229,9 +232,9 @@ function Section3() {
               Premium
             </h3>
             <p className="mt-6 text-base leading-7 text-gray-600 dark:text-gray-300">
-              Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque
-              amet indis perferendis blanditiis repellendus etur quidem
-              assumenda.
+              Elevate your audio experience with our Premium plan. Designed for
+              both individuals and professionals, our service provides
+              exceptional quality, versatility, and ease of use.
             </p>
             <div className="mt-10 flex items-center gap-x-4">
               <h4 className="flex-none text-sm font-semibold leading-6 text-blue-600 dark:text-blue-400">
