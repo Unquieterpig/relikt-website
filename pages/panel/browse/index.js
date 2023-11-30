@@ -29,7 +29,7 @@ import {
 import { useState } from "react";
 
 // Max post to query per page
-const LIMIT = 10;
+const LIMIT = 8;
 
 export async function getServerSideProps(context) {
   const postsQuery = query(

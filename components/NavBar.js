@@ -164,7 +164,7 @@ export default function NavBar() {
                   <DropdownItem
                     key="profile"
                     className="h-14 gap-2"
-                    href={username}
+                    href={`/${username}`}
                   >
                     <p className="font-semibold">Signed in as</p>
                     <p className="font-semibold">@{username}</p>
