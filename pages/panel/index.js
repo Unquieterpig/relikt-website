@@ -200,31 +200,6 @@ function VoiceSelector() {
     );
 }
 
-function createVoiceCard(name, audio) {
-    // Get the template element by ID
-    const template = document.getElementById("template");
-
-    // Clone the template element
-    const newVoice = template.cloneNode(true);
-
-    // Set the name and audio values in the cloned element
-    // newVoice.querySelector('.voice-name').textContent = name;
-    // newVoice.querySelector('.voice-audio').src = audio;
-
-    // Get the container where you want to append the new card
-    const vbody = document.getElementById("vbody");
-
-    // Append the cloned element to the container
-    vbody.appendChild(newVoice);
-
-    // Make the cloned element visible (assuming it was hidden in the template)
-    newVoice.style.display = 'block';
-
-    // Hide no voices paragraph
-    let noVoices = document.getElementById("noVoiceHistoryObject")
-    noVoices.style.display = 'none';
-}
-
 function openFile() {
     let input = document.createElement('input');
     input.type = 'file';
@@ -253,18 +228,50 @@ function openFile() {
     input.click();
 }
 
+function createVoiceCard(name, audio) {
+    // Get the template element by ID
+    const template = document.getElementById("template");
+
+    // Clone the template element
+    const newVoice = template.cloneNode(true);
+
+    // Set the name and audio values in the cloned element
+    // newVoice.querySelector('.voice-name').textContent = name;
+    // newVoice.querySelector('.voice-audio').src = audio;
+
+    // Get the container where you want to append the new card
+    const vbody = document.getElementById("vbody");
+
+    // Append the cloned element to the container
+    vbody.appendChild(newVoice);
+
+    // Make the cloned element visible (assuming it was hidden in the template)
+    newVoice.style.display = 'block';
+
+    // Hide no voices paragraph
+    let noVoices = document.getElementById("noVoiceHistoryObject")
+    noVoices.style.display = 'none';
+}
+
 function postVTSData() {
     if (selectedFile && selectedFileData && selectedVoice) {
+        // Edit serverURL to correct location
         let serverURL = 'http://localhost:3001'
     
         axios({
             method: 'post',
             url: serverURL,
             data: {
+                // Edit data to correct format
                 voice: selectedValue,
                 name: selectedFile.name,
                 audio: selectedFileData
             }
+        })
+        .then((response) => {
+            // Edit response if needed then send to createVoiceCard
+            // createVoiceCard(response);
+            console.log(response);
         });
     }
 }
@@ -272,16 +279,23 @@ function postVTSData() {
 function postTTSData() {
     let text = textToBinaryArray(document.getElementById("textArea").value);
     if (text) {
+        // Edit serverURL to correct location
         let serverURL = 'http://localhost:3001'
 
         axios({
             method: 'post',
             url: serverURL,
             data: {
+                // Edit data to correct format
                 voice: selectedVoice,
                 name: 'TTS',
                 audio: text
             }
+        })
+        .then((response) => {
+            // Edit response if needed then send to createVoiceCard
+            // createVoiceCard(response);
+            console.log(response);
         });
     }
 }
