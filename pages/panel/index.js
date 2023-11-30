@@ -23,7 +23,9 @@ import {
     TableBody,
     TableColumn,
     TableRow,
-    TableCell} from "@nextui-org/react";
+    TableCell,
+    Breadcrumbs,
+    BreadcrumbItem} from "@nextui-org/react";
 import { useState, useMemo } from 'react';
 
 export default function Generate() {
@@ -52,8 +54,20 @@ function PanelContent() {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
     return(
-
         <div className='flex-col justify-center text-center'>
+
+            <Card className="mx-10 mt-5">
+                    <CardBody className="flex flex-row justify-between">
+                    <Breadcrumbs
+                        size="lg"
+                        className="flex text-center justify-center font"
+                    >
+                        <BreadcrumbItem href="/panel">Panel</BreadcrumbItem>
+                        <BreadcrumbItem href="/panel">Generate</BreadcrumbItem>
+                    </Breadcrumbs>
+                    </CardBody>
+                </Card>
+
             {/* Button to open popup */}
             <div className='my-4'>
                     <Button
@@ -123,7 +137,7 @@ function PanelContent() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 function PopUpContainer() {
