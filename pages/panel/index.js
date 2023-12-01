@@ -27,6 +27,7 @@ import {
   Breadcrumbs,
   BreadcrumbItem,
   Tab,
+  ButtonGroup,
 } from "@nextui-org/react";
 
 import { useState, useMemo } from "react";
@@ -57,7 +58,7 @@ function PanelContent() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
-    <div className="flex-col justify-center text-center">
+    <>
       <Card className="mx-10 mt-5">
         <CardBody className="flex flex-row justify-between">
           <Breadcrumbs
@@ -94,13 +95,9 @@ function PanelContent() {
         </ModalContent>
       </Modal>
 
-      <Divider orientation="horizontal" />
-
       {/* List of previous files */}
-      <div className="flex flex-col items-center">
-        <h3 className="my-5 text-2xl font-bold">Generated Voices</h3>
-
-        <Table className="mx-10 mt-5 w-5/6">
+      <div className="mx-10 mt-5">
+        <Table>
           <TableHeader>
             <TableColumn>Name</TableColumn>
             <TableColumn>Voice</TableColumn>
@@ -116,8 +113,7 @@ function PanelContent() {
           </TableBody>
         </Table>
       </div>
-
-      <div className="hidden">
+      {/* <div className="hidden">
         <div className="my-2" id="template">
           <Card
             isBlurred
@@ -138,45 +134,41 @@ function PanelContent() {
             </CardBody>
           </Card>
         </div>
-      </div>
-    </div>
+      </div> */}
+    </>
   );
 }
 
 function PopUpContainer() {
   return (
-    <div className="flex-col justify-center text-center">
-      <h3>Pick a Voice:</h3>
-      <VoiceSelector onVoiceChange={VoiceSelector.handleVoiceChange} />
+    <>
+      <div>
+        <ButtonGroup>
+          <Button>Text to Voice</Button>
+          <Button>Voice to Voice</Button>
+        </ButtonGroup>
+      </div>
 
-      <Table hideHeader>
-        <TableHeader>
-          <TableColumn>TextArea</TableColumn>
-          <TableColumn>FileSelect</TableColumn>
-        </TableHeader>
-        <TableBody>
-          <TableRow>
-            <TableCell className="w-1/2">
-              <TTSUploader />
-            </TableCell>
-            <TableCell className="w-1/2">
-              <h3>Voice To Speech:</h3>
-              <div className="flex flex-col items-center">
-                <Button
-                  className="my-2"
-                  color="primary"
-                  label="Open File"
-                  onPress={openFile.bind(this)}
-                >
-                  Open File
-                </Button>
-                <h3 id="fileName"></h3>
-              </div>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </div>
+      <div className="flex-col justify-center text-center">
+        <h3>Pick a Voice:</h3>
+        <VoiceSelector onVoiceChange={VoiceSelector.handleVoiceChange} />
+
+        <TTSUploader />
+
+        <h3>Voice To Speech:</h3>
+        <div className="flex flex-col items-center">
+          <Button
+            className="my-2"
+            color="primary"
+            label="Open File"
+            onPress={openFile.bind(this)}
+          >
+            Open File
+          </Button>
+          <h3 id="fileName"></h3>
+        </div>
+      </div>
+    </>
   );
 }
 
