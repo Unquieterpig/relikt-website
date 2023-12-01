@@ -2,12 +2,14 @@
 // The .mp3 file is then added to a NextUI card and displayed on the table in the panel.
 import { Button, Checkbox, Textarea, Switch, Slider } from "@nextui-org/react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function TTSUploader() {
   const [advancedSettings, setAdvancedSettings] = useState(false);
 
   const sendTextToSpeech = async (event) => {
     event.preventDefault();
+
     const response = await fetch("/api/voice/create_tts", {
       method: "POST",
       body: JSON.stringify({
@@ -18,8 +20,14 @@ export default function TTSUploader() {
         "Content-Type": "application/json",
       },
     });
-    const data = await response.json();
-    console.log(data);
+
+    if (!response.ok) {
+      toast.error("Failed to generate audio file");
+    } else {
+      const data = await response.json();
+      toast.success("Successfully generated audio file");
+      props.handleAudioFileLink(data.audioUrl);
+    }
   };
 
   return (
