@@ -4,6 +4,7 @@ import { Button, Checkbox, Textarea, Switch, Slider } from "@nextui-org/react";
 import { useState } from "react";
 import { set } from "react-hook-form";
 import toast from "react-hot-toast";
+import VoiceSelector from "@components/VoiceSelector"
 
 export default function TTSUploader(props) {
   const [advancedSettings, setAdvancedSettings] = useState(false);
@@ -54,10 +55,12 @@ export default function TTSUploader(props) {
   return (
     <div className="flex flex-col align-center items-center mt-2">
       <h1 className="text-4xl">Text to Speech</h1>
-      <form onSubmit={sendTextToSpeech}>
+      <form className="w-full" onSubmit={sendTextToSpeech}>
+        <VoiceSelector></VoiceSelector>
+
         <Textarea
           name="textToConvert"
-          className="my-5 w-full"
+          className="my-5"
           placeholder="Enter text to convert to speech"
         ></Textarea>
 
