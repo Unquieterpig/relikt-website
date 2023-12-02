@@ -11,10 +11,6 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
   Card,
   CardBody,
   Table,
@@ -200,8 +196,4 @@ function postData() {
       console.log(response);
     });
   }
-}
-
-function getRows() {
-
 }
