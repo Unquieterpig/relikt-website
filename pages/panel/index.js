@@ -102,7 +102,8 @@ function PanelContent() {
                 ></PopUpContainer>
               </ModalBody>
               <ModalFooter>
-                <Button color="primary" variant="light" onPress={postData}>
+                {/* TODO: set onPress to perform some function that submits the form*/}
+                <Button color="primary" variant="light" onPress={submitForm}>
                   Generate
                 </Button>
                 <Button color="danger" variant="light" onPress={onClose}>
@@ -176,24 +177,30 @@ function PopUpContainer(props) {
   );
 }
 
-function postData() {
-  if (selectedFile && selectedFileData && selectedVoice) {
-    // Edit serverURL to correct location
-    let serverURL = "http://localhost:3001";
-
-    axios({
-      method: "post",
-      url: serverURL,
-      data: {
-        // Edit data to correct format
-        voice: selectedValue,
-        name: selectedFile.name,
-        audio: selectedFileData,
-      },
-    }).then((response) => {
-      // Edit response if needed then send to createVoiceCell
-      // createVoiceCell(response);
-      console.log(response);
-    });
-  }
+// TODO: figure out how to get the form to submit and distinguish between tts and vts
+function submitForm() {
+  document.getElementById("ttsForm");
 }
+
+// Unsure if this will be used or the create_tts and create_vtv will
+// function postData() {
+//   if (selectedFile && selectedFileData && selectedVoice) {
+//     // Edit serverURL to correct location
+//     let serverURL = "http://localhost:3001";
+
+//     axios({
+//       method: "post",
+//       url: serverURL,
+//       data: {
+//         // Edit data to correct format
+//         voice: selectedValue,
+//         name: selectedFile.name,
+//         audio: selectedFileData,
+//       },
+//     }).then((response) => {
+//       // Edit response if needed then send to createVoiceCell
+//       // createVoiceCell(response);
+//       console.log(response);
+//     });
+//   }
+// }
