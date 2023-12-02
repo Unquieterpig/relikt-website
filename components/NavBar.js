@@ -118,10 +118,6 @@ export default function NavBar() {
       </NavbarContent>
 
       <NavbarContent justify="end">
-        <NavbarItem>
-          <ThemeSwitcher />
-        </NavbarItem>
-
         {/* user is not signed-in or has no username */}
         {!user && (
           <NavbarItem>
@@ -148,7 +144,7 @@ export default function NavBar() {
             )}
 
             <NavbarItem>
-              <Dropdown placement="bottom-end">
+              <Dropdown placement="bottom-end" closeOnSelect={false}>
                 <DropdownTrigger>
                   <Avatar
                     isBordered
@@ -160,18 +156,22 @@ export default function NavBar() {
                     src={user?.photoURL || "/OGMartin.png"}
                   />
                 </DropdownTrigger>
-                <DropdownMenu aria-label="Profile Actions" variant="flat">
+                <DropdownMenu aria-label="Profile Actions" variant="light">
                   <DropdownItem
                     key="profile"
                     className="h-14 gap-2"
                     href={`/${username}`}
+                    showDivider
                   >
                     <p className="font-semibold">Signed in as</p>
                     <p className="font-semibold">@{username}</p>
                   </DropdownItem>
                   <DropdownItem key="settings">My Settings</DropdownItem>
-                  <DropdownItem showDivider key="help_and_feedback">
+                  <DropdownItem key="help_and_feedback">
                     Help & Feedback
+                  </DropdownItem>
+                  <DropdownItem showDivider key="dark_mode">
+                    <ThemeSwitcher />
                   </DropdownItem>
                   <DropdownItem
                     key="logout"
