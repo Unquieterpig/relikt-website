@@ -28,6 +28,7 @@ import {
   BreadcrumbItem,
   Tab,
   ButtonGroup,
+  getKeyValue,
 } from "@nextui-org/react";
 
 import { useState, useMemo } from "react";
@@ -35,45 +36,58 @@ import { useState, useMemo } from "react";
 export default function Generate() {
   return (
     <>
-      <Metatags title="Generate" description="Generate an AI voice" />
+      <Metatags title="Relikt - Generate" description="Generate an AI voice" />
       <GradientTop />
 
-      <GenerateContainer />
+      <PanelContent />
     </>
   );
 }
 
 let selectedFile, selectedFileData, selectedVoice;
 
-//Container to put everything in
-function GenerateContainer() {
-  return (
-    <>
-      <PanelContent />
-    </>
-  );
-}
+// todo; Move this to a separate file and connect to database for voice history - Josh
+const rows = [];
+const columns = [
+  {
+    key: "name",
+    label: "NAME",
+  },
+  {
+    key: "voice",
+    label: "VOICE",
+  },
+  {
+    key: "status",
+    label: "STATUS",
+  },
+  {
+    key: "audioSample",
+    label: "AUDIO SAMPLE",
+  },
+];
 
 function PanelContent() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
+  // Prop drill that thang to TTSUploader.js 😎
+  // todo; Future Josh fix this nesting nightmare.
+  // The function below will append the json received in audioLink to the rows array, with some additional data.
+  // Additonal data: name: "TTS", voice: selectedVoice, status: "Generated"
+  function handleAudioFileLink(audioLink) {
+    console.log(audioLink);
+    rows.push({
+      key: rows.length,
+      name: "TTS",
+      voice: audioLink.selectedVoice,
+      status: "Generated",
+      audioSample: audioLink.audioUrl,
+    });
+  }
+
   return (
     <>
-      <Card className="mx-10 mt-5">
-        <CardBody className="flex flex-row justify-between">
-          <Breadcrumbs
-            size="lg"
-            className="flex text-center justify-center font"
-          >
-            <BreadcrumbItem href="/panel">Panel</BreadcrumbItem>
-            <BreadcrumbItem href="/panel">Generate</BreadcrumbItem>
-          </Breadcrumbs>
-
-          <Button onPress={onOpen} color="primary" variant="shadow">
-            + Generate Voice
-          </Button>
-        </CardBody>
-      </Card>
+      {GenerateBreadcrumb(onOpen)}
 
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="5xl">
         <ModalContent>
@@ -82,8 +96,10 @@ function PanelContent() {
               <ModalHeader className="flex flex-col gap-1">
                 Generate Voice
               </ModalHeader>
-              <ModalBody>
-                <PopUpContainer></PopUpContainer>
+              <ModalBody className="min-h-[500px]">
+                <PopUpContainer
+                  onAudioLinkAvailable={handleAudioFileLink}
+                ></PopUpContainer>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
@@ -98,18 +114,24 @@ function PanelContent() {
       {/* List of previous files */}
       <div className="mx-10 mt-5">
         <Table>
-          <TableHeader>
-            <TableColumn>Name</TableColumn>
-            <TableColumn>Voice</TableColumn>
-            <TableColumn>Audio Sample</TableColumn>
+          <TableHeader columns={columns}>
+            {(column) => (
+              <TableColumn key={column.key}>{column.label}</TableColumn>
+            )}
           </TableHeader>
           <TableBody
-            id="vbody"
             emptyContent={
               "No files have been generated. Press the button above to begin!"
             }
+            items={rows}
           >
-            {[]}
+            {(item) => (
+              <TableRow key={item.key}>
+                {(columnKey) => (
+                  <TableCell>{getKeyValue(item, columnKey)}</TableCell>
+                )}
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </div>
@@ -139,34 +161,44 @@ function PanelContent() {
   );
 }
 
-function PopUpContainer() {
+function GenerateBreadcrumb(onOpen) {
+  return (
+    <Card className="mx-10 mt-5">
+      <CardBody className="flex flex-row justify-between">
+        <Breadcrumbs size="lg" className="flex text-center justify-center font">
+          <BreadcrumbItem href="/panel">Panel</BreadcrumbItem>
+          <BreadcrumbItem href="/panel">Generate</BreadcrumbItem>
+        </Breadcrumbs>
+
+        <Button onPress={onOpen} color="primary" variant="shadow">
+          + Generate Voice
+        </Button>
+      </CardBody>
+    </Card>
+  );
+}
+
+function PopUpContainer(props) {
+  const [VoiceMode, setVoiceMode] = useState(true);
+
   return (
     <>
       <div>
-        <ButtonGroup>
-          <Button>Text to Voice</Button>
-          <Button>Voice to Voice</Button>
-        </ButtonGroup>
+        <Button
+          color={VoiceMode ? "primary" : "secondary"}
+          onClick={() => setVoiceMode(!VoiceMode)}
+        >
+          {VoiceMode ? "Text to Speech" : "Speech to Speech"}
+        </Button>
       </div>
 
       <div className="flex-col justify-center text-center">
         <h3>Pick a Voice:</h3>
         <VoiceSelector onVoiceChange={VoiceSelector.handleVoiceChange} />
 
-        <TTSUploader />
-
-        <h3>Voice To Speech:</h3>
-        <div className="flex flex-col items-center">
-          <Button
-            className="my-2"
-            color="primary"
-            label="Open File"
-            onPress={openFile.bind(this)}
-          >
-            Open File
-          </Button>
-          <h3 id="fileName"></h3>
-        </div>
+        {VoiceMode && (
+          <TTSUploader onAudioLinkAvailable={props.onAudioLinkAvailable} />
+        )}
       </div>
     </>
   );
