@@ -200,7 +200,11 @@ function PopUpContainer(props) {
           <Tab key="tts" title="Text to Speech">
             <TTSUploader onAudioLinkAvailable={props.onAudioLinkAvailable} />
           </Tab>
-          <Tab key="sts" title="Speech to Speech"></Tab>
+          <Tab key="sts" title="Speech to Speech">
+            <div className="flex flex-col justify-center text-center items-center">
+              <h1 className="text-4xl font-bold">Coming Soon</h1>
+            </div>
+          </Tab>
         </Tabs>
 
         {/* <div className="flex-col justify-center text-center">
