@@ -1,12 +1,11 @@
 // Component that contacts our API create_tts.js to generate a .mp3 file from the text the user has entered in the text box.
 // The .mp3 file is then added to a NextUI card and displayed on the table in the panel.
-import { Button, Checkbox, Textarea, Switch, Slider } from "@nextui-org/react";
+import { Checkbox, Textarea, Switch, Slider } from "@nextui-org/react";
 import { useState } from "react";
-import { set } from "react-hook-form";
 import toast from "react-hot-toast";
-import VoiceSelector from "@components/VoiceSelector"
+import VoiceSelector from "@components/VoiceSelector";
 
-export default function TTSUploader(props) {
+export default function TTSUploader({ onAudioLinkAvailable }) {
   const [advancedSettings, setAdvancedSettings] = useState(false);
   const [similarityBoost, setSimilarityBoost] = useState(0.98);
   const [stability, setStability] = useState(0.4);
@@ -51,7 +50,7 @@ export default function TTSUploader(props) {
       const data = await response.json();
       toast.success("Successfully generated audio file");
       setIsProcessing(false);
-      props.onAudioLinkAvailable(data);
+      onAudioLinkAvailable(data);
     }
   };
 
@@ -59,7 +58,7 @@ export default function TTSUploader(props) {
     <div className="flex flex-col align-center items-center mt-2">
       <h1 className="text-4xl">Text to Speech</h1>
       <form id="ttsForm" className="w-full" onSubmit={sendTextToSpeech}>
-        <VoiceSelector name="selectedVoice"></VoiceSelector>
+        <VoiceSelector name="selectedVoice" type="eleven" />
 
         <Textarea
           name="textToConvert"
@@ -83,7 +82,7 @@ export default function TTSUploader(props) {
             step={0.01}
             maxValue={1}
             minValue={0}
-            defaultValue={0.98} 
+            defaultValue={0.98}
             onChangeEnd={setSimilarityBoost}
             isDisabled={!advancedSettings}
           />
