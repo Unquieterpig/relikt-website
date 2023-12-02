@@ -106,7 +106,7 @@ function PanelContent() {
                 ></PopUpContainer>
               </ModalBody>
               <ModalFooter>
-                <Button color="primary" variant="light" onPress={postVTSData}>
+                <Button color="primary" variant="light" onPress={postData}>
                   Generate
                 </Button>
                 <Button color="danger" variant="light" onPress={onClose}>
@@ -168,87 +168,19 @@ function PopUpContainer(props) {
     <>
       <div className="flex flex-col justify-center items-center text-center">
         <Tabs aria-label="Options">
-          <Tab key="tts" title="Text to Speech">
-            <TTSUploader onAudioLinkAvailable={props.onAudioLinkAvailable} />
+          <Tab key="tts" title="Text to Speech" className="w-full">
+            <TTSUploader className="w-full" onAudioLinkAvailable={props.onAudioLinkAvailable} />
           </Tab>
-          <Tab key="sts" title="Speech to Speech">
-            <VTSUploader onAudioLinkAvailable={props.onAudioLinkAvailable} />
+          <Tab key="sts" title="Voice to Speech" className="w-full">
+            <VTSUploader className="w-full" onAudioLinkAvailable={props.onAudioLinkAvailable} />
           </Tab>
         </Tabs>
-
-        {/* <div className="flex-col justify-center text-center">
-          <h3>Pick a Voice:</h3>
-          <VoiceSelector onVoiceChange={VoiceSelector.handleVoiceChange} />
-
-          {VoiceMode && (
-            <TTSUploader onAudioLinkAvailable={props.onAudioLinkAvailable} />
-          )}
-        </div> */}
       </div>
     </>
   );
 }
 
-function VoiceSelector() {
-  const [selectedKeys, setSelectedKeys] = useState(new Set(["Martin Russel"]));
-
-  const selectedValue = useMemo(
-    () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
-    [selectedKeys]
-  );
-
-  return (
-    <div className="ring-1 ring-gray-400/10 my-4">
-      <Dropdown id="voiceSelection">
-        <DropdownTrigger>
-          <Button variant="bordered" className="my-2">
-            {selectedValue}
-          </Button>
-        </DropdownTrigger>
-        <DropdownMenu
-          aria-label="Single selection"
-          disallowEmptySelection
-          selectionMode="single"
-          selectedKeys={selectedKeys}
-          onSelectionChange={(event) => setSelectedKeys(event)}
-        >
-          <DropdownItem key="Martin Russel">Martin Russel</DropdownItem>
-          <DropdownItem key="Moist Critikal">Moist Critikal</DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
-    </div>
-  );
-}
-
-function openFile() {
-  let input = document.createElement("input");
-  input.type = "file";
-
-  let fileName = document.getElementById("fileName");
-
-  input.onchange = (event) => {
-    const file = event.target.files[0];
-
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        const fileData = e.target.result;
-
-        selectedFile = file;
-        selectedFileData = fileData;
-      };
-
-      reader.readAsText(file);
-
-      fileName.innerText = file.name;
-    }
-  };
-
-  input.click();
-}
-
-function postVTSData() {
+function postData() {
   if (selectedFile && selectedFileData && selectedVoice) {
     // Edit serverURL to correct location
     let serverURL = "http://localhost:3001";
