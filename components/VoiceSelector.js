@@ -1,4 +1,14 @@
-function VoiceSelector() {
+import {
+  Button,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+} from "@nextui-org/react";
+
+import { useState, useMemo } from "react";
+
+export default function VoiceSelector() {
     const [selectedKeys, setSelectedKeys] = useState(new Set(["Martin Russel"]));
   
     const selectedValue = useMemo(
@@ -7,7 +17,7 @@ function VoiceSelector() {
     );
   
     return (
-      <div className="ring-1 ring-gray-400/10 my-4">
+      <div className="mt-2">
         <Dropdown id="voiceSelection">
           <DropdownTrigger>
             <Button variant="bordered" className="my-2">
@@ -28,4 +38,4 @@ function VoiceSelector() {
         </Dropdown>
       </div>
     );
-  }
+}
