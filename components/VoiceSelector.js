@@ -1,19 +1,30 @@
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
-export default function VoiceSelector({ type }) {
+export default function VoiceSelector({ type, onSelect }) {
   const [items, setItems] = useState([]); // Initialize items as an empty array
+  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
-      const data = await getNormalizedData(type);
-      setItems(data); // Update the items state when the data is ready
+      try {
+        const data = await getNormalizedData(type);
+        setItems(data); // Update the items state when the data is ready
+      } catch (error) {
+        toast.error("Failed to fetch voices");
+      }
     }
 
     fetchData();
   }, [type]); // This effect runs when the 'type' prop changes
 
-  console.log(items);
+  const handleSelect = (item) => {
+    setSelectedItem(item);
+    if (onSelect) {
+      onSelect(item);
+    }
+  };
 
   return (
     <Autocomplete
@@ -21,6 +32,8 @@ export default function VoiceSelector({ type }) {
       label="Voice Selection"
       placeholder="Search a voice"
       className="max-w-xs mt-2"
+      defaultSelectedKey="knrPHWnBmmDHMoiMeP3l"
+      onSelectionChange={handleSelect}
     >
       {(item) => (
         <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>
