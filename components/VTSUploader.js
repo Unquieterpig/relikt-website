@@ -6,8 +6,10 @@ import { set } from "react-hook-form";
 import toast from "react-hot-toast";
 import VoiceSelector from "@components/VoiceSelector"
 
+// TODO: Move if needed
 let selectedFile, selectedFileData;
 
+// TODO: Move if needed
 function openFile() {
     let input = document.createElement("input");
     input.type = "file";
@@ -57,9 +59,10 @@ export default function VTSUploader(props) {
     }
 
     const requestBody = {
-      voiceToConvert: event.target.voiceToConvert.value,
-      voiceId: "21m00Tcm4TlvDq8ikWAM",
-      voiceSettings: voiceSettings,
+    // TODO: Figure out what request body is for API
+    //   voiceToConvert: event.target.voiceToConvert.value,
+    //   voiceId: "21m00Tcm4TlvDq8ikWAM",
+    //   voiceSettings: voiceSettings,
     };
 
     const response = await fetch("/api/voice/create_tts", {
@@ -75,6 +78,7 @@ export default function VTSUploader(props) {
       console.log(response);
       setIsProcessing(false);
     } else {
+      //TODO: create row and save it to user profile
       const data = await response.json();
       toast.success("Successfully generated audio file");
       setIsProcessing(false);
@@ -85,7 +89,7 @@ export default function VTSUploader(props) {
   return (
     <div className="flex flex-col align-center items-center mt-2">
       <h1 className="text-4xl">Voice to Speech</h1>
-      <form className="w-full" onSubmit={sendVoiceToSpeech}>
+      <form id="vtsForm" className="w-full" onSubmit={sendVoiceToSpeech}>
         <VoiceSelector></VoiceSelector>
 
         <Button 
@@ -97,7 +101,8 @@ export default function VTSUploader(props) {
 
         <h1 id="fileName"></h1>
 
-        <div className="flex flex-row align-center items-center gap-1">
+        {/* TODO: Only necessary if advanced settings exist */}
+        {/* <div className="flex flex-row align-center items-center gap-1">
           <Switch
             isSelected={advancedSettings}
             onValueChange={setAdvancedSettings}
@@ -105,9 +110,10 @@ export default function VTSUploader(props) {
           >
             Advanced Settings
           </Switch>
-        </div>
-
-        <div className="flex flex-col gap-2 mt-2">
+        </div> */}
+        
+        {/* TODO: Check API call for required arguments */}
+        {/* <div className="flex flex-col gap-2 mt-2">
           <Slider
             label="Similarity Boost"
             step={0.01}
@@ -134,7 +140,7 @@ export default function VTSUploader(props) {
           >
             Speaker Boost
           </Checkbox>
-        </div>
+        </div> */}
       </form>
     </div>
   );

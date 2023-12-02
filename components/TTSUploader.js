@@ -28,7 +28,9 @@ export default function TTSUploader(props) {
 
     const requestBody = {
       textToConvert: event.target.textToConvert.value,
-      voiceId: "21m00Tcm4TlvDq8ikWAM",
+      // TODO: test if voiceID is correct/works
+      voiceID: event.target.selectedVoice.value,
+      //voiceId: "21m00Tcm4TlvDq8ikWAM",
       voiceSettings: voiceSettings,
     };
 
@@ -45,6 +47,7 @@ export default function TTSUploader(props) {
       console.log(response);
       setIsProcessing(false);
     } else {
+      //TODO: create row and save it to user profile
       const data = await response.json();
       toast.success("Successfully generated audio file");
       setIsProcessing(false);
@@ -55,8 +58,8 @@ export default function TTSUploader(props) {
   return (
     <div className="flex flex-col align-center items-center mt-2">
       <h1 className="text-4xl">Text to Speech</h1>
-      <form className="w-full" onSubmit={sendTextToSpeech}>
-        <VoiceSelector></VoiceSelector>
+      <form id="ttsForm" className="w-full" onSubmit={sendTextToSpeech}>
+        <VoiceSelector name="selectedVoice"></VoiceSelector>
 
         <Textarea
           name="textToConvert"
