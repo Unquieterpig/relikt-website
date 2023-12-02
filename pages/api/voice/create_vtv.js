@@ -30,7 +30,20 @@ export default async function handler(req, res) {
       const finalVoiceSettings = { ...defaultVoiceSettings, ...voiceSettings };
 
       const response = await axios.post(
-        
+        // apiUrl,
+        // {
+        //   text: textToConvert,
+        //   voice_settings: finalVoiceSettings,
+        //   model_id: "eleven_multilingual_v2",
+        // },
+        // {
+        //   headers: {
+        //     accept: "audio/mpeg",
+        //     "content-type": "application/json",
+        //     "xi-api-key": apiKey,
+        //   },
+        //   responseType: "arraybuffer",
+        // }
       );
 
       // Generate a random file name
