@@ -26,6 +26,7 @@ import {
   TableCell,
   Breadcrumbs,
   BreadcrumbItem,
+  Tabs,
   Tab,
   ButtonGroup,
   getKeyValue,
@@ -74,8 +75,7 @@ function PanelContent() {
   // todo; Future Josh fix this nesting nightmare.
   // The function below will append the json received in audioLink to the rows array, with some additional data.
   // Additonal data: name: "TTS", voice: selectedVoice, status: "Generated"
-  function handleAudioFileLink(audioLink) {
-    console.log(audioLink);
+  const handleAudioFileLink = (audioLink) => {
     rows.push({
       key: rows.length,
       name: "TTS",
@@ -83,20 +83,26 @@ function PanelContent() {
       status: "Generated",
       audioSample: audioLink.audioUrl,
     });
-  }
+    onOpenChange(false);
+  };
 
   return (
     <>
       {GenerateBreadcrumb(onOpen)}
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="5xl">
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        size="xl"
+        backdrop="blur"
+      >
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
                 Generate Voice
               </ModalHeader>
-              <ModalBody className="min-h-[500px]">
+              <ModalBody className="min-h-[425px]">
                 <PopUpContainer
                   onAudioLinkAvailable={handleAudioFileLink}
                 ></PopUpContainer>
@@ -179,26 +185,32 @@ function GenerateBreadcrumb(onOpen) {
 }
 
 function PopUpContainer(props) {
-  const [VoiceMode, setVoiceMode] = useState(true);
-
   return (
     <>
-      <div>
+      {/* <div>
         <Button
           color={VoiceMode ? "primary" : "secondary"}
           onClick={() => setVoiceMode(!VoiceMode)}
         >
           {VoiceMode ? "Text to Speech" : "Speech to Speech"}
         </Button>
-      </div>
+      </div> */}
+      <div className="flex flex-col justify-center items-center text-center">
+        <Tabs aria-label="Options">
+          <Tab key="tts" title="Text to Speech">
+            <TTSUploader onAudioLinkAvailable={props.onAudioLinkAvailable} />
+          </Tab>
+          <Tab key="sts" title="Speech to Speech"></Tab>
+        </Tabs>
 
-      <div className="flex-col justify-center text-center">
-        <h3>Pick a Voice:</h3>
-        <VoiceSelector onVoiceChange={VoiceSelector.handleVoiceChange} />
+        {/* <div className="flex-col justify-center text-center">
+          <h3>Pick a Voice:</h3>
+          <VoiceSelector onVoiceChange={VoiceSelector.handleVoiceChange} />
 
-        {VoiceMode && (
-          <TTSUploader onAudioLinkAvailable={props.onAudioLinkAvailable} />
-        )}
+          {VoiceMode && (
+            <TTSUploader onAudioLinkAvailable={props.onAudioLinkAvailable} />
+          )}
+        </div> */}
       </div>
     </>
   );

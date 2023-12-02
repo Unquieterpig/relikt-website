@@ -107,12 +107,12 @@ export default function TTSUploader(props) {
           </Checkbox>
         </div>
 
-        {/* Debug info */}
+        {/* Debug info
         <p>Debug Info:</p>
         <p>Advanced Settings: {advancedSettings ? "true" : "false"}</p>
         <p>Similarity Boost: {similarityBoost}</p>
         <p>Stability: {stability}</p>
-        <p>Speaker Boost: {speakerBoost ? "true" : "false"}</p>
+        <p>Speaker Boost: {speakerBoost ? "true" : "false"}</p> */}
       </form>
     </div>
   );
