@@ -57,18 +57,11 @@ export default function TTSUploader(props) {
       <form onSubmit={sendTextToSpeech}>
         <Textarea
           name="textToConvert"
-          className="mt-2"
+          className="my-5 w-full"
           placeholder="Enter text to convert to speech"
         ></Textarea>
 
         <div className="flex flex-row align-center items-center gap-1">
-          <Button
-            type="submit"
-            className="btn btn-primary mt-2"
-            isLoading={isProcessing}
-          >
-            Submit
-          </Button>
           <Switch
             isSelected={advancedSettings}
             onValueChange={setAdvancedSettings}
@@ -84,7 +77,7 @@ export default function TTSUploader(props) {
             step={0.01}
             maxValue={1}
             minValue={0}
-            defaultValue={0.98}
+            defaultValue={0.98} 
             onChangeEnd={setSimilarityBoost}
             isDisabled={!advancedSettings}
           />

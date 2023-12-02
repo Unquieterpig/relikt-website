@@ -1,10 +1,10 @@
 import GradientTop from "@components/GamesenseGradient";
 import Metatags from "@components/Metatags";
 import TTSUploader from "@components/TTSUploader";
+import VTSUploader from "@components/VTSUploader";
 
 import {
   Button,
-  Divider,
   Modal,
   ModalContent,
   ModalHeader,
@@ -15,7 +15,6 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  Textarea,
   Card,
   CardBody,
   Table,
@@ -28,7 +27,6 @@ import {
   BreadcrumbItem,
   Tabs,
   Tab,
-  ButtonGroup,
   getKeyValue,
 } from "@nextui-org/react";
 
@@ -108,6 +106,9 @@ function PanelContent() {
                 ></PopUpContainer>
               </ModalBody>
               <ModalFooter>
+                <Button color="primary" variant="light" onPress={postVTSData}>
+                  Generate
+                </Button>
                 <Button color="danger" variant="light" onPress={onClose}>
                   Cancel
                 </Button>
@@ -141,28 +142,6 @@ function PanelContent() {
           </TableBody>
         </Table>
       </div>
-      {/* <div className="hidden">
-        <div className="my-2" id="template">
-          <Card
-            isBlurred
-            className="border-none bg-background/60 dark:bg-default-100/50 max-w-[610px] text-center w-full"
-            shadow="sm"
-          >
-            <CardBody className="flex-row justify-between">
-              <h3 className="m-2 text-l self-center" id="voiceName">
-                Template
-              </h3>
-
-              <div className="mp3-player">
-                <audio controls>
-                  <source src="" type="audio/mpeg" id="voiceSource" />
-                  Your browser does not support the audio element.
-                </audio>
-              </div>
-            </CardBody>
-          </Card>
-        </div>
-      </div> */}
     </>
   );
 }
@@ -187,23 +166,13 @@ function GenerateBreadcrumb(onOpen) {
 function PopUpContainer(props) {
   return (
     <>
-      {/* <div>
-        <Button
-          color={VoiceMode ? "primary" : "secondary"}
-          onClick={() => setVoiceMode(!VoiceMode)}
-        >
-          {VoiceMode ? "Text to Speech" : "Speech to Speech"}
-        </Button>
-      </div> */}
       <div className="flex flex-col justify-center items-center text-center">
         <Tabs aria-label="Options">
           <Tab key="tts" title="Text to Speech">
             <TTSUploader onAudioLinkAvailable={props.onAudioLinkAvailable} />
           </Tab>
           <Tab key="sts" title="Speech to Speech">
-            <div className="flex flex-col justify-center text-center items-center">
-              <h1 className="text-4xl font-bold">Coming Soon</h1>
-            </div>
+            <VTSUploader onAudioLinkAvailable={props.onAudioLinkAvailable} />
           </Tab>
         </Tabs>
 
@@ -279,31 +248,6 @@ function openFile() {
   input.click();
 }
 
-// function createVoiceCell(name, audio) {
-//   // Get the template element by ID
-//   const template = document.getElementById("template");
-
-//   // Clone the template element
-//   const newVoice = template.cloneNode(true);
-
-//   // Set the name and audio values in the cloned element
-//   // newVoice.querySelector('.voice-name').textContent = name;
-//   // newVoice.querySelector('.voice-audio').src = audio;
-
-//   // Get the container where you want to append the new card
-//   const vbody = document.getElementById("vbody");
-
-//   // Append the cloned element to the container
-//   vbody.appendChild(newVoice);
-
-//   // Make the cloned element visible (assuming it was hidden in the template)
-//   newVoice.style.display = "block";
-
-//   // Hide no voices paragraph
-//   let noVoices = document.getElementById("noVoiceHistoryObject");
-//   noVoices.style.display = "none";
-// }
-
 function postVTSData() {
   if (selectedFile && selectedFileData && selectedVoice) {
     // Edit serverURL to correct location
@@ -326,31 +270,6 @@ function postVTSData() {
   }
 }
 
-// function postTTSData() {
-//   let text = textToBinaryArray(document.getElementById("textArea").value);
-//   if (text) {
-//     // Edit serverURL to correct location
-//     let serverURL = "http://localhost:3001";
+function getRows() {
 
-//     axios({
-//       method: "post",
-//       url: serverURL,
-//       data: {
-//         // Edit data to correct format
-//         voice: selectedVoice,
-//         name: "TTS",
-//         audio: text,
-//       },
-//     }).then((response) => {
-//       // Edit response if needed then send to createVoiceCell
-//       // createVoiceCell(response);
-//       console.log(response);
-//     });
-//   }
-// }
-
-// function textToBinaryArray(text) {
-//   const encoder = new TextEncoder();
-//   const binaryArray = encoder.encode(text);
-//   return binaryArray;
-// }
+}
