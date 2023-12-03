@@ -206,10 +206,10 @@ function PopUpContainer(props) {
             />
           </Tab>
           <Tab key="sts" title="Voice to Speech" className="w-full">
-            {/* <VTSUploader
+            <VTSUploader
               className="w-full"
               onAudioLinkAvailable={props.onAudioLinkAvailable}
-            /> */}
+            />
           </Tab>
         </Tabs>
       </div>
