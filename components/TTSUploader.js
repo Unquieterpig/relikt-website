@@ -74,7 +74,6 @@ export default function TTSUploader({ onAudioLinkAvailable, onProcessing }) {
 
   return (
     <div className="flex flex-col align-center items-center mt-2">
-      <h1 className="text-4xl">Text to Speech</h1>
       <form id="ttsForm" className="w-full" onSubmit={sendTextToSpeech}>
         <VoiceSelector
           name="selectedVoice"
@@ -93,7 +92,6 @@ export default function TTSUploader({ onAudioLinkAvailable, onProcessing }) {
           <Switch
             isSelected={advancedSettings}
             onValueChange={setAdvancedSettings}
-            className="mt-2"
           >
             Advanced Settings
           </Switch>
@@ -101,7 +99,7 @@ export default function TTSUploader({ onAudioLinkAvailable, onProcessing }) {
 
         <div className="flex flex-col gap-2 mt-2">
           <Slider
-            label="Similarity Boost"
+            label="Affinity Amplification"
             step={0.01}
             maxValue={1}
             minValue={0}
@@ -111,7 +109,7 @@ export default function TTSUploader({ onAudioLinkAvailable, onProcessing }) {
             isDisabled={!advancedSettings}
           />
           <Slider
-            label="Stability"
+            label="Consistency Assurance"
             step={0.01}
             maxValue={1}
             minValue={0}
@@ -140,13 +138,13 @@ export default function TTSUploader({ onAudioLinkAvailable, onProcessing }) {
         </div>
 
         {/* Debug info */}
-        <p>Debug Info:</p>
+        {/* <p>Debug Info:</p>
         <p>Selected Name: {selectedName}</p>
         <p>Selected Voice: {selectedVoice}</p>
         <p>Advanced Settings: {advancedSettings ? "true" : "false"}</p>
         <p>Similarity Boost: {similarityBoost}</p>
         <p>Stability: {stability}</p>
-        <p>Speaker Boost: {speakerBoost ? "true" : "false"}</p>
+        <p>Speaker Boost: {speakerBoost ? "true" : "false"}</p> */}
       </form>
     </div>
   );
