@@ -103,7 +103,7 @@ function PanelContent() {
               </ModalBody>
               <ModalFooter>
                 {/* TODO: set onPress to perform some function that submits the form*/}
-                <Button color="primary" variant="light" onPress={submitForm}>
+                <Button color="primary" variant="light" type="submit" form="ttsForm">
                   Generate
                 </Button>
                 <Button color="danger" variant="light" onPress={onClose}>
