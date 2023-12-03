@@ -19,7 +19,15 @@ export default function VoiceSelector({ type, onSelect, onNameSelect }) {
   }, [type]); // This effect runs when the 'type' prop changes
 
   const handleSelect = (SelectedKey) => {
-    const selectedItem = items.find((item) => item.value === SelectedKey);
+    let selectedItem;
+
+    // Have to differentiate between the two APIs
+    // kits returns a number for IDs and eleven returns a string
+    if (type === "eleven") {
+      selectedItem = items.find((item) => item.value === SelectedKey);
+    } else if (type === "kits") {
+      selectedItem = items.find((item) => item.value == SelectedKey);
+    }
 
     if (onSelect) {
       onSelect(SelectedKey);
@@ -39,7 +47,7 @@ export default function VoiceSelector({ type, onSelect, onNameSelect }) {
       label="Voice Selection"
       placeholder="Search a voice"
       className="max-w-xs mt-2"
-      defaultSelectedKey="knrPHWnBmmDHMoiMeP3l"
+      defaultSelectedKey={type === "eleven" ? "knrPHWnBmmDHMoiMeP3l" : "959984"}
       onSelectionChange={handleSelect}
     >
       {(item) => (
@@ -70,10 +78,9 @@ async function getNormalizedData(type) {
       .sort((a, b) => a.label.localeCompare(b.label));
   } else if (type === "kits") {
     // Fetch the voices from the API
-    // todo; Move this to one of our API routes since we need to provide an API key to access the data
-    const response = await fetch("https://arpeggi.io/api/kits/v1/voice-models");
+    const response = await fetch("/api/voice/get_vtv_models");
     const data = await response.json();
-    voices = data.voices;
+    voices = data.data;
     return voices
       .map((voice) => {
         return {

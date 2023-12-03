@@ -4,18 +4,17 @@ import { Button, Checkbox, Textarea, Switch, Slider } from "@nextui-org/react";
 import { useState } from "react";
 import { set } from "react-hook-form";
 import toast from "react-hot-toast";
-import VoiceSelector from "@components/VoiceSelector"
+import VoiceSelector from "@components/VoiceSelector";
 
 export default function VTSUploader(props) {
   const [advancedSettings, setAdvancedSettings] = useState(false);
-  const [similarityBoost, setSimilarityBoost] = useState(0.98);
-  const [stability, setStability] = useState(0.4);
-  const [speakerBoost, setSpeakerBoost] = useState(true);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [selectedFile, setSelectedFile] = useState()
-  const [selectedFileData, setSelectedFileData] = useState()
-  const [selectedVoice, setSelectedVoice] = useState("knrPHWnBmmDHMoiMeP3l");
-  const [selectedName, setSelectedName] = useState("Santa Claus");
+  const [pitchTone, setPitchTone] = useState(0);
+  const [strength, setStrength] = useState(0.8);
+  const [modelVolume, setModelVolume] = useState(0.75);
+  const [selectedFile, setSelectedFile] = useState();
+  const [selectedFileData, setSelectedFileData] = useState();
+  const [selectedVoice, setSelectedVoice] = useState("959984");
+  const [selectedName, setSelectedName] = useState("Evan Voice");
 
   const handleVoiceSelect = (voice) => {
     setSelectedVoice(voice);
@@ -27,60 +26,59 @@ export default function VTSUploader(props) {
 
   const handleSelectedFile = (selected) => {
     setSelectedFile(selected);
-  }
+  };
 
   const handleSelectedFileData = (data) => {
     setSelectedFileData(data);
-  }
+  };
 
   // Open file dialog
   const openFile = () => {
     let input = document.createElement("input");
     input.type = "file";
-  
+
     let fileName = document.getElementById("fileName");
-  
+
     input.onchange = (event) => {
       const file = event.target.files[0];
-  
+
       if (file) {
         const reader = new FileReader();
-  
+
         reader.onload = (e) => {
           const fileData = e.target.result;
-  
+
           handleSelectedFile(file);
           handleSelectedFileData(fileData);
         };
-  
+
         reader.readAsText(file);
-  
+
         fileName.innerText = file.name;
       }
     };
-  
+
     input.click();
-};
+  };
 
   const sendVoiceToSpeech = async (event) => {
     event.preventDefault();
 
     setIsProcessing(true);
-    let voiceSettings = {};
+    let voiceSettings = null;
+
     if (advancedSettings) {
       voiceSettings = {
-        // TODO: know what is needed for settings if any
-        similarity_boost: similarityBoost,
-        stability: stability,
-        use_speaker_boost: speakerBoost,
+        pitchShift: pitchTone,
+        conversionStrength: strength,
+        modelVolumeMix: modelVolume,
       };
     }
 
     const requestBody = {
-    // TODO: Figure out what request body is for API
-    //   voiceToConvert: event.target.voiceToConvert.value,
-    //   voiceId: "21m00Tcm4TlvDq8ikWAM",
-    //   voiceSettings: voiceSettings,
+      soundFile: selectedFileData,
+      voiceModelId: selectedVoice,
+      ...(voiceSettings && voiceSettings),
     };
 
     const response = await fetch("/api/voice/create_tts", {
@@ -110,22 +108,19 @@ export default function VTSUploader(props) {
       <form id="vtsForm" className="w-full" onSubmit={sendVoiceToSpeech}>
         <VoiceSelector
           name="selectedVoice"
-          type="eleven"
+          type="kits"
           onSelect={handleVoiceSelect}
           onNameSelect={handleNameSelect}
         />
 
-        <Button 
-        color="primary" 
-        className="my-5 w-full" 
-        onPress={openFile}>
-        Upload Audio
+        <Button color="primary" className="my-5 w-full" onPress={openFile}>
+          Upload Audio
         </Button>
 
         <h1 id="fileName"></h1>
 
         {/* TODO: Only necessary if advanced settings exist */}
-        {/* <div className="flex flex-row align-center items-center gap-1">
+        <div className="flex flex-row align-center items-center gap-1">
           <Switch
             isSelected={advancedSettings}
             onValueChange={setAdvancedSettings}
@@ -133,38 +128,57 @@ export default function VTSUploader(props) {
           >
             Advanced Settings
           </Switch>
-        </div> */}
-        
+        </div>
+
         {/* TODO: Check API call for required arguments */}
-        {/* <div className="flex flex-col gap-2 mt-2">
+        <div className="flex flex-col gap-2 mt-2">
           <Slider
-            label="Similarity Boost"
-            step={0.01}
-            maxValue={1}
-            minValue={0}
-            defaultValue={0.98} 
-            onChangeEnd={setSimilarityBoost}
+            label="Harmonic Tonal Modulation"
+            step={1}
+            maxValue={12}
+            minValue={-12}
+            defaultValue={0}
+            fillOffset={0}
+            onChange={setPitchTone}
             isDisabled={!advancedSettings}
           />
           <Slider
-            label="Stability"
+            label="Articulation Intensity"
             step={0.01}
             maxValue={1}
             minValue={0}
-            defaultValue={0.4}
-            onChangeEnd={setStability}
+            defaultValue={0.8}
+            onChange={setStrength}
             isDisabled={!advancedSettings}
           />
-          <Checkbox
+          <Slider
+            label="Adaptive Resonance Calibration"
+            step={0.01}
+            maxValue={1}
+            minValue={0}
+            defaultValue={0.75}
+            onChange={setModelVolume}
+            isDisabled={!advancedSettings}
+          />
+          {/* <Checkbox
             defaultSelected
             isSelected={speakerBoost}
             onValueChange={setSpeakerBoost}
             isDisabled={!advancedSettings}
           >
             Speaker Boost
-          </Checkbox>
-        </div> */}
+          </Checkbox> */}
+        </div>
       </form>
+
+      {/* Debug info */}
+      <p>Debug Info:</p>
+      <p>Selected Name: {selectedName}</p>
+      <p>Selected Voice: {selectedVoice}</p>
+      <p>Advanced Settings: {advancedSettings ? "true" : "false"}</p>
+      {/* <p>Similarity Boost: {similarityBoost}</p>
+      <p>Stability: {stability}</p>
+      <p>Speaker Boost: {speakerBoost ? "true" : "false"}</p> */}
     </div>
   );
 }
