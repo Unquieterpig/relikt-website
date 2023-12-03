@@ -64,6 +64,7 @@ const columns = [
 
 function PanelContent() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [selectedTab, setSelected] = useState("tts"); // Lift state up
 
   // Prop drill that thang to TTSUploader.js 😎
   // todo; Future Josh fix this nesting nightmare.
@@ -104,7 +105,10 @@ function PanelContent() {
               <ModalFooter>
                 {/* TODO: set onPress to perform some function that submits the form*/}
                 <Button color="primary" variant="light" type="submit" form="ttsForm">
-                  Generate
+                  Generate TTS
+                </Button>
+                <Button color="primary" variant="light" type="submit" form="vtsForm">
+                  Generate VTS
                 </Button>
                 <Button color="danger" variant="light" onPress={onClose}>
                   Cancel
@@ -161,7 +165,7 @@ function GenerateBreadcrumb(onOpen) {
 }
 
 function PopUpContainer(props) {
-  return (
+    return (
     <>
       <div className="flex flex-col justify-center items-center text-center">
         <Tabs aria-label="Options">
@@ -175,11 +179,6 @@ function PopUpContainer(props) {
       </div>
     </>
   );
-}
-
-// TODO: figure out how to get the form to submit and distinguish between tts and vts
-function submitForm() {
-  document.getElementById("ttsForm");
 }
 
 // Unsure if this will be used or the create_tts and create_vtv will
