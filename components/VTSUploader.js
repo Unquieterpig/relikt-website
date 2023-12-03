@@ -176,9 +176,9 @@ export default function VTSUploader(props) {
       <p>Selected Name: {selectedName}</p>
       <p>Selected Voice: {selectedVoice}</p>
       <p>Advanced Settings: {advancedSettings ? "true" : "false"}</p>
-      {/* <p>Similarity Boost: {similarityBoost}</p>
-      <p>Stability: {stability}</p>
-      <p>Speaker Boost: {speakerBoost ? "true" : "false"}</p> */}
+      <p>Pitch Shift: {pitchTone}</p>
+      <p>Conversion Strength: {strength}</p>
+      <p>Model Volume: {modelVolume}</p>
     </div>
   );
 }
