@@ -64,7 +64,11 @@ const columns = [
 
 function PanelContent() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [selectedTab, setSelected] = useState("tts"); // Lift state up
+  const [selectedTab, setSelected] = useState(true); // Lift state up
+
+  const handleTabChange = () => {
+    setSelected(!selectedTab);
+  };
 
   // Prop drill that thang to TTSUploader.js 😎
   // todo; Future Josh fix this nesting nightmare.
@@ -100,26 +104,33 @@ function PanelContent() {
               <ModalBody className="min-h-[425px]">
                 <PopUpContainer
                   onAudioLinkAvailable={handleAudioFileLink}
+                  handleTabChange={handleTabChange}
                 ></PopUpContainer>
               </ModalBody>
               <ModalFooter>
-                {/* TODO: set onPress to perform some function that submits the form*/}
-                <Button
-                  color="primary"
-                  variant="light"
-                  type="submit"
-                  form="ttsForm"
-                >
-                  Generate TTS
-                </Button>
-                <Button
-                  color="primary"
-                  variant="light"
-                  type="submit"
-                  form="vtsForm"
-                >
-                  Generate VTS
-                </Button>
+                {/* Since Daniel wanted it to look pretty */}
+                {!selectedTab && (
+                  <Button
+                    color="primary"
+                    variant="light"
+                    type="submit"
+                    form="ttsForm"
+                  >
+                    Generate
+                  </Button>
+                )}
+
+                {selectedTab && (
+                  <Button
+                    color="primary"
+                    variant="light"
+                    type="submit"
+                    form="vtsForm"
+                  >
+                    Generate
+                  </Button>
+                )}
+
                 <Button color="danger" variant="light" onPress={onClose}>
                   Cancel
                 </Button>
@@ -178,7 +189,7 @@ function PopUpContainer(props) {
   return (
     <>
       <div className="flex flex-col justify-center items-center text-center">
-        <Tabs aria-label="Options">
+        <Tabs aria-label="Options" onSelectionChange={props.handleTabChange}>
           <Tab key="tts" title="Text to Speech" className="w-full">
             <TTSUploader
               className="w-full"
@@ -186,10 +197,10 @@ function PopUpContainer(props) {
             />
           </Tab>
           <Tab key="sts" title="Voice to Speech" className="w-full">
-            <VTSUploader
+            {/* <VTSUploader
               className="w-full"
               onAudioLinkAvailable={props.onAudioLinkAvailable}
-            />
+            /> */}
           </Tab>
         </Tabs>
       </div>
