@@ -35,11 +35,12 @@ export default function TTSUploader({ onAudioLinkAvailable }) {
         use_speaker_boost: speakerBoost,
       };
     }
+    console.log(selectedVoice);
 
     const requestBody = {
       textToConvert: event.target.textToConvert.value,
       // TODO: test if voiceID is correct/works
-      voiceID: selectedVoice,
+      voiceId: selectedVoice,
       voiceSettings: voiceSettings,
     };
 

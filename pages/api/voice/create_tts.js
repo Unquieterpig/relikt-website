@@ -21,7 +21,7 @@ export default async function handler(req, res) {
       // Debugging stuff
       // console.log("textToConvert: ", textToConvert);
       // console.log("voiceID: ", voiceId);
-      // console.log("voiceSettings: ", voiceSettings)
+      // console.log("voiceSettings: ", voiceSettings);
 
       const apiKey = process.env.ELEVENLABS_SECRET_KEY;
       const apiUrl = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`;
