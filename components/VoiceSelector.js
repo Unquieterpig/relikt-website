@@ -32,6 +32,7 @@ export default function VoiceSelector({ type, onSelect, onNameSelect }) {
 
   return (
     <Autocomplete
+      disableClearable
       defaultItems={items}
       label="Voice Selection"
       placeholder="Search a voice"
