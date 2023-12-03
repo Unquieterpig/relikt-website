@@ -6,11 +6,35 @@ import { set } from "react-hook-form";
 import toast from "react-hot-toast";
 import VoiceSelector from "@components/VoiceSelector"
 
-// TODO: Move if needed
-let selectedFile, selectedFileData;
+export default function VTSUploader(props) {
+  const [advancedSettings, setAdvancedSettings] = useState(false);
+  const [similarityBoost, setSimilarityBoost] = useState(0.98);
+  const [stability, setStability] = useState(0.4);
+  const [speakerBoost, setSpeakerBoost] = useState(true);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [selectedFile, setSelectedFile] = useState()
+  const [selectedFileData, setSelectedFileData] = useState()
+  const [selectedVoice, setSelectedVoice] = useState("knrPHWnBmmDHMoiMeP3l");
+  const [selectedName, setSelectedName] = useState("Santa Claus");
 
-// TODO: Move if needed
-function openFile() {
+  const handleVoiceSelect = (voice) => {
+    setSelectedVoice(voice);
+  };
+
+  const handleNameSelect = (name) => {
+    setSelectedName(name);
+  };
+
+  const handleSelectedFile = (selected) => {
+    setSelectedFile(selected);
+  }
+
+  const handleSelectedFileData = (data) => {
+    setSelectedFileData(data);
+  }
+
+  // Open file dialog
+  const openFile = () => {
     let input = document.createElement("input");
     input.type = "file";
   
@@ -25,8 +49,8 @@ function openFile() {
         reader.onload = (e) => {
           const fileData = e.target.result;
   
-          selectedFile = file;
-          selectedFileData = fileData;
+          handleSelectedFile(file);
+          handleSelectedFileData(fileData);
         };
   
         reader.readAsText(file);
@@ -36,14 +60,7 @@ function openFile() {
     };
   
     input.click();
-}
-
-export default function VTSUploader(props) {
-  const [advancedSettings, setAdvancedSettings] = useState(false);
-  const [similarityBoost, setSimilarityBoost] = useState(0.98);
-  const [stability, setStability] = useState(0.4);
-  const [speakerBoost, setSpeakerBoost] = useState(true);
-  const [isProcessing, setIsProcessing] = useState(false);
+};
 
   const sendVoiceToSpeech = async (event) => {
     event.preventDefault();
@@ -52,6 +69,7 @@ export default function VTSUploader(props) {
     let voiceSettings = {};
     if (advancedSettings) {
       voiceSettings = {
+        // TODO: know what is needed for settings if any
         similarity_boost: similarityBoost,
         stability: stability,
         use_speaker_boost: speakerBoost,
@@ -90,7 +108,12 @@ export default function VTSUploader(props) {
     <div className="flex flex-col align-center items-center mt-2">
       <h1 className="text-4xl">Voice to Speech</h1>
       <form id="vtsForm" className="w-full" onSubmit={sendVoiceToSpeech}>
-        <VoiceSelector></VoiceSelector>
+        <VoiceSelector
+          name="selectedVoice"
+          type="eleven"
+          onSelect={handleVoiceSelect}
+          onNameSelect={handleNameSelect}
+        />
 
         <Button 
         color="primary" 
