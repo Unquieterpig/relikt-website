@@ -26,7 +26,9 @@ export default function VoiceSelector({ type, onSelect, onNameSelect }) {
     }
 
     if (onNameSelect) {
-      onNameSelect(selectedItem.label); // Passes the name to the parent
+      onNameSelect(
+        selectedItem && selectedItem.label ? selectedItem.label : ""
+      ); // Passes the name to the parent
     }
   };
 
