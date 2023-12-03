@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     console.log("POST request received for /api/voice/create_tts");
     try {
-      const { textToConvert, voiceId, voiceSettings } = req.body; // Extract voiceId from the request body
+      const { textToConvert, voiceId, voiceSettings, voiceName } = req.body; // Extract voiceId from the request body
 
       // Debugging stuff
       // console.log("textToConvert: ", textToConvert);
@@ -61,9 +61,11 @@ export default async function handler(req, res) {
       // Save the audio data as an mp3 file
       fs.writeFileSync(filePath, Buffer.from(response.data, "binary"));
 
-      res
-        .status(200)
-        .json({ audioUrl: `/audio/${filename}`, selectedVoice: voiceId });
+      res.status(200).json({
+        audioUrl: `/audio/${filename}`,
+        selectedVoice: voiceId,
+        voiceName: voiceName,
+      });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

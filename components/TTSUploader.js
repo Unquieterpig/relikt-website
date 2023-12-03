@@ -12,9 +12,14 @@ export default function TTSUploader({ onAudioLinkAvailable }) {
   const [speakerBoost, setSpeakerBoost] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
   const [selectedVoice, setSelectedVoice] = useState("knrPHWnBmmDHMoiMeP3l");
+  const [selectedName, setSelectedName] = useState("Santa Claus");
 
   const handleVoiceSelect = (voice) => {
     setSelectedVoice(voice);
+  };
+
+  const handleNameSelect = (name) => {
+    setSelectedName(name);
   };
 
   const resetAdvancedSettings = () => {
@@ -35,13 +40,12 @@ export default function TTSUploader({ onAudioLinkAvailable }) {
         use_speaker_boost: speakerBoost,
       };
     }
-    console.log(selectedVoice);
 
     const requestBody = {
       textToConvert: event.target.textToConvert.value,
-      // TODO: test if voiceID is correct/works
       voiceId: selectedVoice,
       voiceSettings: voiceSettings,
+      voiceName: selectedName,
     };
 
     const response = await fetch("/api/voice/create_tts", {
@@ -73,6 +77,7 @@ export default function TTSUploader({ onAudioLinkAvailable }) {
           name="selectedVoice"
           type="eleven"
           onSelect={handleVoiceSelect}
+          onNameSelect={handleNameSelect}
         />
 
         <Textarea
@@ -133,6 +138,7 @@ export default function TTSUploader({ onAudioLinkAvailable }) {
 
         {/* Debug info */}
         <p>Debug Info:</p>
+        <p>Selected Name: {selectedName}</p>
         <p>Selected Voice: {selectedVoice}</p>
         <p>Advanced Settings: {advancedSettings ? "true" : "false"}</p>
         <p>Similarity Boost: {similarityBoost}</p>

@@ -46,7 +46,7 @@ const rows = [];
 const columns = [
   {
     key: "name",
-    label: "NAME",
+    label: "TYPE",
   },
   {
     key: "voice",
@@ -73,7 +73,7 @@ function PanelContent() {
     rows.push({
       key: rows.length,
       name: "TTS",
-      voice: audioLink.selectedVoice,
+      voice: audioLink.voiceName,
       status: "Generated",
       audioSample: audioLink.audioUrl,
     });
@@ -103,7 +103,12 @@ function PanelContent() {
               </ModalBody>
               <ModalFooter>
                 {/* TODO: set onPress to perform some function that submits the form*/}
-                <Button color="primary" variant="light" type="submit" form="ttsForm">
+                <Button
+                  color="primary"
+                  variant="light"
+                  type="submit"
+                  form="ttsForm"
+                >
                   Generate
                 </Button>
                 <Button color="danger" variant="light" onPress={onClose}>
@@ -166,10 +171,16 @@ function PopUpContainer(props) {
       <div className="flex flex-col justify-center items-center text-center">
         <Tabs aria-label="Options">
           <Tab key="tts" title="Text to Speech" className="w-full">
-            <TTSUploader className="w-full" onAudioLinkAvailable={props.onAudioLinkAvailable} />
+            <TTSUploader
+              className="w-full"
+              onAudioLinkAvailable={props.onAudioLinkAvailable}
+            />
           </Tab>
           <Tab key="sts" title="Voice to Speech" className="w-full">
-            <VTSUploader className="w-full" onAudioLinkAvailable={props.onAudioLinkAvailable} />
+            <VTSUploader
+              className="w-full"
+              onAudioLinkAvailable={props.onAudioLinkAvailable}
+            />
           </Tab>
         </Tabs>
       </div>

@@ -2,9 +2,8 @@ import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 
-export default function VoiceSelector({ type, onSelect }) {
+export default function VoiceSelector({ type, onSelect, onNameSelect }) {
   const [items, setItems] = useState([]); // Initialize items as an empty array
-  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -19,10 +18,15 @@ export default function VoiceSelector({ type, onSelect }) {
     fetchData();
   }, [type]); // This effect runs when the 'type' prop changes
 
-  const handleSelect = (item) => {
-    setSelectedItem(item);
+  const handleSelect = (SelectedKey) => {
+    const selectedItem = items.find((item) => item.value === SelectedKey);
+
     if (onSelect) {
-      onSelect(item);
+      onSelect(SelectedKey);
+    }
+
+    if (onNameSelect) {
+      onNameSelect(selectedItem.label); // Passes the name to the parent
     }
   };
 
