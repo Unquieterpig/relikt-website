@@ -78,6 +78,8 @@ export default function TTSUploader({ onAudioLinkAvailable }) {
           type="eleven"
           onSelect={handleVoiceSelect}
           onNameSelect={handleNameSelect}
+          disallowEmptySelection
+          selectionMode="single"
         />
 
         <Textarea
