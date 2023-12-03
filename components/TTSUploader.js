@@ -5,12 +5,11 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import VoiceSelector from "@components/VoiceSelector";
 
-export default function TTSUploader({ onAudioLinkAvailable }) {
+export default function TTSUploader({ onAudioLinkAvailable, onProcessing }) {
   const [advancedSettings, setAdvancedSettings] = useState(false);
   const [similarityBoost, setSimilarityBoost] = useState(0.98);
   const [stability, setStability] = useState(0.4);
   const [speakerBoost, setSpeakerBoost] = useState(true);
-  const [isProcessing, setIsProcessing] = useState(false);
   const [selectedVoice, setSelectedVoice] = useState("knrPHWnBmmDHMoiMeP3l");
   const [selectedName, setSelectedName] = useState("Santa Claus");
 
@@ -22,6 +21,10 @@ export default function TTSUploader({ onAudioLinkAvailable }) {
     setSelectedName(name);
   };
 
+  const handleProcessing = (isProcessing) => {
+    onProcessing(isProcessing);
+  };
+
   const resetAdvancedSettings = () => {
     setSimilarityBoost(0.98);
     setStability(0.4);
@@ -31,7 +34,7 @@ export default function TTSUploader({ onAudioLinkAvailable }) {
   const sendTextToSpeech = async (event) => {
     event.preventDefault();
 
-    setIsProcessing(true);
+    handleProcessing(true);
     let voiceSettings = {};
     if (advancedSettings) {
       voiceSettings = {
@@ -59,12 +62,12 @@ export default function TTSUploader({ onAudioLinkAvailable }) {
     if (!response.ok) {
       toast.error("Failed to generate audio file");
       console.log(response);
-      setIsProcessing(false);
+      handleProcessing(false);
     } else {
       //TODO: create row and save it to user profile
       const data = await response.json();
       toast.success("Successfully generated audio file");
-      setIsProcessing(false);
+      handleProcessing(false);
       onAudioLinkAvailable(data);
     }
   };

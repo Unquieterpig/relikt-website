@@ -65,6 +65,11 @@ const columns = [
 function PanelContent() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedTab, setSelected] = useState(true); // Lift state up
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handleProcessing = (isProcessing) => {
+    setIsProcessing(isProcessing);
+  };
 
   const handleTabChange = () => {
     setSelected(!selectedTab);
@@ -105,6 +110,7 @@ function PanelContent() {
                 <PopUpContainer
                   onAudioLinkAvailable={handleAudioFileLink}
                   handleTabChange={handleTabChange}
+                  handleProcessing={handleProcessing}
                 ></PopUpContainer>
               </ModalBody>
               <ModalFooter>
@@ -115,6 +121,7 @@ function PanelContent() {
                     variant="light"
                     type="submit"
                     form="ttsForm"
+                    isLoading={isProcessing}
                   >
                     Generate
                   </Button>
@@ -126,6 +133,7 @@ function PanelContent() {
                     variant="light"
                     type="submit"
                     form="vtsForm"
+                    isLoading={isProcessing}
                   >
                     Generate
                   </Button>
@@ -194,6 +202,7 @@ function PopUpContainer(props) {
             <TTSUploader
               className="w-full"
               onAudioLinkAvailable={props.onAudioLinkAvailable}
+              onProcessing={props.handleProcessing}
             />
           </Tab>
           <Tab key="sts" title="Voice to Speech" className="w-full">
