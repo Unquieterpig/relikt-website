@@ -5,7 +5,11 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import VoiceSelector from "@components/VoiceSelector";
 
-export default function TTSUploader({ onAudioLinkAvailable, onProcessing }) {
+export default function TTSUploader({
+  handleAudioFileLink,
+  onProcessing,
+  handleOnOpenChange,
+}) {
   const [advancedSettings, setAdvancedSettings] = useState(false);
   const [similarityBoost, setSimilarityBoost] = useState(0.98);
   const [stability, setStability] = useState(0.4);
@@ -68,7 +72,7 @@ export default function TTSUploader({ onAudioLinkAvailable, onProcessing }) {
       const data = await response.json();
       toast.success("Successfully generated audio file");
       handleProcessing(false);
-      onAudioLinkAvailable(data);
+      handleAudioFileLink(data);
     }
   };
 

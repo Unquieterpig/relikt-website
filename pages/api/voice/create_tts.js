@@ -65,6 +65,7 @@ export default async function handler(req, res) {
         audioUrl: `/audio/${filename}`,
         selectedVoice: voiceId,
         voiceName: voiceName,
+        type: "TEXT",
       });
     } catch (error) {
       res.status(500).json({ error: error.message });

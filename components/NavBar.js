@@ -118,6 +118,9 @@ export default function NavBar() {
       </NavbarContent>
 
       <NavbarContent justify="end">
+        <NavbarItem>
+          <ThemeSwitcher />
+        </NavbarItem>
         {/* user is not signed-in or has no username */}
         {!user && (
           <NavbarItem>
@@ -167,11 +170,8 @@ export default function NavBar() {
                     <p className="font-semibold">@{username}</p>
                   </DropdownItem>
                   <DropdownItem key="settings">My Settings</DropdownItem>
-                  <DropdownItem key="help_and_feedback">
+                  <DropdownItem showDivider key="help_and_feedback">
                     Help & Feedback
-                  </DropdownItem>
-                  <DropdownItem showDivider key="dark_mode">
-                    <ThemeSwitcher />
                   </DropdownItem>
                   <DropdownItem
                     key="logout"

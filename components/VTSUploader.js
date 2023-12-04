@@ -1,18 +1,21 @@
 // Component that contacts our API create_tts.js to generate a .mp3 file from the audio file the user has entered in the text box.
 // The .mp3 file is then added to a NextUI card and displayed on the table in the panel.
-import { Button, Checkbox, Textarea, Switch, Slider } from "@nextui-org/react";
+import { Button, Switch, Slider } from "@nextui-org/react";
 import { useState } from "react";
-import { set } from "react-hook-form";
 import toast from "react-hot-toast";
 import VoiceSelector from "@components/VoiceSelector";
+import { useDropzone } from "react-dropzone";
 
-export default function VTSUploader(props) {
+export default function VTSUploader({
+  handleAudioFileLink,
+  onProcessing,
+  handleOnOpenChange,
+}) {
   const [advancedSettings, setAdvancedSettings] = useState(false);
   const [pitchTone, setPitchTone] = useState(0);
   const [strength, setStrength] = useState(0.8);
   const [modelVolume, setModelVolume] = useState(0.75);
-  const [selectedFile, setSelectedFile] = useState();
-  const [selectedFileData, setSelectedFileData] = useState();
+  const [selectedFile, setSelectedFile] = useState(null);
   const [selectedVoice, setSelectedVoice] = useState("959984");
   const [selectedName, setSelectedName] = useState("Evan Voice");
 
@@ -24,83 +27,81 @@ export default function VTSUploader(props) {
     setSelectedName(name);
   };
 
-  const handleSelectedFile = (selected) => {
-    setSelectedFile(selected);
+  const handleProcessing = (isProcessing) => {
+    onProcessing(isProcessing);
   };
 
-  const handleSelectedFileData = (data) => {
-    setSelectedFileData(data);
-  };
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    accept: { "audio/*": [".mp3", ".wav", ".flac"] },
+    onDrop: (acceptedFiles) => {
+      setSelectedFile(acceptedFiles[0]);
+    },
+    onDropRejected: () => {
+      toast.error("You can only drop one file.");
+    },
+    maxFiles: 1,
+  });
 
-  // Open file dialog
-  const openFile = () => {
-    let input = document.createElement("input");
-    input.type = "file";
-
-    let fileName = document.getElementById("fileName");
-
-    input.onchange = (event) => {
-      const file = event.target.files[0];
-
-      if (file) {
-        const reader = new FileReader();
-
-        reader.onload = (e) => {
-          const fileData = e.target.result;
-
-          handleSelectedFile(file);
-          handleSelectedFileData(fileData);
+  const sendVoiceToSpeechLogic = async () => {
+    handleProcessing(true);
+    let voiceSettings = advancedSettings
+      ? {
+          pitchShift: pitchTone,
+          conversionStrength: strength,
+          modelVolumeMix: modelVolume,
+        }
+      : {
+          pitchShift: 0,
+          conversionStrength: 0.8,
+          modelVolumeMix: 0.75,
         };
 
-        reader.readAsText(file);
+    const formData = new FormData();
 
-        fileName.innerText = file.name;
-      }
-    };
+    if (!selectedFile) {
+      handleProcessing(false);
+      throw new Error("No file selected");
+    }
 
-    input.click();
+    formData.append("soundFile", selectedFile);
+    formData.append("voiceModelId", selectedVoice);
+    formData.append("voiceName", selectedName);
+    for (const key in voiceSettings) {
+      formData.append(key, voiceSettings[key]);
+    }
+
+    const response = await fetch("/api/voice/create_vtv", {
+      method: "POST",
+      body: formData,
+    });
+
+    handleProcessing(false);
+
+    if (!response.ok) {
+      throw new Error("Failed to generate audio file");
+    }
+
+    return response.json();
   };
 
   const sendVoiceToSpeech = async (event) => {
     event.preventDefault();
 
-    setIsProcessing(true);
-    let voiceSettings = null;
-
-    if (advancedSettings) {
-      voiceSettings = {
-        pitchShift: pitchTone,
-        conversionStrength: strength,
-        modelVolumeMix: modelVolume,
-      };
-    }
-
-    const requestBody = {
-      soundFile: selectedFileData,
-      voiceModelId: selectedVoice,
-      ...(voiceSettings && voiceSettings),
-    };
-
-    const response = await fetch("/api/voice/create_tts", {
-      method: "POST",
-      body: JSON.stringify(requestBody),
-      headers: {
-        "Content-Type": "application/json",
+    toast.promise(sendVoiceToSpeechLogic(), {
+      loading: "Generating audio file...",
+      success: (data) => {
+        handleAudioFileLink(data);
+        return "Successfully generated audio file";
       },
+      error: (err) => err.message,
     });
 
-    if (!response.ok) {
-      toast.error("Failed to generate audio file");
-      console.log(response);
-      setIsProcessing(false);
-    } else {
-      //TODO: create row and save it to user profile
-      const data = await response.json();
-      toast.success("Successfully generated audio file");
-      setIsProcessing(false);
-      props.onAudioLinkAvailable(data);
-    }
+    handleOnOpenChange(false);
   };
+
+  // Since tailwind overrides the default styles, we need to manually set the styles for the dropzone
+  const activeDropzoneStyle = "border-green-500";
+  const inactiveDropzoneStyle = "border-gray-300";
 
   return (
     <div className="flex flex-col align-center items-center mt-2">
@@ -113,11 +114,28 @@ export default function VTSUploader(props) {
           onNameSelect={handleNameSelect}
         />
 
-        <Button color="primary" className="my-5 w-full" onPress={openFile}>
-          Upload Audio
-        </Button>
+        <div
+          {...getRootProps()}
+          className={`flex flex-col mt-2 justify-center items-center p-6 border-2 border-dashed rounded-md cursor-pointer ${
+            isDragActive ? activeDropzoneStyle : inactiveDropzoneStyle
+          }`}
+        >
+          <input {...getInputProps()} />
+          {isDragActive ? (
+            <>
+              <p>Drop the audio file here ...</p>
+            </>
+          ) : (
+            <>
+              <p>Drag 'n' drop an audio file here, or click to select a file</p>
+            </>
+          )}
+          <em>(Only *.mp3, *.wav, *.flac audio files will be accepted)</em>
+        </div>
 
-        <h1 id="fileName"></h1>
+        <div id="fileName" className="mt-2">
+          {selectedFile && <div>Currently Selected: {selectedFile.name} ✔</div>}
+        </div>
 
         {/* TODO: Only necessary if advanced settings exist */}
         <div className="flex flex-row align-center items-center gap-1">
@@ -160,14 +178,6 @@ export default function VTSUploader(props) {
             onChange={setModelVolume}
             isDisabled={!advancedSettings}
           />
-          {/* <Checkbox
-            defaultSelected
-            isSelected={speakerBoost}
-            onValueChange={setSpeakerBoost}
-            isDisabled={!advancedSettings}
-          >
-            Speaker Boost
-          </Checkbox> */}
         </div>
       </form>
 
