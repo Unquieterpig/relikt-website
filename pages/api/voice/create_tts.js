@@ -8,9 +8,21 @@
 // WARNING: This is probably horrible for performance. In the future we should probably store the audio files in a database. Future Josh issue.
 
 import axios from "axios";
-import fs from "fs";
-import path from "path";
 import { nanoid } from "nanoid";
+import admin from "firebase-admin";
+const { getStorage, getDownloadURL } = require("firebase-admin/storage");
+
+// Initialize Firebase Admin SDK
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    storageBucket: "relikt-b74a6.appspot.com",
+  });
+}
+
+const bucket = admin.storage().bucket();
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -19,15 +31,12 @@ export default async function handler(req, res) {
       const { textToConvert, voiceId, voiceSettings, voiceName } = req.body; // Extract voiceId from the request body
 
       // Debugging stuff
-      console.log("textToConvert: ", textToConvert);
-      console.log("voiceID: ", voiceId);
-      console.log("voiceSettings: ", voiceSettings);
+      // console.log("textToConvert: ", textToConvert);
+      // console.log("voiceID: ", voiceId);
+      // console.log("voiceSettings: ", voiceSettings);
 
       const apiKey = process.env.ELEVENLABS_SECRET_KEY;
       const apiUrl = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`;
-
-      console.log("API URL: ", apiUrl);
-      console.log("API Key: ", apiKey);
 
       // Default voice settings
       const defaultVoiceSettings = {
@@ -59,18 +68,24 @@ export default async function handler(req, res) {
 
       // Generate a random file name
       const filename = `${nanoid()}.mp3`;
-      const filePath = path.resolve("./public/audio", filename);
 
-      // Save the audio data as an mp3 file
-      fs.writeFileSync(filePath, Buffer.from(response.data, "binary"));
+      // Get a reference to the storage bucket and the file
+      const fileRef = getStorage().bucket().file(`audio/${filename}`);
+
+      // Upload the file to Firebase Storage
+      await fileRef.save(Buffer.from(response.data, "binary"));
+
+      // Construct the public URL for the file
+      const audioUrl = await getDownloadURL(fileRef);
 
       res.status(200).json({
-        audioUrl: `/audio/${filename}`,
+        audioUrl: audioUrl,
         selectedVoice: voiceId,
         voiceName: voiceName,
         type: "TEXT",
       });
     } catch (error) {
+      console.error("Error in /api/voice/create_tts:", error);
       res.status(500).json({ error: error.message });
     }
   } else {
