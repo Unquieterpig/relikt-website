@@ -25,33 +25,31 @@ const columns = [
 const rows = [
   {
     id: 1,
-    name: "Tony Reichert",
+    name: "MoistMan",
     status: "trained",
-    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
+    avatar:
+      "https://upload.wikimedia.org/wikipedia/commons/b/b6/Cr1TiKaL_in_2022.jpg",
   },
   {
     id: 2,
-    name: "Zoey Lang",
+    name: "Martin",
     status: "cancelled",
-    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+    avatar:
+      "https://behrend.psu.edu/sites/behrend/files/styles/person_headshot/public/russell-martin.jpg?itok=5ZQdF7e6",
   },
   {
     id: 3,
-    name: "Jane Fisher",
-    status: "training",
-    avatar: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+    name: "Evan Voice",
+    status: "trained",
+    avatar:
+      "https://www.rainforest-alliance.org/wp-content/uploads/2021/06/capybara-square-1.jpg.optimal.jpg",
   },
   {
     id: 4,
-    name: "William Howard",
-    status: "paused",
-    avatar: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-  },
-  {
-    id: 5,
-    name: "Kristen Copper",
+    name: "JSchlatt",
     status: "trained",
-    avatar: "https://i.pravatar.cc/150?u=a092581d4ef9026700d",
+    avatar:
+      "https://yt3.googleusercontent.com/ytc/APkrFKaQySY92yPYceE12T3k5SgPf-qL8m2iLKmlpSx9_A=s900-c-k-c0x00ffffff-no-rj",
   },
 ];
 
