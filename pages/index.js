@@ -1,15 +1,16 @@
+import { useState, useEffect } from "react";
+
 import Metatags from "@components/Metatags";
 
 import NextImage from "next/image";
+import { useTheme } from "next-themes";
 
 import {
   Image,
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   Spacer,
-  Button,
   Link,
 } from "@nextui-org/react";
 
@@ -19,6 +20,7 @@ import DoctorMartin from "../public/DoctorMartin.png";
 import FireMartin from "../public/FireMartin.png";
 import SpaceMartin from "../public/SpaceMartin.png";
 import Moist from "../public/Moist.png";
+import Schlatt from "../public/latestschlatt.png";
 
 import {
   CloudArrowUpIcon,
@@ -64,16 +66,16 @@ function Section1() {
         </h2>
       </div>
 
-      <Spacer y={5} />
+      <Spacer y={20} />
 
       <div className="flex flex-rows justify-center items-start h-unit-9xl gap-2">
         <Card isFooterBlurred className="py-2">
           <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-            <p className="text-tiny uppercase font-bold">The Martin Mix</p>
+            <p className="text-tiny uppercase font-bold">The Schlatt Mix</p>
             <small className="text-default-500">
               Trained on 5 minutes of audio
             </small>
-            <h4 className="font-bold text-large">Martin</h4>
+            <h4 className="font-bold text-large">JSchlatt</h4>
           </CardHeader>
           <CardBody className="overflow-visible py-2">
             <Image
@@ -81,21 +83,9 @@ function Section1() {
               as={NextImage}
               alt="Card background"
               className="opacity-100 max-h-72 max-w-sm object-cover rounded-xl"
-              src={OGMartin}
+              src={Schlatt}
             />
           </CardBody>
-          <CardFooter className="justify-between overflow-hidden py-0 px-0 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_24px)] shadow-small ml-3 mb-6 z-10">
-            <Button
-              fullWidth
-              className="text-tiny text-white bg-black/20"
-              variant="flat"
-              color="default"
-              radius="lg"
-              size="sm"
-            >
-              Play Sample
-            </Button>
-          </CardFooter>
         </Card>
 
         <Card isFooterBlurred className="py-2">
@@ -115,18 +105,6 @@ function Section1() {
               src={Moist}
             />
           </CardBody>
-          <CardFooter className="justify-between overflow-hidden py-0 px-0 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_24px)] shadow-small ml-3 mb-6 z-10">
-            <Button
-              fullWidth
-              className="text-tiny text-white bg-black/20"
-              variant="flat"
-              color="default"
-              radius="lg"
-              size="sm"
-            >
-              Play Sample
-            </Button>
-          </CardFooter>
         </Card>
       </div>
     </>
@@ -155,6 +133,16 @@ const features = [
 ];
 
 function Section2() {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // When mounted on client, now we can show the UI
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+
+  const imageSrc =
+    theme === "dark" ? "/AppPlaceHolderDark.png" : "/AppPlaceHolder.png";
+
   return (
     <div id="features" className="overflow-hidden h-100 py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -192,7 +180,7 @@ function Section2() {
             </div>
           </div>
           <Image
-            src="/AppPlaceHolder.png"
+            src={imageSrc}
             alt="Product screenshot"
             className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
             width={2432}
@@ -346,10 +334,7 @@ function Section4() {
             src={DoctorMartin}
           />
         </Card>
-        <Card
-          isFooterBlurred
-          className="w-full h-[300px] col-span-12 sm:col-span-5"
-        >
+        <Card className="w-full h-[300px] col-span-12 sm:col-span-5">
           <CardHeader className="absolute z-10 top-1 flex-col items-start">
             <p className="text-tiny text-white/60 uppercase font-bold">
               Breaking Boundaries
@@ -364,10 +349,7 @@ function Section4() {
             src={FireMartin}
           />
         </Card>
-        <Card
-          isFooterBlurred
-          className="w-full h-[300px] col-span-12 sm:col-span-7"
-        >
+        <Card className="w-full h-[300px] col-span-12 sm:col-span-7">
           <CardHeader className="absolute z-10 top-1 flex-col items-start">
             <p className="text-tiny text-white/60 uppercase font-bold">
               Pushing the limits
@@ -394,7 +376,7 @@ function Footer() {
     <div className="flex justify-center text-center border-t border-t-neutral-300/20 gap-2">
       <p>Made with 💗 by </p>
       <Link color="danger" href="https://github.com/Unquieterpig">
-        Joshua Partridge
+        Just Debugging, Mostly (JDM)
       </Link>
     </div>
   );
