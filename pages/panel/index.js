@@ -61,7 +61,7 @@ const columns = [
 
 function PanelContent() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [selectedTab, setSelected] = useState(true); // Lift state up
+  const [selectedTab, setSelected] = useState("tts");
   const [isProcessing, setIsProcessing] = useState(false);
   const [rows, setRows] = useState([]);
 
@@ -69,8 +69,8 @@ function PanelContent() {
     setIsProcessing(isProcessing);
   };
 
-  const handleTabChange = () => {
-    setSelected(!selectedTab);
+  const handleTabChange = (tab) => {
+    setSelected(tab);
   };
 
   const handleOnOpenChange = (isOpen) => {
@@ -120,7 +120,7 @@ function PanelContent() {
               </ModalBody>
               <ModalFooter>
                 {/* Since Daniel wanted it to look pretty */}
-                {!selectedTab && (
+                {selectedTab === "tts" && (
                   <Button
                     color="primary"
                     variant="light"
@@ -132,7 +132,7 @@ function PanelContent() {
                   </Button>
                 )}
 
-                {selectedTab && (
+                {selectedTab === "sts" && (
                   <Button
                     color="primary"
                     variant="light"

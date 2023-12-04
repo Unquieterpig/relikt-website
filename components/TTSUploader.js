@@ -35,18 +35,15 @@ export default function TTSUploader({
     setSpeakerBoost(true);
   };
 
-  const sendTextToSpeech = async (event) => {
-    event.preventDefault();
-
+  const sendTextToSpeechLogic = async (event) => {
     handleProcessing(true);
-    let voiceSettings = {};
-    if (advancedSettings) {
-      voiceSettings = {
-        similarity_boost: similarityBoost,
-        stability: stability,
-        use_speaker_boost: speakerBoost,
-      };
-    }
+    let voiceSettings = advancedSettings
+      ? {
+          similarity_boost: similarityBoost,
+          stability: stability,
+          use_speaker_boost: speakerBoost,
+        }
+      : {};
 
     const requestBody = {
       textToConvert: event.target.textToConvert.value,
@@ -63,17 +60,30 @@ export default function TTSUploader({
       },
     });
 
+    handleProcessing(false);
+
     if (!response.ok) {
-      toast.error("Failed to generate audio file");
-      console.log(response);
-      handleProcessing(false);
-    } else {
-      //TODO: create row and save it to user profile
-      const data = await response.json();
-      toast.success("Successfully generated audio file");
-      handleProcessing(false);
-      handleAudioFileLink(data);
+      throw new Error("Failed to generate audio file");
     }
+
+    return response.json();
+  };
+
+  const sendTextToSpeech = (event) => {
+    event.preventDefault();
+
+    toast.promise(sendTextToSpeechLogic(event), {
+      loading: "Generating audio file...",
+      success: (data) => {
+        handleAudioFileLink(data);
+        return "Successfully generated audio file";
+      },
+      error: (err) => {
+        return err.message;
+      },
+    });
+
+    handleOnOpenChange(false);
   };
 
   return (

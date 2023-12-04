@@ -105,7 +105,6 @@ export default function VTSUploader({
 
   return (
     <div className="flex flex-col align-center items-center mt-2">
-      <h1 className="text-4xl">Voice to Speech</h1>
       <form id="vtsForm" className="w-full" onSubmit={sendVoiceToSpeech}>
         <VoiceSelector
           name="selectedVoice"
@@ -149,7 +148,7 @@ export default function VTSUploader({
         </div>
 
         {/* TODO: Check API call for required arguments */}
-        <div className="flex flex-col gap-2 mt-2">
+        <div className="flex flex-col gap-1 mt-2">
           <Slider
             label="Harmonic Tonal Modulation"
             step={1}
@@ -182,13 +181,13 @@ export default function VTSUploader({
       </form>
 
       {/* Debug info */}
-      <p>Debug Info:</p>
+      {/* <p>Debug Info:</p>
       <p>Selected Name: {selectedName}</p>
       <p>Selected Voice: {selectedVoice}</p>
       <p>Advanced Settings: {advancedSettings ? "true" : "false"}</p>
       <p>Pitch Shift: {pitchTone}</p>
       <p>Conversion Strength: {strength}</p>
-      <p>Model Volume: {modelVolume}</p>
+      <p>Model Volume: {modelVolume}</p> */}
     </div>
   );
 }
