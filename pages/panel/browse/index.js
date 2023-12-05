@@ -28,6 +28,8 @@ import {
 
 import { useState } from "react";
 
+import GradientTop from "@components/GamesenseGradient";
+
 // Max post to query per page
 const LIMIT = 8;
 
@@ -85,6 +87,7 @@ export default function Browse(props) {
         title="Relikt - Browse"
         description="Find the perfect voice in our community."
       />
+      <GradientTop />
       <Card className="mx-10 mt-5">
         <CardBody className="flex flex-row justify-between">
           <Breadcrumbs

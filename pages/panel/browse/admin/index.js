@@ -28,10 +28,16 @@ import {
   setDoc,
 } from "firebase/firestore";
 
+import Metatags from "@components/Metatags";
+
+import GradientTop from "@components/GamesenseGradient";
+
 export default function AdminPostsPage(props) {
   return (
     <>
       <main>
+        <Metatags title="Relikt - Your Posts" description="Manage your posts" />
+        <GradientTop />
         <AuthCheck>
           <AdminBreadcrumb />
           <PostList />

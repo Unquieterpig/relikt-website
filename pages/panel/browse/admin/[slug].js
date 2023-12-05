@@ -20,9 +20,12 @@ import {
 } from "firebase/firestore";
 import Metatags from "@components/Metatags";
 
+import GradientTop from "@components/GamesenseGradient";
+
 export default function AdminPostEdit(props) {
   return (
     <AuthCheck>
+      <GradientTop />
       <PostManager />
     </AuthCheck>
   );

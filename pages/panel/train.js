@@ -15,11 +15,13 @@ import {
 import Metatags from "@components/Metatags";
 import { SearchIcon } from "@components/SearchIcon";
 import TrainFeed from "@components/TrainFeed";
+import GradientTop from "@components/GamesenseGradient";
 
 export default function Train() {
   return (
     <>
-      <Metatags title="Train" description="Train an AI voice" />
+      <Metatags title="Relikt - Train" description="Train an AI voice" />
+      <GradientTop />
 
       <TrainContainer />
     </>

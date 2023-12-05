@@ -17,6 +17,7 @@ import Link from "next/link";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { useContext } from "react";
 import { Button, Card, CardBody } from "@nextui-org/react";
+import GradientTop from "@components/GamesenseGradient";
 
 export async function getStaticProps({ params }) {
   const { username, slug } = params;
@@ -72,6 +73,7 @@ export default function Post(props) {
 
   return (
     <main className="flex min-w-screen justify-center gap-4">
+      <GradientTop />
       <Metatags title={post.title} description={post.title} />
 
       <Card className="flex top-[15px] w-[60vw] ml-2">
