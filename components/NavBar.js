@@ -17,7 +17,7 @@ import {
 
 import { useContext } from "react";
 import { UserContext } from "@lib/context";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { ReliktLogo } from "@components/ReliktLogo";
 import ThemeSwitcher from "@components/ThemeSwitcher";

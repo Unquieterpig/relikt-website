@@ -22,8 +22,6 @@ if (!admin.apps.length) {
   });
 }
 
-const bucket = admin.storage().bucket();
-
 export default async function handler(req, res) {
   if (req.method === "POST") {
     console.log("POST request received for /api/voice/create_tts");

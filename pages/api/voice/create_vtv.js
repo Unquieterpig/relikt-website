@@ -21,8 +21,6 @@ import { IncomingForm } from "formidable";
 import FormData from "form-data";
 import axios from "axios";
 import fs from "fs";
-import path from "path";
-import { nanoid } from "nanoid";
 
 const sleep = (milliseconds) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -41,9 +39,6 @@ export default async function handler(req, res) {
         res.status(500).json({ error: err.message });
         return;
       }
-
-      // console.log("Fields received: ", fields);
-      // console.log("Files received: ", files);
 
       const formData = new FormData();
 
@@ -80,7 +75,7 @@ export default async function handler(req, res) {
         let jobStatus = postResponse.data.status; // Always assume the job is running until we know otherwise
         let getResponse;
         while (jobStatus === "running" || jobStatus === "queued") {
-          await sleep(10000); // Poll every 10 seconds, until they add webhooks.
+          await sleep(7000); // Poll every 7 seconds, until they add webhooks.
           getResponse = await axios.get(
             `https://arpeggi.io/api/kits/v1/voice-conversions/${jobId}`,
             {
@@ -97,16 +92,9 @@ export default async function handler(req, res) {
 
         if (jobStatus === "success") {
           const outputFileUrl = getResponse.data.outputFileUrl;
-          const audioResponse = await axios.get(outputFileUrl, {
-            responseType: "arraybuffer",
-          });
-
-          const filename = `${nanoid()}.mp3`;
-          const filePath = path.resolve("./public/audio", filename);
-          fs.writeFileSync(filePath, audioResponse.data);
 
           res.status(200).json({
-            audioUrl: `/audio/${filename}`,
+            audioUrl: outputFileUrl,
             selectedVoice: fields.voiceModelId,
             voiceName: fields.voiceName,
             type: "AUDIO",

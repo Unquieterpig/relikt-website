@@ -3,8 +3,6 @@ import "@styles/globals.css";
 import { Toaster } from "react-hot-toast";
 import { UserContext } from "@lib/context";
 
-import { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
 import { useUserData } from "@lib/hooks";
 import { NextUIProvider } from "@nextui-org/react";
