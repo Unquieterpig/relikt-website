@@ -22,36 +22,7 @@ const columns = [
   { name: "ACTIONS", uid: "actions" },
 ];
 
-const rows = [
-  {
-    id: 1,
-    name: "MoistMan",
-    status: "trained",
-    avatar:
-      "https://upload.wikimedia.org/wikipedia/commons/b/b6/Cr1TiKaL_in_2022.jpg",
-  },
-  {
-    id: 2,
-    name: "Martin",
-    status: "cancelled",
-    avatar:
-      "https://behrend.psu.edu/sites/behrend/files/styles/person_headshot/public/russell-martin.jpg?itok=5ZQdF7e6",
-  },
-  {
-    id: 3,
-    name: "Evan Voice",
-    status: "trained",
-    avatar:
-      "https://www.rainforest-alliance.org/wp-content/uploads/2021/06/capybara-square-1.jpg.optimal.jpg",
-  },
-  {
-    id: 4,
-    name: "JSchlatt",
-    status: "trained",
-    avatar:
-      "https://yt3.googleusercontent.com/ytc/APkrFKaQySY92yPYceE12T3k5SgPf-qL8m2iLKmlpSx9_A=s900-c-k-c0x00ffffff-no-rj",
-  },
-];
+const rows = [];
 
 const statusColorMap = {
   trained: "success",
@@ -109,7 +80,7 @@ export default function TrainFeed() {
   }, []);
 
   return (
-    <Table>
+    <Table aria-label="Table to store conversions">
       <TableHeader columns={columns}>
         {(column) => (
           <TableColumn
@@ -120,7 +91,10 @@ export default function TrainFeed() {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody items={rows}>
+      <TableBody
+        items={rows}
+        emptyContent={"No voices trained yet! Press the button above to begin."}
+      >
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (
