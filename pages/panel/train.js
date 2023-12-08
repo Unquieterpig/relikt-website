@@ -78,8 +78,7 @@ function TrainBreadcrumb() {
                   </ModalHeader>
                   <ModalBody className="flex flex-col justify-center items-center text-center">
                     <h1 className="font-bold text-4xl">
-                      Training a voice is currently disabled during the beta
-                      period.
+                      Training a voice is currently disabled for the BETA period
                     </h1>
                   </ModalBody>
                   <ModalFooter>
