@@ -21,46 +21,63 @@ import GradientTop from "@components/GamesenseGradient";
 
 export async function getStaticProps({ params }) {
   const { username, slug } = params;
-  const userDoc = await getUserWithUsername(username);
 
-  // If no user, short circuit to 404 page
-  if (!userDoc) {
+  try {
+    const userDoc = await getUserWithUsername(username);
+
+    // If no user, short circuit to 404 page
+    if (!userDoc) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const postRef = doc(collection(userDoc.ref, "posts"), slug);
+    const postDoc = await getDoc(postRef);
+
+    if (!postDoc.exists()) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const post = postToJSON(postDoc);
+
+    return {
+      props: { post, path: postRef.path },
+      revalidate: 5000,
+    };
+  } catch (error) {
+    console.error("Failed to load post data", error);
     return {
       notFound: true,
     };
   }
-
-  let post;
-  let path;
-
-  if (userDoc) {
-    const postRef = doc(collection(userDoc.ref, "posts"), slug);
-    post = postToJSON(await getDoc(postRef));
-
-    path = postRef.path;
-  }
-
-  return {
-    props: { post, path },
-    revalidate: 5000,
-  };
 }
 
 export async function getStaticPaths() {
-  const postsQuery = query(collectionGroup(firestore, "posts"));
-  const snapshot = await getDocs(postsQuery);
+  try {
+    const postsQuery = query(collectionGroup(firestore, "posts"));
+    const snapshot = await getDocs(postsQuery);
 
-  const paths = snapshot.docs.map((doc) => {
-    const { slug, username } = doc.data();
+    const paths = snapshot.docs.map((doc) => {
+      const { slug, username } = doc.data();
+      return {
+        params: { username, slug },
+      };
+    });
+
     return {
-      params: { username, slug },
+      paths,
+      fallback: "blocking",
     };
-  });
-
-  return {
-    paths,
-    fallback: "blocking",
-  };
+  } catch (error) {
+    console.error("Failed to generate post paths", error);
+    return {
+      paths: [],
+      fallback: "blocking",
+    };
+  }
 }
 
 export default function Post(props) {
