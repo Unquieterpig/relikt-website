@@ -1,6 +1,1 @@
-module.exports = {
-    swcMinify: true,
-    experimental: {
-      esmExternals: true
-    }
-}
+module.exports = {};
