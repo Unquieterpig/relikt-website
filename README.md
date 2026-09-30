@@ -16,6 +16,14 @@ A school project to help demonstrate the usage of web services.
 - **NextUI**: Beautiful and reusable prebuilt components
 
 ## Installation and Setup 🚀
+
+Use a maintained Node.js LTS release (Node.js 22 or 24 recommended). The locked
+Next.js image-optimization dependency requires Node.js 20.9 or newer.
+
+The Next.js security upgrade keeps the Pages Router and React 18. The scoped
+PostCSS override uses the patched direct dependency until Next.js 15 updates its
+pinned PostCSS version.
+
 1. **Clone the repository**
    ```bash
    git clone [https://github.com/Unquieterpig/relikt-website]
