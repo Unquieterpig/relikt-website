@@ -22,7 +22,8 @@ Next.js image-optimization dependency requires Node.js 20.9 or newer.
 
 The Next.js security upgrade keeps the Pages Router and React 18. The scoped
 PostCSS override uses the patched direct dependency until Next.js 15 updates its
-pinned PostCSS version.
+pinned PostCSS version. Same-major Undici and gRPC overrides patch the older
+versions pinned by Firebase 10; revisit these when upgrading Firebase.
 
 1. **Clone the repository**
    ```bash
